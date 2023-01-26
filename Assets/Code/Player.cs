@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
             spr.color = Color.green;
         } else
         {
-            spr.color = Color.red;
+            spr.color = Color.blue;
         }
     }
 
