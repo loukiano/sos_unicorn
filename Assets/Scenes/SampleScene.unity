@@ -174,6 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 493fc1fb8554e47b1b21ca2ae3f0cfa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  castDist: 1
   walkSpeed: 7
   walkAccel: 0.1
   numJumps: 2
@@ -281,7 +282,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.0000002, y: 2.0000005}
+  m_Size: {x: 1, y: 2}
   m_Direction: 0
 --- !u!1 &519420028
 GameObject:
@@ -378,7 +379,7 @@ GameObject:
   - component: {fileID: 1271279959}
   - component: {fileID: 1271279958}
   - component: {fileID: 1271279960}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +490,7 @@ GameObject:
   - component: {fileID: 1563203196}
   - component: {fileID: 1563203195}
   - component: {fileID: 1563203194}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -600,7 +601,7 @@ GameObject:
   - component: {fileID: 1792683027}
   - component: {fileID: 1792683026}
   - component: {fileID: 1792683025}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

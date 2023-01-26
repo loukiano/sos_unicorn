@@ -6,6 +6,9 @@ public class Player : MonoBehaviour
 {
     Controller c;
     Rigidbody2D rb;
+    SpriteRenderer spr;
+
+    public float castDist = 1;
 
     public float walkSpeed = 7;
     public float walkAccel = 0.1f; // how quick the player gets up to speed
@@ -30,12 +33,24 @@ public class Player : MonoBehaviour
         {
             rb = gameObject.AddComponent<Rigidbody2D>();
         }
+
+        spr = GetComponent<SpriteRenderer>();
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
         HandleMovement();
+
+        if (IsGrounded())
+        {
+            spr.color = Color.green;
+        } else
+        {
+            spr.color = Color.red;
+        }
     }
 
     public void HandleMovement()
@@ -66,6 +81,12 @@ public class Player : MonoBehaviour
             Debug.Log("refreshing Jumps!");
             jumpsLeft = numJumps;
         }
+    }
+
+    private bool IsGrounded()
+    {
+        LayerMask groundMask = LayerMask.GetMask("Ground");
+        return Physics2D.Raycast(gameObject.transform.position, Vector2.down, castDist, groundMask);
     }
 
 }
