@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
             spr.color = Color.green;
         } else
         {
-            spr.color = Color.blue;
+            spr.color = Color.red;
         }
     }
 
@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
 
     public void ApplyFriction()
     {
-        if (IsGrounded() && Mathf.Abs(c.GetInputDir().x) < c.deadzone)
+        if (IsGrounded() && Mathf.Abs(c.GetInputDir().x) < Controller.deadzone)
         {
                 // use either our velocity or the default friction amt (~.75)
             float fricAmt = Mathf.Min(Mathf.Abs(rb.velocity.x), Mathf.Abs(frictionAmount));
@@ -178,8 +178,9 @@ public class Player : MonoBehaviour
             isJumping = false; // we've landed
         }
 
+
         // on any (?) collision, refresh jumps
-        if (jumpsLeft < numJumps)
+        if (collision.collider.bounds.center.y < transform.position.y && jumpsLeft < numJumps)
         {
             //Debug.Log("refreshing Jumps!");
             jumpsLeft = numJumps;
