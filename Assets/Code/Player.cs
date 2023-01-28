@@ -33,12 +33,12 @@ public class Player : MonoBehaviour
     public float jumpStopMultiplier = 0.5f;
 
     // dash variables
+    public float dashingPowerX = 20f;
+    public float dashingPowerY = 20f;
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPowerX = 24f;
-    private float dashingPowerY = 12f;
-    private float dashingTime = 0.2f;
-    private float dashingCooldown = 0.5f;
+    public float dashingTime = 0.2f;
+    public float dashingCooldown = 0.5f;
 
     
 
@@ -67,12 +67,16 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsGrounded())
+        if (isDashing)
+        {
+            spr.color = Color.magenta;
+        }
+        else if (IsGrounded())
         {
             spr.color = Color.green;
         } else
         {
-            spr.color = Color.red;
+            spr.color = Color.blue;
         }
     }
 
@@ -90,16 +94,20 @@ public class Player : MonoBehaviour
     {
         Vector2 inputDir = c.GetInputDir();
 
+        if (!(Mathf.Sign(rb.velocity.x) == Mathf.Sign(inputDir.x) && Mathf.Abs(rb.velocity.x) > walkSpeed))
+            // skip if we're already moving at faster than max speed and still trying to move in that direction
+        {
             // how fast do we want to be going
-        float goalSpeed = inputDir.x * walkSpeed; 
+            float goalSpeed = inputDir.x * walkSpeed;
             // diff between that and how fast we're going now
-        float velDif = goalSpeed - rb.velocity.x; 
+            float velDif = goalSpeed - rb.velocity.x;
             // how much are we accelerating
-        float accelRate = (Mathf.Abs(goalSpeed) > 0.01f) ? acceleration : decceleration;
+            float accelRate = (Mathf.Abs(goalSpeed) > 0.01f) ? acceleration : decceleration;
             // calculate movement force
-        float moveForce = Mathf.Pow(Mathf.Abs(velDif) * accelRate, velPower) * Mathf.Sign(velDif);
+            float moveForce = Mathf.Pow(Mathf.Abs(velDif) * accelRate, velPower) * Mathf.Sign(velDif);
 
-        rb.AddForce(moveForce * Vector2.right);
+            rb.AddForce(moveForce * Vector2.right);
+        }
 
     }
 
@@ -136,6 +144,10 @@ public class Player : MonoBehaviour
     {
         if (Time.time > lastJump + jumpCooldown && jumpsLeft > 0)
         {
+            if (isDashing)
+            {
+                isDashing = false;
+            }
             //Debug.Log("Jumping!");
             lastJump = Time.time;
             jumpsLeft -= 1;
@@ -172,17 +184,18 @@ public class Player : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (isJumping)
-        {
-            isJumping = false; // we've landed
-        }
-
+    { 
 
         // on any (?) collision, refresh jumps
         if (collision.collider.bounds.center.y < transform.position.y && jumpsLeft < numJumps)
         {
             //Debug.Log("refreshing Jumps!");
+            if (isDashing)
+            {
+                isDashing = false;
+            }
+
+            isJumping = false;
             jumpsLeft = numJumps;
         }
     }
@@ -199,12 +212,34 @@ public class Player : MonoBehaviour
 
         canDash = false;
         isDashing = true;
+        
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(inputDir.x * dashingPowerX, inputDir.y * dashingPowerY);
+
+        float newXVel = inputDir.x * dashingPowerX;
+        if (Mathf.Sign(inputDir.x) == Mathf.Sign(rb.velocity.x))
+            // conserve momentum if same direction
+        {
+            newXVel += rb.velocity.x;
+        }
+
+        float newYVel = inputDir.y * dashingPowerY;
+        if (Mathf.Sign(inputDir.y) == Mathf.Sign(rb.velocity.y))
+        {
+            newYVel += rb.velocity.y;
+        }
+
+        rb.velocity = new Vector2(newXVel, newYVel);
         yield return new WaitForSeconds(dashingTime);
         rb.gravityScale = originalGravity;
-        isDashing = false;
+        if (isDashing)
+        {
+            // only cancel momentum if the dash hasn't been canceled by something
+            isDashing = false;
+            float xCancel = inputDir.x * dashingPowerX;
+            float yCancel = IsGrounded() ? 0 : inputDir.y * dashingPowerY;
+            rb.velocity -= new Vector2(xCancel, yCancel);
+        }
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
