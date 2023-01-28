@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 
 public class Controller : MonoBehaviour
 {
-    public float controllerDeadzone = 0.05f;
+    public float deadzone = 0.05f;
 
     public KeyCode upButton = KeyCode.W;
     public KeyCode downButton = KeyCode.S;
@@ -13,6 +13,8 @@ public class Controller : MonoBehaviour
 
     public KeyCode jumpKey = KeyCode.Space;
 
+    public KeyCode dashKey = KeyCode.LeftShift;
+
 
     // Use this for initialization
     void Start()
@@ -20,9 +22,16 @@ public class Controller : MonoBehaviour
         
     }
 
-    void FixedUpdate()
+    void Update()
     {
         MaybeJump();
+        MaybeStopJump();
+        MaybeDash();
+    }
+
+    void FixedUpdate()
+    {
+        
     }
 
     public Vector2 GetInputDir()
@@ -54,25 +63,45 @@ public class Controller : MonoBehaviour
             // we have a controller -- lets use it
         {
             xin = Input.GetAxis("Horizontal");
-            xin = Mathf.Abs(xin) < controllerDeadzone ? 0 : xin; // deadzone filter
+            xin = Mathf.Abs(xin) < deadzone ? 0 : xin; // deadzone filter
 
             yin = Input.GetAxis("Vertical");
-            yin = Mathf.Abs(yin) < controllerDeadzone ? 0 : yin; // deadzone filter
+            yin = Mathf.Abs(yin) < deadzone ? 0 : yin; // deadzone filter
         }
 
         return new Vector2(xin, yin);
 
     }
 
+    private void MaybeDash()
+    {
+        if (Input.GetKeyDown(dashKey) || Input.GetButtonDown("Dash"))
+        {
+            Debug.Log("Dash!!");
+            gameObject.SendMessage("DoDash");
+        }
+    }
+
     private void MaybeJump()
     {
-        if (Input.GetKey(jumpKey) || Input.GetButton("Jump"))
+        if (Input.GetKeyDown(jumpKey) || Input.GetButtonDown("Jump"))
         {
+            //Debug.Log("Sending Jump!");
             gameObject.SendMessage("DoJump");
         }
     }
 
+    private void MaybeStopJump()
+    {
+        if (Input.GetKeyUp(jumpKey) || Input.GetButtonUp("Jump"))
+        {
+            //Debug.Log("SendingStop");
+            gameObject.SendMessage("StopJump");
+        }
+    }
 
-    
+
+
+
 }
 
