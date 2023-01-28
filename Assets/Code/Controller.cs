@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 
 public class Controller : MonoBehaviour
 {
-    public float controllerDeadzone = 0.05f;
+    public float deadzone = 0.05f;
 
     public KeyCode upButton = KeyCode.W;
     public KeyCode downButton = KeyCode.S;
@@ -54,10 +54,10 @@ public class Controller : MonoBehaviour
             // we have a controller -- lets use it
         {
             xin = Input.GetAxis("Horizontal");
-            xin = Mathf.Abs(xin) < controllerDeadzone ? 0 : xin; // deadzone filter
+            xin = Mathf.Abs(xin) < deadzone ? 0 : xin; // deadzone filter
 
             yin = Input.GetAxis("Vertical");
-            yin = Mathf.Abs(yin) < controllerDeadzone ? 0 : yin; // deadzone filter
+            yin = Mathf.Abs(yin) < deadzone ? 0 : yin; // deadzone filter
         }
 
         return new Vector2(xin, yin);
