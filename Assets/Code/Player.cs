@@ -19,6 +19,16 @@ public class Player : MonoBehaviour
     public float jumpCooldown = 0.5f; // seconds
     public Vector2 jumpForce = new Vector2(0, 10);
 
+    // dash variables
+    private bool canDash = true;
+    private bool isDashing;
+    private float dashingPowerX = 24f;
+    private float dashingPowerY = 12f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 0.5f;
+
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +52,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDashing) {
+            return;
+        }
         HandleMovement();
 
         if (IsGrounded())
@@ -60,6 +73,11 @@ public class Player : MonoBehaviour
         float yvel = rb.velocity.y;
 
         rb.velocity = new Vector2(xvel, yvel);
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            StartCoroutine(Dash());
+        }
     }
 
     public void DoJump()
@@ -87,6 +105,21 @@ public class Player : MonoBehaviour
     {
         LayerMask groundMask = LayerMask.GetMask("Ground");
         return Physics2D.Raycast(gameObject.transform.position, Vector2.down, castDist, groundMask);
+    }
+
+    private IEnumerator Dash()
+    {
+        Vector2 inputDir = c.GetInputDir();
+        canDash = false;
+        isDashing = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(inputDir.x * dashingPowerX, inputDir.y * dashingPowerY);
+        yield return new WaitForSeconds(dashingTime);
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
     }
 
 }
