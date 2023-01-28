@@ -21,14 +21,16 @@ public class Player : MonoBehaviour
     // gravity stuff
     public float gravityScale = 5;
     public float fallGravityMultiplier = 1.25f;
+    public float fallGravIncreaseRate = 0.25f;
 
     // jumping stuff
     public int numJumps = 2;
     private int jumpsLeft = 2;
     private float lastJump = 0; // when was the player's last jump
     private bool isJumping = false;
-    public float jumpCooldown = 0.5f; // seconds
+    public float jumpCooldown = 0f; // seconds
     public float jumpForce = 25;
+    public float jumpStopMultiplier = 0.5f;
 
     // dash variables
     private bool canDash = true;
@@ -126,7 +128,10 @@ public class Player : MonoBehaviour
     {
         if (rb.velocity.y < 0)
         {
-            rb.gravityScale = gravityScale * fallGravityMultiplier;
+
+            rb.gravityScale = Mathf.Lerp(rb.gravityScale,
+                                        gravityScale * fallGravityMultiplier,
+                                        fallGravIncreaseRate);
         } else
         {
             rb.gravityScale = gravityScale;
@@ -142,7 +147,26 @@ public class Player : MonoBehaviour
             lastJump = Time.time;
             jumpsLeft -= 1;
             isJumping = true;
+
+            if (rb.velocity.y < 0)
+                // if falling
+            {
+
+                rb.AddForce(Vector2.down * rb.velocity.y, ForceMode2D.Impulse);
+            }
+
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+    }
+
+    // called via messages by the Controller
+    public void StopJump()
+    {
+        if (rb.velocity.y > 0 && isJumping)
+        {
+            Debug.Log("Stopping jump!");
+            rb.AddForce(Vector2.down * rb.velocity.y * (1 - jumpStopMultiplier), ForceMode2D.Impulse);
+
         }
     }
 

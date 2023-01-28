@@ -20,9 +20,15 @@ public class Controller : MonoBehaviour
         
     }
 
-    void FixedUpdate()
+    void Update()
     {
         MaybeJump();
+        MaybeStopJump();
+    }
+
+    void FixedUpdate()
+    {
+        
     }
 
     public Vector2 GetInputDir()
@@ -66,13 +72,24 @@ public class Controller : MonoBehaviour
 
     private void MaybeJump()
     {
-        if (Input.GetKey(jumpKey) || Input.GetButton("Jump"))
+        if (Input.GetKeyDown(jumpKey) || Input.GetButtonDown("Jump"))
         {
+            Debug.Log("Sending Jump!");
             gameObject.SendMessage("DoJump");
         }
     }
 
+    private void MaybeStopJump()
+    {
+        if (Input.GetKeyUp(jumpKey) || Input.GetButtonUp("Jump"))
+        {
+            Debug.Log("SendingStop");
+            gameObject.SendMessage("StopJump");
+        }
+    }
 
-    
+
+
+
 }
 
