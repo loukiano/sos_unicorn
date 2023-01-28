@@ -74,7 +74,7 @@ public class Controller : MonoBehaviour
     {
         if (Input.GetKeyDown(jumpKey) || Input.GetButtonDown("Jump"))
         {
-            Debug.Log("Sending Jump!");
+            //Debug.Log("Sending Jump!");
             gameObject.SendMessage("DoJump");
         }
     }
@@ -83,7 +83,7 @@ public class Controller : MonoBehaviour
     {
         if (Input.GetKeyUp(jumpKey) || Input.GetButtonUp("Jump"))
         {
-            Debug.Log("SendingStop");
+            //Debug.Log("SendingStop");
             gameObject.SendMessage("StopJump");
         }
     }

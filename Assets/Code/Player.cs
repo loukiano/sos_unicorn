@@ -143,7 +143,7 @@ public class Player : MonoBehaviour
     {
         if (Time.time > lastJump + jumpCooldown && jumpsLeft > 0)
         {
-            Debug.Log("Jumping!");
+            //Debug.Log("Jumping!");
             lastJump = Time.time;
             jumpsLeft -= 1;
             isJumping = true;
@@ -164,7 +164,7 @@ public class Player : MonoBehaviour
     {
         if (rb.velocity.y > 0 && isJumping)
         {
-            Debug.Log("Stopping jump!");
+            //Debug.Log("Stopping jump!");
             rb.AddForce(Vector2.down * rb.velocity.y * (1 - jumpStopMultiplier), ForceMode2D.Impulse);
 
         }
@@ -180,7 +180,7 @@ public class Player : MonoBehaviour
         // on any (?) collision, refresh jumps
         if (jumpsLeft < numJumps)
         {
-            Debug.Log("refreshing Jumps!");
+            //Debug.Log("refreshing Jumps!");
             jumpsLeft = numJumps;
         }
     }
