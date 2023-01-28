@@ -33,10 +33,10 @@ public class Player : MonoBehaviour
     public float jumpStopMultiplier = 0.5f;
 
     // dash variables
+    public float dashingPowerX = 20f;
+    public float dashingPowerY = 20f;
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPowerX = 24f;
-    private float dashingPowerY = 12f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 0.5f;
 
@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
             spr.color = Color.green;
         } else
         {
-            spr.color = Color.red;
+            spr.color = Color.blue;
         }
     }
 
@@ -201,7 +201,21 @@ public class Player : MonoBehaviour
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(inputDir.x * dashingPowerX, inputDir.y * dashingPowerY);
+
+        float newXVel = inputDir.x * dashingPowerX;
+        if (Mathf.Sign(inputDir.x) == Mathf.Sign(rb.velocity.x))
+            // conserve momentum if same direction
+        {
+            newXVel += rb.velocity.x;
+        }
+
+        float newYVel = inputDir.y * dashingPowerY;
+        if (Mathf.Sign(inputDir.y) == Mathf.Sign(rb.velocity.y))
+        {
+            newYVel += rb.velocity.y;
+        }
+
+        rb.velocity = new Vector2(newXVel, newYVel);
         yield return new WaitForSeconds(dashingTime);
         rb.gravityScale = originalGravity;
         isDashing = false;

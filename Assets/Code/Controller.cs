@@ -77,7 +77,7 @@ public class Controller : MonoBehaviour
             xin = Input.GetAxis("Horizontal");
             xin = Mathf.Abs(xin) < deadzone ? 0 : xin; // deadzone filter
 
-            yin = Input.GetAxis("Vertical");
+            yin = -Input.GetAxis("Vertical");
             yin = Mathf.Abs(yin) < deadzone ? 0 : yin; // deadzone filter
 
 
