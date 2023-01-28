@@ -133,10 +133,10 @@ GameObject:
   m_Component:
   - component: {fileID: 386986832}
   - component: {fileID: 386986831}
-  - component: {fileID: 386986833}
   - component: {fileID: 386986830}
   - component: {fileID: 386986829}
   - component: {fileID: 386986828}
+  - component: {fileID: 386986833}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -156,12 +156,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f05bbb5475f4683ab3ab6bc2851eb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllerDeadzone: 0.05
+  deadzone: 0.05
   upButton: 119
   downButton: 115
   leftButton: 97
   rightButton: 100
   jumpKey: 32
+  dashKey: 304
 --- !u!114 &386986829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,10 +177,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castDist: 1
   walkSpeed: 7
-  walkAccel: 0.1
+  acceleration: 20
+  decceleration: 5
+  velPower: 1
+  frictionAmount: 0.75
+  gravityScale: 5
+  fallGravityMultiplier: 1.25
+  fallGravIncreaseRate: 0.25
   numJumps: 2
-  jumpCooldown: 0.5
-  jumpForce: {x: 0, y: 10}
+  jumpCooldown: 0
+  jumpForce: 25
+  jumpStopMultiplier: 0.5
 --- !u!50 &386986830
 Rigidbody2D:
   serializedVersion: 4
@@ -200,7 +208,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &386986831
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -268,8 +276,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!70 &386986833
-CapsuleCollider2D:
+--- !u!61 &386986833
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -282,8 +290,18 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 2}
+    newSize: {x: 1, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
   m_Size: {x: 1, y: 2}
-  m_Direction: 0
+  m_EdgeRadius: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
