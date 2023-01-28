@@ -8,6 +8,11 @@ public class CameraFollow : MonoBehaviour
     public Transform followTransform;
     public BoxCollider2D mapBounds;
 
+    public float maxYOff = 5;
+    public float maxXOff = 5;
+
+    public float moveDamp = 0.2f;
+
     private float xMin, xMax, yMin, yMax;
     private float camY, camX;
     private float camOrthsize;
@@ -28,8 +33,14 @@ public class CameraFollow : MonoBehaviour
 
     void FixedUpdate()
     {
-        camY = Mathf.Clamp(followTransform.position.y, yMin + camOrthsize, yMax - camOrthsize);
-        camX = Mathf.Clamp(followTransform.position.x, xMin + cameraRatio, xMax - cameraRatio);
+        float xOff = Controller.GetAxisFilter("RightHorizontal") * maxXOff;
+        float yOff = Controller.GetAxisFilter("RightVertical") * maxYOff;
+
+        float newX = Mathf.Lerp(transform.position.x, followTransform.position.x + xOff, moveDamp);
+        float newY = Mathf.Lerp(transform.position.y, followTransform.position.y + yOff, moveDamp);
+
+        camX = Mathf.Clamp(newX, xMin + cameraRatio, xMax - cameraRatio);
+        camY = Mathf.Clamp(newY, yMin + camOrthsize, yMax - camOrthsize);
         this.transform.position = new Vector3(camX, camY, this.transform.position.z);
     }
 
