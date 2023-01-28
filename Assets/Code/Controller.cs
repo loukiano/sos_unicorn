@@ -81,9 +81,9 @@ public class Controller : MonoBehaviour
             yin = Mathf.Abs(yin) < deadzone ? 0 : yin; // deadzone filter
 
 
-            float y2 = Controller.GetAxisFilter("RightVertical");
-            float x2 = Controller.GetAxisFilter("RightHorizontal");
-            Debug.Log("left: (" + xin + ", " + yin + ")\nright: (" + x2 + ", " + y2 + ")");
+            //float y2 = Controller.GetAxisFilter("RightVertical");
+            //float x2 = Controller.GetAxisFilter("RightHorizontal");
+            //Debug.Log("left: (" + xin + ", " + yin + ")\nright: (" + x2 + ", " + y2 + ")");
         }
 
         return new Vector2(xin, yin);
