@@ -13,6 +13,8 @@ public class Controller : MonoBehaviour
 
     public KeyCode jumpKey = KeyCode.Space;
 
+    public KeyCode dashKey = KeyCode.LeftShift;
+
 
     // Use this for initialization
     void Start()
@@ -24,6 +26,7 @@ public class Controller : MonoBehaviour
     {
         MaybeJump();
         MaybeStopJump();
+        MaybeDash();
     }
 
     void FixedUpdate()
@@ -68,6 +71,15 @@ public class Controller : MonoBehaviour
 
         return new Vector2(xin, yin);
 
+    }
+
+    private void MaybeDash()
+    {
+        if (Input.GetKeyDown(dashKey) || Input.GetButtonDown("Dash"))
+        {
+            Debug.Log("Dash!!");
+            gameObject.SendMessage("DoDash");
+        }
     }
 
     private void MaybeJump()

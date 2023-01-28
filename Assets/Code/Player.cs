@@ -74,17 +74,16 @@ public class Player : MonoBehaviour
         {
             spr.color = Color.blue;
         }
-
-        if (isDashing) {
-            return;
-        }
     }
 
     void FixedUpdate()
     {
-        HandleMovement();
-        ApplyFriction();
-        HandleGravity();
+        if (!isDashing)
+        {
+            HandleMovement();
+            ApplyFriction();
+            HandleGravity();
+        }
     }
 
     public void HandleMovement()
@@ -101,12 +100,6 @@ public class Player : MonoBehaviour
         float moveForce = Mathf.Pow(Mathf.Abs(velDif) * accelRate, velPower) * Mathf.Sign(velDif);
 
         rb.AddForce(moveForce * Vector2.right);
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
-        {
-            StartCoroutine(Dash());
-        }
-
 
     }
 
@@ -159,6 +152,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void DoDash()
+    {
+        if (canDash)
+        {
+            StartCoroutine(Dash());
+        }
+    }
+
     // called via messages by the Controller
     public void StopJump()
     {
@@ -194,6 +195,7 @@ public class Player : MonoBehaviour
     private IEnumerator Dash()
     {
         Vector2 inputDir = c.GetInputDir();
+
         canDash = false;
         isDashing = true;
         float originalGravity = rb.gravityScale;
