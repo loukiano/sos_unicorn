@@ -40,11 +40,16 @@ public class Player : MonoBehaviour
     public float dashingTime = 0.2f;
     public float dashingCooldown = 0.5f;
 
-    
+    public float health, maxHealth;
+    public HealthBar healthBar;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        health = 100;
+        maxHealth = 100;
+
         c = GetComponent<Controller>();
         if (c == null)
         {
@@ -78,6 +83,15 @@ public class Player : MonoBehaviour
         {
             spr.color = Color.blue;
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            HealDamage();
+            // TakeDamage();
+        }
+
+        health -= 1 / 30f;
+        healthBar.UpdateHealthBar();
     }
 
     void FixedUpdate()
@@ -88,6 +102,21 @@ public class Player : MonoBehaviour
             ApplyFriction();
             HandleGravity();
         }
+    }
+
+    public void TakeDamage()
+    {
+        // Use your own damage handling code, or this example one.
+        health = health - 5f;
+        healthBar.UpdateHealthBar();
+    }
+
+    public void HealDamage()
+    {
+        health += 5f;
+        Debug.Log(health);
+        Debug.Log(maxHealth);
+        healthBar.UpdateHealthBar();
     }
 
     public void HandleMovement()
