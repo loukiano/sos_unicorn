@@ -101,11 +101,11 @@ public class Player : MonoBehaviour
         hurtColor = new Color(165f / 255f, 250f / 255f, 198f / 255f);
         dashColor = new Color(1f, 13f/255f, 0f);
         kickColor = new Color(1f, 13f/255f, 0f);
-}
+    }
 
     // Update is called once per frame
     void Update()
-    {
+    {   
         if (health <= 0)
         {
             isDead = true;
@@ -115,39 +115,39 @@ public class Player : MonoBehaviour
         {
             health -= 1 / 120f;
             healthBar.UpdateHealthBar();
-        if (!isDead)
-        {
-            if (isKicking)
+            if (!isDead)
             {
-                spr.color = kickColor;
-            }
-            else if (isDashing)
-            {
-                spr.color = dashColor;
-            }
-            else if (isInvincible)
-            {
-                spr.color = hurtColor;
-            }
-            else
-            {
-                spr.color = normalColor;
-            }
+                if (isKicking)
+                {
+                    spr.color = kickColor;
+                }
+                else if (isDashing)
+                {
+                    spr.color = dashColor;
+                }
+                else if (isInvincible)
+                {
+                    spr.color = hurtColor;
+                }
+                else
+                {
+                    spr.color = normalColor;
+                }
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                //HealDamage();
-                // TakeDamage();
-            }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    //HealDamage();
+                    // TakeDamage();
+                }
 
-            if (health > 0)
-            {
-                health -= 1 / 120f;
-                healthBar.UpdateHealthBar();
+                if (health > 0)
+                {
+                    health -= 1 / 120f;
+                    healthBar.UpdateHealthBar();
+                }
             }
         }
-        
-     }
+    }
 
     void FixedUpdate()
     {
@@ -330,6 +330,10 @@ public class Player : MonoBehaviour
 
             isJumping = false;
             jumpsLeft = numJumps;
+        }
+        else if (collidingObject.name == "Death Plane")
+        {
+            health = 0;
         }
     }
 
