@@ -191,7 +191,6 @@ GameObject:
   - component: {fileID: 104075095}
   - component: {fileID: 104075098}
   - component: {fileID: 104075097}
-  - component: {fileID: 104075096}
   m_Layer: 0
   m_Name: Death Plane
   m_TagString: Untagged
@@ -214,27 +213,6 @@ Transform:
   m_Father: {fileID: 1388331118}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &104075096
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 104075094}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &104075097
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2493,6 +2471,8 @@ MonoBehaviour:
   p: {fileID: 386986827}
   deathMessage: {fileID: 1185401355}
   deathScore: {fileID: 1387316627}
+  scoreValue: {fileID: 154465659}
+  scoreText: {fileID: 1018539924}
 --- !u!4 &1176424899 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4280961164421236594, guid: da4c7c56b761942f9b25a4ab08f2b259, type: 3}
@@ -2721,7 +2701,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score:'
+  m_text: 'Blood:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 609b18d386881584cabfbe16c932de37, type: 2}
   m_sharedMaterial: {fileID: -6963929252005133289, guid: 609b18d386881584cabfbe16c932de37, type: 2}
@@ -3061,7 +3041,6 @@ GameObject:
   - component: {fileID: 1672210831}
   - component: {fileID: 1672210834}
   - component: {fileID: 1672210833}
-  - component: {fileID: 1672210832}
   m_Layer: 0
   m_Name: Death Plane
   m_TagString: Untagged
@@ -3084,27 +3063,6 @@ Transform:
   m_Father: {fileID: 1388331118}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &1672210832
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1672210830}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &1672210833
 BoxCollider2D:
   m_ObjectHideFlags: 0
