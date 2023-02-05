@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
 
     // enemy contact variables
     private bool isInvincible;
-    public float invincibleTime = 0.5f;
+    public float invincibleTime = 3.0f;
 
     //kick variables
     public float kickCooldown;
@@ -51,6 +51,12 @@ public class Player : MonoBehaviour
     public Vector2 kickSize;
     public bool isKicking;
     private bool canKick;
+
+    //Colors
+    public Color normalColor;
+    public Color hurtColor;
+    public Color dashColor;
+    public Color kickColor;
 
     public float health, maxHealth;
     public HealthBar healthBar;
@@ -68,8 +74,6 @@ public class Player : MonoBehaviour
         kickDuration = 0.1f;
         kickSize = new Vector2(1.5f, 3);
 
-
-
         c = GetComponent<Controller>();
         if (c == null)
         {
@@ -85,29 +89,31 @@ public class Player : MonoBehaviour
         spr = GetComponent<SpriteRenderer>();
 
         box = GetComponent<BoxCollider2D>();
-    }
+
+        normalColor = new Color(46f/255f, 173f/255f, 94f/255f);
+        hurtColor = new Color(165f / 255f, 250f / 255f, 198f / 255f);
+        dashColor = new Color(1f, 13f/255f, 0f);
+        kickColor = new Color(1f, 13f/255f, 0f);
+}
 
     // Update is called once per frame
     void Update()
     {
         if (isKicking)
         {
-            spr.color = Color.red;
+            spr.color = kickColor;
         }
         else if (isDashing)
         {
-            spr.color = Color.magenta;
+            spr.color = dashColor;
         }
         else if (isInvincible)
         {
-            spr.color = Color.yellow;
+            spr.color = hurtColor;
         }
-        else if (IsGrounded())
+        else
         {
-            spr.color = Color.green;
-        } else
-        {
-            spr.color = Color.blue;
+            spr.color = normalColor;
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
