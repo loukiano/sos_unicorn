@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer spr;
     BoxCollider2D box;
-    //DeathScreen ds;
+    GameObject scoreUI;
 
     public float castDist = 1;
 
@@ -85,13 +85,6 @@ public class Player : MonoBehaviour
             c = gameObject.AddComponent<Controller>();
         }
 
-        /*
-        ds = GetComponent<DeathScreen>();
-        if (ds == null)
-        {
-            ds = gameObject.AddComponent<DeathScreen>();
-        } */
-
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
@@ -101,6 +94,8 @@ public class Player : MonoBehaviour
         spr = GetComponent<SpriteRenderer>();
 
         box = GetComponent<BoxCollider2D>();
+
+        scoreUI = GameObject.Find("ScoreUI");
 
         normalColor = new Color(46f/255f, 173f/255f, 94f/255f);
         hurtColor = new Color(165f / 255f, 250f / 255f, 198f / 255f);
@@ -116,6 +111,10 @@ public class Player : MonoBehaviour
             isDead = true;
         }
 
+        if (health > 0)
+        {
+            health -= 1 / 120f;
+            healthBar.UpdateHealthBar();
         if (!isDead)
         {
             if (isKicking)
@@ -182,6 +181,7 @@ public class Player : MonoBehaviour
             health = maxHealth;
         }
         healthBar.UpdateHealthBar();
+        scoreUI.GetComponent<ScoreUI>().Score();
     }
 
     public void HandleMovement()
