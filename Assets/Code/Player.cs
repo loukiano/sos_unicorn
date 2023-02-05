@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer spr;
     BoxCollider2D box;
-    DeathScreen ds;
+    //DeathScreen ds;
 
     public float castDist = 1;
 
@@ -85,11 +85,12 @@ public class Player : MonoBehaviour
             c = gameObject.AddComponent<Controller>();
         }
 
+        /*
         ds = GetComponent<DeathScreen>();
         if (ds == null)
         {
             ds = gameObject.AddComponent<DeathScreen>();
-        }
+        } */
 
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
