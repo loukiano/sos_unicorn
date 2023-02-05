@@ -382,7 +382,7 @@ MonoBehaviour:
   mapBounds: {fileID: 1859034681}
   levelDesign: {fileID: 125150066}
   camera: {fileID: 519420031}
-  spawnCheck: 0.5
+  spawnCheck: 2
 --- !u!4 &499361456
 Transform:
   m_ObjectHideFlags: 0
