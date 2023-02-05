@@ -5,6 +5,7 @@ public class EnemySpawner : MonoBehaviour
 {
 	public Enemy enemy;
 	public BoxCollider2D mapBounds;
+	public Transform playerTransform;
 	//public LevelDesign levelDesign;
 	public Camera camera;
 	public float spawnCheck;
@@ -98,7 +99,8 @@ public class EnemySpawner : MonoBehaviour
 			xPosition = Random.value * (xMax - xMin) + xMin;
 		}
 
-		Instantiate(enemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+		Enemy newEnemy = Instantiate(enemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+		newEnemy.playerTransform = playerTransform;
 	}
 
 	// Same constraints as out of camera view, with the additional constraint that enemies must spawn on a platform.
