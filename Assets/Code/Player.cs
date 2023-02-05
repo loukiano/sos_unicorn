@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     private bool isDashing;
     public float dashingTime = 0.2f;
     public float dashingCooldown = 0.5f;
+    public float dashDmg = 100;
 
     // enemy contact variables
     private bool isInvincible;
@@ -48,6 +49,7 @@ public class Player : MonoBehaviour
     public float kickCooldown;
     public float kickDuration;
     public float kickVel;
+    public float kickDmgScale = 1;
     public Vector2 kickSize;
     public bool isKicking;
     private bool canKick;
@@ -139,10 +141,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    public IEnumerator TakeDamage()
+    public IEnumerator TakeDamage(float dmg)
     {
         // Use your own damage handling code, or this example one.
-        health = health - 5f;
+        health -= dmg;
         healthBar.UpdateHealthBar();
         isInvincible = true;
         Debug.Log("isInvincible: " + isInvincible);
@@ -150,11 +152,13 @@ public class Player : MonoBehaviour
         isInvincible = false;
     }
 
-    public void HealDamage()
+    public void HealDamage(float healAmt)
     {
-        health += 5f;
-        Debug.Log(health);
-        Debug.Log(maxHealth);
+        health += healAmt;
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
         healthBar.UpdateHealthBar();
     }
 
@@ -310,18 +314,23 @@ public class Player : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         GameObject collidingObject = collision.gameObject;
-
+        //Debug.Log("HIT SOMETHING");
         if (collidingObject.GetComponent<Enemy>())
         {
-            if (isDashing)
+            if (isKicking || isDashing)
             {
-                HealDamage();
-                Destroy(collidingObject);
+                float damage = dashDmg;
+                if (isKicking)
+                {
+                    damage = rb.velocity.magnitude * kickDmgScale;
+                }
+                float lifesteal = collidingObject.GetComponent<Enemy>().TakeDamage(damage);
+                HealDamage(lifesteal);
             }
             else if (!isInvincible)
             {
                 Debug.Log("Taking Damage");
-                StartCoroutine(TakeDamage());
+                StartCoroutine(TakeDamage(collidingObject.GetComponent<Enemy>().GetAtkDmg()));
             }
         }
     }
