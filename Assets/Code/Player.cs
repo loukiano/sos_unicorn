@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer spr;
     BoxCollider2D box;
+    GameObject scoreUI;
 
     public float castDist = 1;
 
@@ -92,6 +93,8 @@ public class Player : MonoBehaviour
 
         box = GetComponent<BoxCollider2D>();
 
+        scoreUI = GameObject.Find("ScoreUI");
+
         normalColor = new Color(46f/255f, 173f/255f, 94f/255f);
         hurtColor = new Color(165f / 255f, 250f / 255f, 198f / 255f);
         dashColor = new Color(1f, 13f/255f, 0f);
@@ -116,12 +119,6 @@ public class Player : MonoBehaviour
         else
         {
             spr.color = normalColor;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //HealDamage();
-            // TakeDamage();
         }
 
         if (health > 0)
@@ -160,6 +157,7 @@ public class Player : MonoBehaviour
             health = maxHealth;
         }
         healthBar.UpdateHealthBar();
+        scoreUI.GetComponent<ScoreUI>().Score();
     }
 
     public void HandleMovement()

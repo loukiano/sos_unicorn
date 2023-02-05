@@ -933,12 +933,18 @@ MonoBehaviour:
   dashingPowerY: 20
   dashingTime: 0.2
   dashingCooldown: 0.5
+  dashDmg: 100
   invincibleTime: 0.5
   kickCooldown: 0
   kickDuration: 0
   kickVel: 0
+  kickDmgScale: 1
   kickSize: {x: 0, y: 0}
   isKicking: 0
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  hurtColor: {r: 0, g: 0, b: 0, a: 0}
+  dashColor: {r: 0, g: 0, b: 0, a: 0}
+  kickColor: {r: 0, g: 0, b: 0, a: 0}
   health: 0
   maxHealth: 0
   healthBar: {fileID: 1790529371}
@@ -1428,6 +1434,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 740429806}
+  - component: {fileID: 740429807}
   m_Layer: 5
   m_Name: ScoreUI
   m_TagString: Untagged
@@ -1457,6 +1464,21 @@ RectTransform:
   m_AnchoredPosition: {x: -768, y: 438}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &740429807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740429805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: def7a065c76429048a1e4e711dcb8c3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
+  scoreValue: {fileID: 0}
+  score: 0
 --- !u!1001 &753986859
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3302,6 +3324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 7259757283221333480, guid: e3c109809a07e454c9ddea6bfa6ee25e, type: 3}
   mapBounds: {fileID: 1859034681}
+  playerTransform: {fileID: 0}
   camera: {fileID: 519420031}
   spawnCheck: 2
 --- !u!4 &1977889939
