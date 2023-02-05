@@ -30,6 +30,8 @@ public class EnemySpawner : MonoBehaviour
 		BoxCollider2D enemyBounds = enemy.GetComponent<BoxCollider2D>();
 		enemySizeX = enemyBounds.bounds.max.x - enemyBounds.bounds.center.x;
 		enemySizeY = enemyBounds.bounds.max.y - enemyBounds.bounds.center.y;
+
+		playerTransform = GameObject.Find("Player").transform;
 	}
 
 	// Update is called once per frame

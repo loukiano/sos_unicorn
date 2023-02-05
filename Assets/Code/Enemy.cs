@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
 		maxHealth = 100;
 		health = maxHealth;
 		atkDmg = 2;
-		bloodValue = 10;
+		bloodValue = 100;
 
 
         spr = GetComponent<SpriteRenderer>();
@@ -45,7 +45,12 @@ public class Enemy : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if (health <= 0)
+        {
+			Die();
+        }
 		ChasePlayer();
+
 	}
 
 	public float GetAtkDmg()
@@ -53,14 +58,16 @@ public class Enemy : MonoBehaviour
 		return atkDmg;
     }
 
-	public void TakeDamage(float dmg)
-    {
+	public float TakeDamage(float dmg)
+		// returns amt of health stolen
+	{
 		health -= dmg;
 
 		if (health <= 0)
         {
-			Die();
+			return bloodValue;
         }
+		return 0;
     }
 
 	private void Die()

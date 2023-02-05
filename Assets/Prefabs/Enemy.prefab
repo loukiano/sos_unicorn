@@ -124,7 +124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cce787776eb234a069545d5b31fd827e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
   box: {fileID: 0}
   spr: {fileID: 0}
   playerTransform: {fileID: 0}
