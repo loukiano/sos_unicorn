@@ -40,6 +40,10 @@ public class Player : MonoBehaviour
     public float dashingTime = 0.2f;
     public float dashingCooldown = 0.5f;
 
+    // enemy contact variables
+    private bool isInvincible;
+    public float invincibleTime = 0.5f;
+
     public float health, maxHealth;
     public HealthBar healthBar;
 
@@ -65,8 +69,6 @@ public class Player : MonoBehaviour
         spr = GetComponent<SpriteRenderer>();
 
         box = GetComponent<BoxCollider2D>();
-
-
     }
 
     // Update is called once per frame
@@ -75,6 +77,10 @@ public class Player : MonoBehaviour
         if (isDashing)
         {
             spr.color = Color.magenta;
+        }
+        else if (isInvincible)
+        {
+            spr.color = Color.yellow;
         }
         else if (IsGrounded())
         {
@@ -86,13 +92,16 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            HealDamage();
+            //HealDamage();
             // TakeDamage();
         }
 
-        health -= 1 / 30f;
-        healthBar.UpdateHealthBar();
-    }
+        if (health > 0)
+        {
+            health -= 1 / 120f;
+            healthBar.UpdateHealthBar();
+        }
+     }
 
     void FixedUpdate()
     {
@@ -104,11 +113,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void TakeDamage()
+    public IEnumerator TakeDamage()
     {
         // Use your own damage handling code, or this example one.
         health = health - 5f;
         healthBar.UpdateHealthBar();
+        isInvincible = true;
+        Debug.Log("isInvincible: " + isInvincible);
+        yield return new WaitForSeconds(dashingTime);
+        isInvincible = false;
     }
 
     public void HealDamage()
@@ -213,10 +226,11 @@ public class Player : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
-    { 
+    {
+        GameObject collidingObject = collision.gameObject;
 
-        // on any (?) collision, refresh jumps
-        if (collision.collider.bounds.center.y < transform.position.y && jumpsLeft < numJumps)
+        // on collision with the ground
+        if (collidingObject.layer == 6 && collision.collider.bounds.center.y < transform.position.y && jumpsLeft < numJumps)
         {
             //Debug.Log("refreshing Jumps!");
             if (isDashing)
@@ -226,6 +240,25 @@ public class Player : MonoBehaviour
 
             isJumping = false;
             jumpsLeft = numJumps;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        GameObject collidingObject = collision.gameObject;
+
+        if (collidingObject.GetComponent<Enemy>())
+        {
+            if (isDashing)
+            {
+                HealDamage();
+                Destroy(collidingObject);
+            }
+            else if (!isInvincible)
+            {
+                Debug.Log("Taking Damage");
+                StartCoroutine(TakeDamage());
+            }
         }
     }
 
