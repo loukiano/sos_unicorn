@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer spr;
     BoxCollider2D box;
+    DeathScreen ds;
 
     public float castDist = 1;
 
@@ -63,12 +64,14 @@ public class Player : MonoBehaviour
     public float health, maxHealth;
     public HealthBar healthBar;
 
+    public bool isDead;
 
     // Start is called before the first frame update
     void Start()
     {
         health = 100;
         maxHealth = 100;
+        isDead = false;
 
         canKick = true;
         kickCooldown = 2;
@@ -80,6 +83,12 @@ public class Player : MonoBehaviour
         if (c == null)
         {
             c = gameObject.AddComponent<Controller>();
+        }
+
+        ds = GetComponent<DeathScreen>();
+        if (ds == null)
+        {
+            ds = gameObject.AddComponent<DeathScreen>();
         }
 
         rb = GetComponent<Rigidbody2D>();
@@ -101,44 +110,56 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isKicking)
+        if (health <= 0)
         {
-            spr.color = kickColor;
-        }
-        else if (isDashing)
-        {
-            spr.color = dashColor;
-        }
-        else if (isInvincible)
-        {
-            spr.color = hurtColor;
-        }
-        else
-        {
-            spr.color = normalColor;
+            isDead = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!isDead)
         {
-            //HealDamage();
-            // TakeDamage();
-        }
+            if (isKicking)
+            {
+                spr.color = kickColor;
+            }
+            else if (isDashing)
+            {
+                spr.color = dashColor;
+            }
+            else if (isInvincible)
+            {
+                spr.color = hurtColor;
+            }
+            else
+            {
+                spr.color = normalColor;
+            }
 
-        if (health > 0)
-        {
-            health -= 1 / 120f;
-            healthBar.UpdateHealthBar();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                //HealDamage();
+                // TakeDamage();
+            }
+
+            if (health > 0)
+            {
+                health -= 1 / 120f;
+                healthBar.UpdateHealthBar();
+            }
         }
+        
      }
 
     void FixedUpdate()
     {
-        if (!isDashing)
+        if (!isDead)
         {
-            HandleMovement();
-            ApplyFriction();
-            HandleGravity();
-        }
+            if (!isDashing)
+            {
+                HandleMovement();
+                ApplyFriction();
+                HandleGravity();
+            }
+        }      
     }
 
     public IEnumerator TakeDamage(float dmg)

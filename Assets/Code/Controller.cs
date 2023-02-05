@@ -17,19 +17,25 @@ public class Controller : MonoBehaviour
 
     public KeyCode kickKey = KeyCode.K;
 
+    Player p;
+
 
     // Use this for initialization
     void Start()
 	{
-        
+        p = GetComponent<Player>();
     }
 
     void Update()
     {
-        MaybeJump();
-        MaybeStopJump();
-        MaybeDash();
-        MaybeKick();
+        if (!p.isDead)
+        {
+            MaybeJump();
+            MaybeStopJump();
+            MaybeDash();
+            MaybeKick();
+        }
+ 
     }
 
     void FixedUpdate()
