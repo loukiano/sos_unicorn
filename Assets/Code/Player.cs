@@ -105,17 +105,24 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
-        if (health <= 0)
+    {
+        if (isDead && health > 0)
+            // if fallen off edge, have health shoot down
         {
-            isDead = true;
+            health -= 1 / 2f;
+            healthBar.UpdateHealthBar();
         }
-
-        if (health > 0)
+        else
         {
             health -= 1 / 120f;
             healthBar.UpdateHealthBar();
-            if (!isDead)
+
+            if (health <= 0)
+            {
+                health = 0;
+                isDead = true;
+            }
+            else
             {
                 if (isKicking)
                 {
@@ -134,19 +141,9 @@ public class Player : MonoBehaviour
                     spr.color = normalColor;
                 }
 
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    //HealDamage();
-                    // TakeDamage();
-                }
-
-                if (health > 0)
-                {
-                    health -= 1 / 120f;
-                    healthBar.UpdateHealthBar();
-                }
             }
         }
+        
     }
 
     void FixedUpdate()
@@ -333,7 +330,7 @@ public class Player : MonoBehaviour
         }
         else if (collidingObject.name == "Death Plane")
         {
-            health = 0;
+            isDead = true;
         }
     }
 
