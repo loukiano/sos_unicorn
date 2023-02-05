@@ -5,7 +5,7 @@ public class EnemySpawner : MonoBehaviour
 {
 	public Enemy enemy;
 	public BoxCollider2D mapBounds;
-	public LevelDesign levelDesign;
+	//public LevelDesign levelDesign;
 	public Camera camera;
 	public float spawnCheck;
 
