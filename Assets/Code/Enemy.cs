@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour
 	public float atkDmg;
 	public float bloodValue;
 
+	public float deathDur = .75f;
+	private float deathTime;
+
 
 
 
@@ -46,10 +49,13 @@ public class Enemy : MonoBehaviour
 	void Update()
 	{
 		if (health <= 0)
-        {
+		{
 			Die();
-        }
-		ChasePlayer();
+		}
+		else
+		{
+			ChasePlayer();
+		}
 
 	}
 
@@ -65,6 +71,9 @@ public class Enemy : MonoBehaviour
 
 		if (health <= 0)
         {
+			// once dead, dont interact with player anymore;
+			box.enabled = false;
+			deathTime = Time.time;
 			return bloodValue;
         }
 		return 0;
@@ -72,7 +81,16 @@ public class Enemy : MonoBehaviour
 
 	private void Die()
     {
-		Destroy(gameObject);
+		Color c = spr.color;
+		c.a = (1 - (Time.time - deathTime)); // fade out over deathtime
+		if (c.a <= 0)
+        {
+			Destroy(gameObject);
+        } else
+        {
+			Debug.Log("fading from " + spr.color.a + " to " + c.a);
+			spr.color = c;
+        }
     }
 
 	private void ChasePlayer()

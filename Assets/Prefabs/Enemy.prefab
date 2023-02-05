@@ -132,3 +132,4 @@ MonoBehaviour:
   maxHealth: 0
   atkDmg: 0
   bloodValue: 0
+  deathDur: 0.75
