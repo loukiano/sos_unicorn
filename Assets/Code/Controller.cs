@@ -13,7 +13,9 @@ public class Controller : MonoBehaviour
 
     public KeyCode jumpKey = KeyCode.Space;
 
-    public KeyCode dashKey = KeyCode.LeftShift;
+    public KeyCode dashKey = KeyCode.J;
+
+    public KeyCode kickKey = KeyCode.K;
 
 
     // Use this for initialization
@@ -27,6 +29,7 @@ public class Controller : MonoBehaviour
         MaybeJump();
         MaybeStopJump();
         MaybeDash();
+        MaybeKick();
     }
 
     void FixedUpdate()
@@ -97,6 +100,15 @@ public class Controller : MonoBehaviour
             Debug.Log("Dash!!");
             gameObject.SendMessage("DoDash");
         }
+    }
+
+    private void MaybeKick()
+    {
+        if (Input.GetKeyDown(kickKey) || Input.GetButtonDown("Kick"))
+        {
+            Debug.Log("kicking!");
+            gameObject.SendMessage("DoKick");
+        } 
     }
 
     private void MaybeJump()
