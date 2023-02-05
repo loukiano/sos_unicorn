@@ -89,6 +89,17 @@ public class Enemy : MonoBehaviour
 		return dir;
     }
 
+    private void OnTriggerStay2D(Collider2D collider)
+    {
+        GameObject collidingObject = collider.gameObject;
+		Player player = collidingObject.GetComponent<Player>();
+        if (player != null)
+        {
+            Debug.Log("HIT PLAYER");
+			player.EnemyCollision(this);
+        }
+    }
+
 
 }
 

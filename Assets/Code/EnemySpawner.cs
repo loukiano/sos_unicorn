@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
 	//public LevelDesign levelDesign;
 	public Camera camera;
 	public float spawnCheck;
+	public int initialNumEnemies = 20;
 
 	private float timer;
 	private float xMin, xMax, yMin, yMax;
@@ -32,6 +33,12 @@ public class EnemySpawner : MonoBehaviour
 		enemySizeY = enemyBounds.bounds.max.y - enemyBounds.bounds.center.y;
 
 		playerTransform = GameObject.Find("Player").transform;
+
+
+		for (int i = 0; i < initialNumEnemies; i++)
+        {
+			SpawnEnemyOutOfCamera();
+        }
 	}
 
 	// Update is called once per frame

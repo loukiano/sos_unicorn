@@ -337,27 +337,23 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+
+    public void EnemyCollision(Enemy enemy)
     {
-        GameObject collidingObject = collision.gameObject;
-        //Debug.Log("HIT SOMETHING");
-        if (collidingObject.GetComponent<Enemy>())
+        if (isKicking || isDashing)
         {
-            if (isKicking || isDashing)
+            float damage = dashDmg;
+            if (isKicking)
             {
-                float damage = dashDmg;
-                if (isKicking)
-                {
-                    damage = rb.velocity.magnitude * kickDmgScale;
-                }
-                float lifesteal = collidingObject.GetComponent<Enemy>().TakeDamage(damage);
-                HealDamage(lifesteal);
+                damage = rb.velocity.magnitude * kickDmgScale;
             }
-            else if (!isInvincible)
-            {
-                Debug.Log("Taking Damage");
-                StartCoroutine(TakeDamage(collidingObject.GetComponent<Enemy>().GetAtkDmg()));
-            }
+            float lifesteal = enemy.TakeDamage(damage);
+            HealDamage(lifesteal);
+        }
+        else if (!isInvincible)
+        {
+            Debug.Log("Taking Damage");
+            StartCoroutine(TakeDamage(enemy.GetAtkDmg()));
         }
     }
 
