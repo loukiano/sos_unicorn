@@ -796,6 +796,7 @@ MonoBehaviour:
   dashingPowerY: 20
   dashingTime: 0.2
   dashingCooldown: 0.5
+  invincibleTime: 0.5
   health: 0
   maxHealth: 0
   healthBar: {fileID: 1790529371}
