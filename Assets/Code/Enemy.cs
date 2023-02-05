@@ -23,8 +23,8 @@ public class Enemy : MonoBehaviour
 		moveSpeed = 5;
 		maxHealth = 100;
 		health = maxHealth;
-		atkDmg = 2;
-		bloodValue = 100;
+		atkDmg = 5;
+		bloodValue = 20;
 
 
         spr = GetComponent<SpriteRenderer>();
