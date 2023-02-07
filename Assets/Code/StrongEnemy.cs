@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy : MonoBehaviour
+public class StrongEnemy : MonoBehaviour
 {
 	public BoxCollider2D box;
 	public SpriteRenderer spr;
@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour
 	public float deathDur = .75f;
 	private float deathTime;
 
+	private bool isInvincible;
+	public float dashingTime = 3.0f;
 
 
 
@@ -24,10 +26,10 @@ public class Enemy : MonoBehaviour
 	void Start()
 	{
 		moveSpeed = 5;
-		maxHealth = 100;
+		maxHealth = 200;
 		health = maxHealth;
-		atkDmg = 10;
-		bloodValue = 5;
+		atkDmg = 15;
+		bloodValue = 10;
 
 
         spr = GetComponent<SpriteRenderer>();
@@ -48,11 +50,15 @@ public class Enemy : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if (health <= 100)
+        {
+			spr.color = Color.red;
+        }
+
 		if (health <= 0)
-		{
+        {
 			Die();
-		}
-		else
+        } else
 		{
 			ChasePlayer();
 		}
@@ -64,20 +70,28 @@ public class Enemy : MonoBehaviour
 		return atkDmg;
     }
 
-	public float TakeDamage(float dmg)
-		// returns amt of health stolen
+	public IEnumerator TakeDamage(float dmg)
 	{
-		health -= dmg;
-
-		if (health <= 0)
+		// Use your own damage handling code, or this example one.
+		if (!isInvincible)
         {
+			health -= dmg;
+		}
+		
+		if (health <= 0)
+		{
 			// once dead, dont interact with player anymore;
 			box.enabled = false;
 			deathTime = Time.time;
-			return bloodValue;
-        }
-		return 0;
-    }
+		}
+
+		isInvincible = true;
+		Debug.Log("isInvincible: " + isInvincible);
+		yield return new WaitForSeconds(dashingTime);
+		isInvincible = false;
+
+		
+	}
 
 	private void Die()
     {
@@ -88,7 +102,7 @@ public class Enemy : MonoBehaviour
 			Destroy(gameObject);
         } else
         {
-			Debug.Log("fading from " + spr.color.a + " to " + c.a);
+			//Debug.Log("fading from " + spr.color.a + " to " + c.a);
 			spr.color = c;
         }
     }
@@ -113,8 +127,8 @@ public class Enemy : MonoBehaviour
 		Player player = collidingObject.GetComponent<Player>();
         if (player != null)
         {
-            Debug.Log("HIT PLAYER");
-			player.EnemyCollision(this);
+            //Debug.Log("HIT PLAYER");
+			player.StrongEnemyCollision(this);
         }
     }
 

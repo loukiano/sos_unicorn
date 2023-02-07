@@ -4040,10 +4040,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 7259757283221333480, guid: e3c109809a07e454c9ddea6bfa6ee25e, type: 3}
+  strongEnemy: {fileID: 5151798882497836661, guid: acb12b6ed51a424408ec488c6bd50dd5, type: 3}
+  strongerEnemy: {fileID: 7317509135872392714, guid: 8cc4ee4e610b3a3499d7edfb4fc27ce0, type: 3}
   mapBounds: {fileID: 1859034681}
   playerTransform: {fileID: 0}
   camera: {fileID: 519420031}
-  spawnCheck: 2
+  spawnCheck: 1
+  initialNumEnemies: 20
 --- !u!4 &1977889939
 Transform:
   m_ObjectHideFlags: 0

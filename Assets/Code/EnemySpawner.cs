@@ -4,6 +4,8 @@ using System.Collections;
 public class EnemySpawner : MonoBehaviour
 {
 	public Enemy enemy;
+	public StrongEnemy strongEnemy;
+	public StrongerEnemy strongerEnemy;
 	public BoxCollider2D mapBounds;
 	public Transform playerTransform;
 	//public LevelDesign levelDesign;
@@ -59,8 +61,22 @@ public class EnemySpawner : MonoBehaviour
 	{
 		float xPosition = Random.value * (xMax - xMin) + xMin;
 		float yPosition = Random.value * (yMax - yMin) + yMin;
-		Instantiate(enemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
-    }
+
+		int enemyProbability = Random.Range(0, 10);
+		
+		if (enemyProbability < 5)
+		{
+			Instantiate(enemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+		}
+		else if (enemyProbability < 8)
+        {
+			Instantiate(strongEnemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+		}
+		else
+        {
+			Instantiate(strongerEnemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+		}
+	}
 
 	// Randomly spawns enemies within bounds, but outside of the player's view. Higher
 	// probability of enemies spawning just outside of the player's view.
@@ -108,8 +124,22 @@ public class EnemySpawner : MonoBehaviour
 			xPosition = Random.value * (xMax - xMin) + xMin;
 		}
 
-		Enemy newEnemy = Instantiate(enemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
-		newEnemy.playerTransform = playerTransform;
+		int enemyProbability = Random.Range(0,10);
+
+		if (enemyProbability < 5)
+        {
+			Enemy newEnemy = Instantiate(enemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+			newEnemy.playerTransform = playerTransform;
+		} else if (enemyProbability < 8)
+        {
+			StrongEnemy newStrongEnemy = Instantiate(strongEnemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+			newStrongEnemy.playerTransform = playerTransform;
+		} else
+        {
+			StrongerEnemy newStrongerEnemy = Instantiate(strongerEnemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
+			newStrongerEnemy.playerTransform = playerTransform;
+		}
+		
 	}
 
 	// Same constraints as out of camera view, with the additional constraint that enemies must spawn on a platform.

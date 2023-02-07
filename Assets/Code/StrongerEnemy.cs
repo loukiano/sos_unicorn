@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy : MonoBehaviour
+public class StrongerEnemy : MonoBehaviour
 {
 	public BoxCollider2D box;
 	public SpriteRenderer spr;
@@ -17,17 +17,18 @@ public class Enemy : MonoBehaviour
 	public float deathDur = .75f;
 	private float deathTime;
 
-
+	private bool isInvincible;
+	public float dashingTime = 0.2f;
 
 
 	// Use this for initialization
 	void Start()
 	{
 		moveSpeed = 5;
-		maxHealth = 100;
+		maxHealth = 300;
 		health = maxHealth;
-		atkDmg = 10;
-		bloodValue = 5;
+		atkDmg = 20;
+		bloodValue = 15;
 
 
         spr = GetComponent<SpriteRenderer>();
@@ -48,6 +49,16 @@ public class Enemy : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+
+		if (health <= 100)
+		{
+			spr.color = Color.red;
+		}
+		else if (health <= 200)
+		{
+			spr.color = Color.blue;
+		}
+
 		if (health <= 0)
 		{
 			Die();
@@ -64,20 +75,28 @@ public class Enemy : MonoBehaviour
 		return atkDmg;
     }
 
-	public float TakeDamage(float dmg)
-		// returns amt of health stolen
+	public IEnumerator TakeDamage(float dmg)
 	{
-		health -= dmg;
+		// Use your own damage handling code, or this example one.
+		if (!isInvincible)
+		{
+			health -= dmg;
+		}
 
 		if (health <= 0)
-        {
+		{
 			// once dead, dont interact with player anymore;
 			box.enabled = false;
 			deathTime = Time.time;
-			return bloodValue;
-        }
-		return 0;
-    }
+		}
+
+		isInvincible = true;
+		Debug.Log("isInvincible: " + isInvincible);
+		yield return new WaitForSeconds(dashingTime);
+		isInvincible = false;
+
+
+	}
 
 	private void Die()
     {
@@ -114,7 +133,7 @@ public class Enemy : MonoBehaviour
         if (player != null)
         {
             Debug.Log("HIT PLAYER");
-			player.EnemyCollision(this);
+			player.StrongerEnemyCollision(this);
         }
     }
 

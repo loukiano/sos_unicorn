@@ -38,8 +38,8 @@ public class Player : MonoBehaviour
     public float dashingPowerY = 20f;
     private bool canDash = true;
     private bool isDashing;
-    public float dashingTime = 0.2f;
-    public float dashingCooldown = 0.5f;
+    public float dashingTime = 0.1f;
+    public float dashingCooldown = 2.5f;
     public float dashDmg = 100;
 
     // enemy contact variables
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            health -= 1 / 120f;
+            health -= 1 / 60f;
             healthBar.UpdateHealthBar();
 
             if (health <= 0)
@@ -344,8 +344,49 @@ public class Player : MonoBehaviour
             {
                 damage = rb.velocity.magnitude * kickDmgScale;
             }
-            float lifesteal = enemy.TakeDamage(damage);
-            HealDamage(lifesteal);
+            enemy.TakeDamage(damage);
+            HealDamage(enemy.bloodValue);
+            canDash = true;
+        }
+        else if (!isInvincible)
+        {
+            Debug.Log("Taking Damage");
+            StartCoroutine(TakeDamage(enemy.GetAtkDmg()));
+        }
+    }
+
+    public void StrongEnemyCollision(StrongEnemy enemy)
+    {
+        if (isKicking || isDashing)
+        {
+            float damage = dashDmg;
+            if (isKicking)
+            {
+                damage = rb.velocity.magnitude * kickDmgScale;
+            }
+            StartCoroutine(enemy.TakeDamage(damage));
+            HealDamage(enemy.bloodValue/2);
+            canDash = true;
+        }
+        else if (!isInvincible)
+        {
+            Debug.Log("Taking Damage");
+            StartCoroutine(TakeDamage(enemy.GetAtkDmg()));
+        }
+    }
+
+    public void StrongerEnemyCollision(StrongerEnemy enemy)
+    {
+        if (isKicking || isDashing)
+        {
+            float damage = dashDmg;
+            if (isKicking)
+            {
+                damage = rb.velocity.magnitude * kickDmgScale;
+            }
+            StartCoroutine(enemy.TakeDamage(damage));
+            HealDamage(enemy.bloodValue/3);
+            canDash = true;
         }
         else if (!isInvincible)
         {
@@ -384,6 +425,8 @@ public class Player : MonoBehaviour
         }
 
         rb.velocity = new Vector2(newXVel, newYVel);
+        isInvincible = true;
+        Debug.Log("isInvincible: " + isInvincible);
         yield return new WaitForSeconds(dashingTime);
         rb.gravityScale = originalGravity;
         if (isDashing)
@@ -395,6 +438,8 @@ public class Player : MonoBehaviour
             rb.velocity -= new Vector2(xCancel, yCancel);
         }
         yield return new WaitForSeconds(dashingCooldown);
+        yield return new WaitForSeconds(dashingTime);
+        isInvincible = false;
         canDash = true;
     }
 
