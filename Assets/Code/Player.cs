@@ -404,7 +404,11 @@ public class Player : MonoBehaviour
     private IEnumerator Dash()
     {
         Vector2 inputDir = c.GetInputDir();
-
+        if (inputDir.magnitude == 0)
+            // neutral dash
+        {
+            inputDir = new Vector2(1, 0);
+        }
         canDash = false;
         isDashing = true;
         

@@ -11,7 +11,9 @@ public class EnemySpawner : MonoBehaviour
 	//public LevelDesign levelDesign;
 	public Camera camera;
 	public float spawnCheck;
-	public int initialNumEnemies = 20;
+	public int initialNumEnemies;
+	public float timeSpawnStrong = 5;
+	public float timeSpawnStronger = 10;
 
 	private float timer;
 	private float xMin, xMax, yMin, yMax;
@@ -19,6 +21,10 @@ public class EnemySpawner : MonoBehaviour
 	private float cameraRatio;
 	private float enemySizeX;
 	private float enemySizeY;
+
+	private int normalProb = 5;
+	private int strongProb = 8;
+	private int strongerProb = 10;
 
 	// Use this for initialization
 	void Start()
@@ -124,7 +130,14 @@ public class EnemySpawner : MonoBehaviour
 			xPosition = Random.value * (xMax - xMin) + xMin;
 		}
 
-		int enemyProbability = Random.Range(0,10);
+		int maxProb = normalProb;
+		if (Time.time > timeSpawnStrong)
+        {
+			maxProb = (Time.time < timeSpawnStronger) ? strongProb : strongerProb;
+        }
+
+
+		int enemyProbability = Random.Range(0, maxProb);
 
 		if (enemyProbability < 5)
         {

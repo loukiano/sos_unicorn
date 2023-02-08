@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
 	public float atkDmg;
 	public float bloodValue;
 
-	public float deathDur = .75f;
+	public float deathDur;
 	private float deathTime;
 
 
@@ -27,7 +27,8 @@ public class Enemy : MonoBehaviour
 		maxHealth = 100;
 		health = maxHealth;
 		atkDmg = 10;
-		bloodValue = 5;
+		bloodValue = 7;
+		deathDur = 0.25f;
 
 
         spr = GetComponent<SpriteRenderer>();
@@ -74,6 +75,7 @@ public class Enemy : MonoBehaviour
 			// once dead, dont interact with player anymore;
 			box.enabled = false;
 			deathTime = Time.time;
+			spr.color = Color.gray;
 			return bloodValue;
         }
 		return 0;

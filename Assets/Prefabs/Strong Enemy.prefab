@@ -133,3 +133,4 @@ MonoBehaviour:
   atkDmg: 0
   bloodValue: 0
   deathDur: 0.75
+  dashingTime: 0.2

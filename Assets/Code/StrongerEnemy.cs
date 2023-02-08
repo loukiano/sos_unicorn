@@ -14,7 +14,7 @@ public class StrongerEnemy : MonoBehaviour
 	public float atkDmg;
 	public float bloodValue;
 
-	public float deathDur = .75f;
+	public float deathDur;
 	private float deathTime;
 
 	private bool isInvincible;
@@ -28,7 +28,8 @@ public class StrongerEnemy : MonoBehaviour
 		maxHealth = 300;
 		health = maxHealth;
 		atkDmg = 20;
-		bloodValue = 15;
+		bloodValue = 20;
+		deathDur = 0.25f;
 
 
         spr = GetComponent<SpriteRenderer>();
@@ -49,22 +50,20 @@ public class StrongerEnemy : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-
-		if (health <= 100)
-		{
-			spr.color = Color.red;
-		}
-		else if (health <= 200)
-		{
-			spr.color = Color.blue;
-		}
-
-		if (health <= 0)
-		{
-			Die();
-		}
+        if (health <= 0)
+        {
+            Die();
+        }
 		else
 		{
+			if (health <= 100)
+			{
+				spr.color = Color.red;
+			}
+			else if (health <= 200)
+			{
+				spr.color = Color.blue;
+			}
 			ChasePlayer();
 		}
 
@@ -87,7 +86,8 @@ public class StrongerEnemy : MonoBehaviour
 		{
 			// once dead, dont interact with player anymore;
 			box.enabled = false;
-			deathTime = Time.time;
+            spr.color = Color.gray;
+            deathTime = Time.time;
 		}
 
 		isInvincible = true;

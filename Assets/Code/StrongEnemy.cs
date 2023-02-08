@@ -14,11 +14,11 @@ public class StrongEnemy : MonoBehaviour
 	public float atkDmg;
 	public float bloodValue;
 
-	public float deathDur = .75f;
+	public float deathDur;
 	private float deathTime;
 
 	private bool isInvincible;
-	public float dashingTime = 3.0f;
+	public float dashingTime = 0.2f;
 
 
 
@@ -29,7 +29,8 @@ public class StrongEnemy : MonoBehaviour
 		maxHealth = 200;
 		health = maxHealth;
 		atkDmg = 15;
-		bloodValue = 10;
+		bloodValue = 13;
+		deathDur = 0.25f;
 
 
         spr = GetComponent<SpriteRenderer>();
@@ -50,20 +51,19 @@ public class StrongEnemy : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (health <= 100)
-        {
-			spr.color = Color.red;
-        }
-
 		if (health <= 0)
-        {
-			Die();
-        } else
 		{
+			Die();
+		}
+		else
+		{
+			if (health <= 100)
+			{
+				spr.color = Color.red;
+			}
 			ChasePlayer();
 		}
-
-	}
+    }
 
 	public float GetAtkDmg()
     {
@@ -82,7 +82,8 @@ public class StrongEnemy : MonoBehaviour
 		{
 			// once dead, dont interact with player anymore;
 			box.enabled = false;
-			deathTime = Time.time;
+            spr.color = Color.gray;
+            deathTime = Time.time;
 		}
 
 		isInvincible = true;
