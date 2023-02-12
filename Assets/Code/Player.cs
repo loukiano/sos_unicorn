@@ -61,6 +61,8 @@ public class Player : MonoBehaviour
     public Color dashColor;
     public Color kickColor;
 
+    private TutorialTransition tutorialTransition;
+
     public float health, maxHealth;
     public HealthBar healthBar;
 
@@ -101,49 +103,53 @@ public class Player : MonoBehaviour
         hurtColor = new Color(165f / 255f, 250f / 255f, 198f / 255f);
         dashColor = new Color(1f, 13f/255f, 0f);
         kickColor = new Color(1f, 13f/255f, 0f);
+
+        tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isDead && health > 0)
+        if (tutorialTransition.FinishedTutorialHuh())
+        {
+            if (isDead && health > 0)
             // if fallen off edge, have health shoot down
-        {
-            health -= 1 / 2f;
-            healthBar.UpdateHealthBar();
-        }
-        else
-        {
-            health -= 1 / 60f;
-            healthBar.UpdateHealthBar();
-
-            if (health <= 0)
             {
-                health = 0;
-                isDead = true;
+                health -= 1 / 2f;
+                healthBar.UpdateHealthBar();
             }
             else
             {
-                if (isKicking)
+                health -= 1 / 60f;
+                healthBar.UpdateHealthBar();
+
+                if (health <= 0)
                 {
-                    spr.color = kickColor;
-                }
-                else if (isDashing)
-                {
-                    spr.color = dashColor;
-                }
-                else if (isInvincible)
-                {
-                    spr.color = hurtColor;
+                    health = 0;
+                    isDead = true;
                 }
                 else
                 {
-                    spr.color = normalColor;
-                }
+                    if (isKicking)
+                    {
+                        spr.color = kickColor;
+                    }
+                    else if (isDashing)
+                    {
+                        spr.color = dashColor;
+                    }
+                    else if (isInvincible)
+                    {
+                        spr.color = hurtColor;
+                    }
+                    else
+                    {
+                        spr.color = normalColor;
+                    }
 
+                }
             }
         }
-        
     }
 
     void FixedUpdate()

@@ -21,6 +21,7 @@ public class EnemySpawner : MonoBehaviour
 	private float cameraRatio;
 	private float enemySizeX;
 	private float enemySizeY;
+	private TutorialTransition tutorialTransition;
 
 	private int normalProb = 5;
 	private int strongProb = 8;
@@ -47,17 +48,24 @@ public class EnemySpawner : MonoBehaviour
         {
 			SpawnEnemyOutOfCamera();
         }
+		tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		timer += Time.deltaTime;
-		if (timer >= spawnCheck)
+		if (tutorialTransition.FinishedTutorialHuh())
+		{
+			timer += Time.deltaTime;
+			if (timer >= spawnCheck)
+			{
+				timer -= spawnCheck;
+				Debug.Log("Spawning...");
+				SpawnEnemyOutOfCamera();
+			}
+		} else
         {
-			timer -= spawnCheck;
-			Debug.Log("Spawning...");
-			SpawnEnemyOutOfCamera();
+			Debug.Log("Timer: " + Time.deltaTime);
         }
 	}
 

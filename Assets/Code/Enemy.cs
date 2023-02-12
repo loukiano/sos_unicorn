@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
 
 	public Transform playerTransform;
 
+	private TutorialTransition tutorialTransition;
+
 	public float moveSpeed;
 	public float health;
 	public float maxHealth;
@@ -16,9 +18,6 @@ public class Enemy : MonoBehaviour
 
 	public float deathDur;
 	private float deathTime;
-
-
-
 
 	// Use this for initialization
 	void Start()
@@ -43,7 +42,7 @@ public class Enemy : MonoBehaviour
             box = gameObject.AddComponent<BoxCollider2D>();
         }
 
-
+		tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
     }
 
 	// Update is called once per frame
@@ -51,11 +50,14 @@ public class Enemy : MonoBehaviour
 	{
 		if (health <= 0)
 		{
+			if (!(tutorialTransition.FinishedTutorialHuh()))
+				tutorialTransition.SendMessage("StartGame");
 			Die();
 		}
 		else
 		{
-			ChasePlayer();
+			if (tutorialTransition.FinishedTutorialHuh())
+				ChasePlayer();
 		}
 
 	}

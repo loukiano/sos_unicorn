@@ -19,16 +19,22 @@ public class Controller : MonoBehaviour
 
     Player p;
 
+    private TutorialTransition tutorialTransition;
 
     // Use this for initialization
     void Start()
 	{
         p = GetComponent<Player>();
+        tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
     }
 
     void Update()
     {
-        if (!p.isDead)
+        if (!tutorialTransition.FinishedTutorialHuh())
+        {
+            MaybeDash();
+        }
+        else if (!p.isDead)
         {
             MaybeJump();
             MaybeStopJump();
@@ -60,39 +66,42 @@ public class Controller : MonoBehaviour
         float xin = 0.0f;
         float yin = 0.0f;
 
-        if (Input.GetJoystickNames().Length == 0)
+        if (tutorialTransition.FinishedTutorialHuh())
+        {
+            if (Input.GetJoystickNames().Length == 0)
             // No controller, use keyboard
-        {
-            if (Input.GetKey(upButton))
             {
-                yin += 1;
+                if (Input.GetKey(upButton))
+                {
+                    yin += 1;
+                }
+                if (Input.GetKey(downButton))
+                {
+                    yin -= 1;
+                }
+                if (Input.GetKey(rightButton))
+                {
+                    xin += 1;
+                }
+                if (Input.GetKey(leftButton))
+                {
+                    xin -= 1;
+                }
             }
-            if (Input.GetKey(downButton))
-            {
-                yin -= 1;
-            }
-            if (Input.GetKey(rightButton))
-            {
-                xin += 1;
-            }
-            if (Input.GetKey(leftButton))
-            {
-                xin -= 1;
-            }
-        }
-        else
+            else
             // we have a controller -- lets use it
-        {
-            xin = Input.GetAxis("Horizontal");
-            xin = Mathf.Abs(xin) < deadzone ? 0 : xin; // deadzone filter
+            {
+                xin = Input.GetAxis("Horizontal");
+                xin = Mathf.Abs(xin) < deadzone ? 0 : xin; // deadzone filter
 
-            yin = -Input.GetAxis("Vertical");
-            yin = Mathf.Abs(yin) < deadzone ? 0 : yin; // deadzone filter
+                yin = -Input.GetAxis("Vertical");
+                yin = Mathf.Abs(yin) < deadzone ? 0 : yin; // deadzone filter
 
 
-            //float y2 = Controller.GetAxisFilter("RightVertical");
-            //float x2 = Controller.GetAxisFilter("RightHorizontal");
-            //Debug.Log("left: (" + xin + ", " + yin + ")\nright: (" + x2 + ", " + y2 + ")");
+                //float y2 = Controller.GetAxisFilter("RightVertical");
+                //float x2 = Controller.GetAxisFilter("RightHorizontal");
+                //Debug.Log("left: (" + xin + ", " + yin + ")\nright: (" + x2 + ", " + y2 + ")");
+            }
         }
 
         return new Vector2(xin, yin);
