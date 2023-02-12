@@ -1,0 +1,60 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DashIndicator : MonoBehaviour
+{
+    private GameObject player;
+    private Controller c;
+    private Player p;
+    private Rigidbody2D rb;
+    private Transform t;
+    private Vector2 indicatorPosition;
+
+    private Transform indicatorTransform;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        player = GameObject.Find("Player");
+        c = player.GetComponent<Controller>();
+        p = player.GetComponent<Player>();
+        rb = player.GetComponent<Rigidbody2D>();
+        t = player.GetComponent<Transform>();
+        indicatorPosition = t.position;
+        indicatorTransform = GetComponent<Transform>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Vector2 inputDir = c.GetInputDir();
+        if (inputDir.magnitude == 0)
+        // neutral dash
+        {
+            indicatorPosition = t.position;
+        }
+        else
+        {
+            float newXVel = inputDir.x * p.dashingPowerX;
+            if (Mathf.Sign(inputDir.x) == Mathf.Sign(rb.velocity.x))
+            {
+                newXVel += rb.velocity.x;
+            }
+
+            float newYVel = inputDir.y * p.dashingPowerY;
+            if (Mathf.Sign(inputDir.y) == Mathf.Sign(rb.velocity.y))
+            {
+                newYVel += rb.velocity.y;
+            }
+
+            float vectorLength = Mathf.Sqrt(newXVel * newXVel + newYVel * newYVel);
+            Vector2 indicatorOffset = new Vector2(newXVel * 4.8f / vectorLength, newYVel * 4.8f / vectorLength);
+            float rotationAngle = 360f - Mathf.Atan(indicatorOffset.x / indicatorOffset.y) * 180f / 2f / Mathf.PI;
+            indicatorPosition = new Vector2(t.position.x + indicatorOffset.x, t.position.y + indicatorOffset.y);
+
+            //indicatorTransform.Rotate(0f, 0f, rotationAngle);
+        }
+        indicatorTransform.position = new Vector3(indicatorPosition.x, indicatorPosition.y, t.position.z);
+    }
+}

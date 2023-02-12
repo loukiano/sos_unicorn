@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 
 public class Controller : MonoBehaviour
 {
-    static public float deadzone = 0.05f;
+    static public float deadzone = 0.3f;
 
     public KeyCode upButton = KeyCode.W;
     public KeyCode downButton = KeyCode.S;
@@ -21,11 +21,15 @@ public class Controller : MonoBehaviour
 
     private TutorialTransition tutorialTransition;
 
+    // Dash Indicator
+    private DashIndicator dashIndicator;
+
     // Use this for initialization
     void Start()
 	{
         p = GetComponent<Player>();
         tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
+        dashIndicator = GetComponent<DashIndicator>();
     }
 
     void Update()

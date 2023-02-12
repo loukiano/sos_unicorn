@@ -63,6 +63,9 @@ public class Player : MonoBehaviour
 
     private TutorialTransition tutorialTransition;
 
+    // Dash Indicator
+    private DashIndicator dashIndicator;
+
     public float health, maxHealth;
     public HealthBar healthBar;
 
@@ -105,6 +108,7 @@ public class Player : MonoBehaviour
         kickColor = new Color(1f, 13f/255f, 0f);
 
         tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
+        dashIndicator = GetComponent<DashIndicator>();
     }
 
     // Update is called once per frame
@@ -435,10 +439,12 @@ public class Player : MonoBehaviour
         }
 
         rb.velocity = new Vector2(newXVel, newYVel);
+        
         isInvincible = true;
         Debug.Log("isInvincible: " + isInvincible);
         yield return new WaitForSeconds(dashingTime);
         rb.gravityScale = originalGravity;
+
         if (isDashing)
         {
             // only cancel momentum if the dash hasn't been canceled by something
