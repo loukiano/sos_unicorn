@@ -18,6 +18,7 @@ public class CameraFollow : MonoBehaviour
     private float camOrthsize;
     private float cameraRatio;
     private Camera mainCam;
+    private TutorialTransition tutorialTransition;
 
     // Start is called before the first frame update
     void Start()
@@ -29,19 +30,23 @@ public class CameraFollow : MonoBehaviour
         mainCam = GetComponent<Camera>();
         camOrthsize = mainCam.orthographicSize;
         cameraRatio = mainCam.aspect * camOrthsize;
+        tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
     }
 
     void FixedUpdate()
     {
-        float xOff = Controller.GetAxisFilter("RightHorizontal") * maxXOff;
-        float yOff = Controller.GetAxisFilter("RightVertical") * maxYOff;
+        if (tutorialTransition.FinishedTutorialHuh())
+        {
+            float xOff = Controller.GetAxisFilter("RightHorizontal") * maxXOff;
+            float yOff = Controller.GetAxisFilter("RightVertical") * maxYOff;
 
-        float newX = Mathf.Lerp(transform.position.x, followTransform.position.x + xOff, moveDamp);
-        float newY = Mathf.Lerp(transform.position.y, followTransform.position.y + yOff, moveDamp);
+            float newX = Mathf.Lerp(transform.position.x, followTransform.position.x + xOff, moveDamp);
+            float newY = Mathf.Lerp(transform.position.y, followTransform.position.y + yOff, moveDamp);
 
-        camX = Mathf.Clamp(newX, xMin + cameraRatio, xMax - cameraRatio);
-        camY = Mathf.Clamp(newY, yMin + camOrthsize, yMax - camOrthsize);
-        this.transform.position = new Vector3(camX, camY, this.transform.position.z);
+            camX = Mathf.Clamp(newX, xMin + cameraRatio, xMax - cameraRatio);
+            camY = Mathf.Clamp(newY, yMin + camOrthsize, yMax - camOrthsize);
+            this.transform.position = new Vector3(camX, camY, this.transform.position.z);
+        }
     }
 
     // Update is called once per frame
