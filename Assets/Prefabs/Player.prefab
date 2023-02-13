@@ -138,6 +138,7 @@ MonoBehaviour:
   hurtColor: {r: 0, g: 0, b: 0, a: 0}
   dashColor: {r: 0, g: 0, b: 0, a: 0}
   kickColor: {r: 0, g: 0, b: 0, a: 0}
+  healthBar: {fileID: 0}
   health: {fileID: 0}
   dash: {fileID: 0}
   jump: {fileID: 0}
@@ -221,7 +222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbc406a4a2f8340f781f4b2c405d3ce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashVel: 40
+  originalGravity: 0
+  dashVel: 50
   isDashing: 0
   dashingTime: 0.1
   dashingCooldown: 2.5

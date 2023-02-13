@@ -10,6 +10,9 @@ public class Dashable : MonoBehaviour
     BoxCollider2D box;
 
 
+    // Gravity
+    public float originalGravity;
+
     // dash variables
     public float dashVel;
     public bool isDashing;
@@ -17,6 +20,9 @@ public class Dashable : MonoBehaviour
     public float dashingCooldown;
     public float dashDmg;
     public bool canDash;
+
+    private float lastDashTime;
+    private Vector2 cancelVel; // velocity to cancel the most recent dash
     //public Vector2 nextDash;
 
     // Use this for initialization
@@ -27,6 +33,7 @@ public class Dashable : MonoBehaviour
         {
             rb = gameObject.AddComponent<Rigidbody2D>();
         }
+        originalGravity = rb.gravityScale;
         box = GetComponent<BoxCollider2D>();
 
     }
@@ -34,62 +41,116 @@ public class Dashable : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-			
+        if (!canDash && lastDashTime + dashingCooldown < Time.time)
+        {
+            canDash = true;
+        }
+        if (lastDashTime + dashingTime < Time.time)
+        {
+            rb.gravityScale = originalGravity;
+            if (isDashing)
+            {
+                // only cancel momentum if the dash hasn't been canceled by something
+                isDashing = false;
+                if (IsGrounded())
+                {
+                    cancelVel *= Vector2.right;
+                }
+                rb.velocity -= cancelVel;
+            }
+        }
 	}
 
     public void DoDash(Vector2 dir)
     {
         if (canDash)
         {
-            StartCoroutine(Dash(dir));
-        }
-    }
+            canDash = false;
+            
 
-    private IEnumerator Dash(Vector2 dir)
-    {
-        if (dir.magnitude == 0)
-        // neutral dash
-        {
-            dir = new Vector2(1, 0);
-        } else if (dir.magnitude != 1)
-        {
-            dir.Normalize();
-        }
-        canDash = false;
-        isDashing = true;
+            if (dir.magnitude == 0)
+            // neutral dash
+            {
+                dir = new Vector2(1, 0);
+            }
+            else if (dir.magnitude != 1)
+            {
+                dir.Normalize();
+            }
 
-        float originalGravity = rb.gravityScale;
-        rb.gravityScale = 0f;
 
-        float newXVel = dir.x * dashVel;
-        if (Mathf.Sign(dir.x) == Mathf.Sign(rb.velocity.x))
-        // conserve momentum if same direction
-        {
-            newXVel += rb.velocity.x;
-        }
+            rb.gravityScale = 0;
 
-        float newYVel = dir.y * dashVel;
-        if (Mathf.Sign(dir.y) == Mathf.Sign(rb.velocity.y))
-        {
-            newYVel += rb.velocity.y;
-        }
+            float newXVel = dir.x * dashVel;
+            if (Mathf.Sign(dir.x) == Mathf.Sign(rb.velocity.x))
+            // conserve momentum if same direction
+            {
+                newXVel += rb.velocity.x;
+            }
 
-        rb.velocity = new Vector2(newXVel, newYVel);
+            float newYVel = dir.y * dashVel;
+            if (Mathf.Sign(dir.y) == Mathf.Sign(rb.velocity.y))
+            {
+                newYVel += rb.velocity.y;
+            }
 
-        // TODO: handle this in update loop instead of being a coroutine
-        yield return new WaitForSeconds(dashingTime);
-        rb.gravityScale = originalGravity;
-        if (isDashing)
-        {
-            // only cancel momentum if the dash hasn't been canceled by something
-            isDashing = false;
+            lastDashTime = Time.time; // marks the new dash
+            isDashing = true;
+            rb.velocity = new Vector2(newXVel, newYVel);
+
             float xCancel = dir.x * dashVel;
-            float yCancel = IsGrounded() ? 0 : dir.y * dashVel;
-            rb.velocity -= new Vector2(xCancel, yCancel);
+            float yCancel = dir.y * dashVel;
+            cancelVel = new Vector2(xCancel, yCancel);
+
+
         }
-        yield return new WaitForSeconds(dashingCooldown);
-        canDash = true;
     }
+
+    //private IEnumerator Dash(Vector2 dir)
+    //{
+    //    if (dir.magnitude == 0)
+    //    // neutral dash
+    //    {
+    //        dir = new Vector2(1, 0);
+    //    } else if (dir.magnitude != 1)
+    //    {
+    //        dir.Normalize();
+    //    }
+    //    canDash = false;
+    //    isDashing = true;
+
+    //    float originalGravity = rb.gravityScale;
+    //    rb.gravityScale = 0f;
+
+    //    float newXVel = dir.x * dashVel;
+    //    if (Mathf.Sign(dir.x) == Mathf.Sign(rb.velocity.x))
+    //    // conserve momentum if same direction
+    //    {
+    //        newXVel += rb.velocity.x;
+    //    }
+
+    //    float newYVel = dir.y * dashVel;
+    //    if (Mathf.Sign(dir.y) == Mathf.Sign(rb.velocity.y))
+    //    {
+    //        newYVel += rb.velocity.y;
+    //    }
+
+    //    rb.velocity = new Vector2(newXVel, newYVel);
+
+    //    // TODO: handle this in update loop instead of being a coroutine
+    //    yield return new WaitForSeconds(dashingTime);
+    //    rb.gravityScale = originalGravity;
+    //    if (isDashing)
+    //    {
+    //        // only cancel momentum if the dash hasn't been canceled by something
+    //        isDashing = false;
+    //        float xCancel = dir.x * dashVel;
+    //        float yCancel = IsGrounded() ? 0 : dir.y * dashVel;
+    //        rb.velocity -= new Vector2(xCancel, yCancel);
+    //    }
+    //    yield return new WaitForSeconds(dashingCooldown);
+    //    canDash = true;
+    //}
 
     public void StopDash()
     {

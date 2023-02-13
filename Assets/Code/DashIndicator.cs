@@ -9,10 +9,13 @@ public class DashIndicator : MonoBehaviour
     private Player p;
     private Rigidbody2D rb;
     private Transform t;
+    private SpriteRenderer spr;
     private Vector2 indicatorPosition;
     private Dashable dash;
 
     private Transform indicatorTransform;
+
+    Color readyColor;
 
     // Start is called before the first frame update
     void Start()
@@ -25,11 +28,23 @@ public class DashIndicator : MonoBehaviour
         dash = player.GetComponent<Dashable>();
         indicatorPosition = t.position;
         indicatorTransform = GetComponent<Transform>();
+
+        spr = GetComponent<SpriteRenderer>();
+
+        readyColor = new Color(165/255f, 250/255f, 198/255f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (dash.canDash)
+        {
+            spr.color = readyColor;
+        } else
+        {
+            spr.color = Color.gray;
+        }
+
         Vector2 inputDir = c.GetInputDir();
         if (inputDir.magnitude == 0)
         // neutral dash
