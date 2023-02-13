@@ -9,13 +9,15 @@ public class Dashable : MonoBehaviour
     Rigidbody2D rb;
     BoxCollider2D box;
 
+
     // dash variables
-    public float dashVel = 40;
+    public float dashVel;
     public bool isDashing;
-    public float dashingTime = 0.1f;
-    public float dashingCooldown = 2.5f;
-    public float dashDmg = 100;
-    public bool canDash = true;
+    public float dashingTime;
+    public float dashingCooldown;
+    public float dashDmg;
+    public bool canDash;
+    //public Vector2 nextDash;
 
     // Use this for initialization
     void Start()
@@ -26,6 +28,7 @@ public class Dashable : MonoBehaviour
             rb = gameObject.AddComponent<Rigidbody2D>();
         }
         box = GetComponent<BoxCollider2D>();
+
     }
 
 	// Update is called once per frame

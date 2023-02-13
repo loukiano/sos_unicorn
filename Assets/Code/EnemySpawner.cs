@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
 	public BoxCollider2D mapBounds;
 	public Transform playerTransform;
 	//public LevelDesign levelDesign;
-	public Camera camera;
+	public Camera cam;
 	public float spawnCheck;
 	public int initialNumEnemies;
 	public float timeSpawnStrong = 5;
@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
 	private float timer;
 	private float xMin, xMax, yMin, yMax;
 	private float camOrthsize;
-	private float cameraRatio;
+	private float camRatio;
 	private float enemySizeX;
 	private float enemySizeY;
 	private TutorialTransition tutorialTransition;
@@ -36,8 +36,8 @@ public class EnemySpawner : MonoBehaviour
 		xMax = mapBounds.bounds.max.x;
 		yMin = mapBounds.bounds.min.y;
 		yMax = mapBounds.bounds.max.y;
-		camOrthsize = camera.orthographicSize;
-		cameraRatio = (xMax + camOrthsize) / 2.0f;
+		camOrthsize = cam.orthographicSize;
+		camRatio = (xMax + camOrthsize) / 2.0f;
 		BoxCollider2D enemyBounds = enemy.GetComponent<BoxCollider2D>();
 		enemySizeX = enemyBounds.bounds.max.x - enemyBounds.bounds.center.x;
 		enemySizeY = enemyBounds.bounds.max.y - enemyBounds.bounds.center.y;
@@ -95,12 +95,12 @@ public class EnemySpawner : MonoBehaviour
 	// Randomly spawns enemies within bounds, but outside of the player's view. Higher
 	// probability of enemies spawning just outside of the player's view.
 	// TASKS TO DO:
-	// Make sure that we're accounting for the size of the enemy (not just the center outside of the camera range, but the full enemy.
+	// Make sure that we're accounting for the size of the enemy (not just the center outside of the cam range, but the full enemy.
 	void SpawnEnemyOutOfCamera()
     {
 		// Constraints:
 		// 1. Enemies can't spawn in the player's view
-		// // a. Must be outside of the range of (yCam + camOrthsize, yCam - camOrthsize) and (xMin + cameraRatio, xMax - cameraRatio)
+		// // a. Must be outside of the range of (yCam + camOrthsize, yCam - camOrthsize) and (xMin + camRatio, xMax - camRatio)
 
 		float xOrY = Random.value;
 		float xPosition = Random.value * 2.0f;
@@ -111,12 +111,12 @@ public class EnemySpawner : MonoBehaviour
 			// Spawn left of player
 			if (xPosition <= 1.0f)
 			{
-				xPosition = Random.value * (camera.transform.position.x - cameraRatio - xMin) + xMin - enemySizeX;
+				xPosition = Random.value * (cam.transform.position.x - camRatio - xMin) + xMin - enemySizeX;
 			}
 			// Spawn right of player
 			else
 			{
-				xPosition = Random.value * (xMax - (camera.transform.position.x + cameraRatio)) + camera.transform.position.x + cameraRatio + enemySizeX;
+				xPosition = Random.value * (xMax - (cam.transform.position.x + camRatio)) + cam.transform.position.x + camRatio + enemySizeX;
 			}
 
 			yPosition = Random.value * (yMax - yMin) + yMin;
@@ -127,12 +127,12 @@ public class EnemySpawner : MonoBehaviour
 			// Spawn above player
 			if (yPosition <= 1.0f)
 			{
-				yPosition = Random.value * (camera.transform.position.y - camOrthsize - yMin) + yMin - enemySizeY;
+				yPosition = Random.value * (cam.transform.position.y - camOrthsize - yMin) + yMin - enemySizeY;
 			}
 			// Spawn below player
 			else
 			{
-				yPosition = Random.value * (yMax - (camera.transform.position.y + camOrthsize)) + camera.transform.position.y + camOrthsize - enemySizeY;
+				yPosition = Random.value * (yMax - (cam.transform.position.y + camOrthsize)) + cam.transform.position.y + camOrthsize - enemySizeY;
 			}
 
 			xPosition = Random.value * (xMax - xMin) + xMin;
@@ -160,7 +160,7 @@ public class EnemySpawner : MonoBehaviour
 		
 	}
 
-	// Same constraints as out of camera view, with the additional constraint that enemies must spawn on a platform.
+	// Same constraints as out of cam view, with the additional constraint that enemies must spawn on a platform.
 	// NEED TO IMPLEMENT
 	void SpawnEnemyOnPlatform()
     {

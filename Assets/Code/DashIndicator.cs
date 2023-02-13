@@ -10,6 +10,7 @@ public class DashIndicator : MonoBehaviour
     private Rigidbody2D rb;
     private Transform t;
     private Vector2 indicatorPosition;
+    private Dashable dash;
 
     private Transform indicatorTransform;
 
@@ -21,6 +22,7 @@ public class DashIndicator : MonoBehaviour
         p = player.GetComponent<Player>();
         rb = player.GetComponent<Rigidbody2D>();
         t = player.GetComponent<Transform>();
+        dash = player.GetComponent<Dashable>();
         indicatorPosition = t.position;
         indicatorTransform = GetComponent<Transform>();
     }
@@ -36,13 +38,14 @@ public class DashIndicator : MonoBehaviour
         }
         else
         {
-            float newXVel = inputDir.x * p.dashingPowerX;
+            float newXVel = inputDir.x * dash.dashVel;
             if (Mathf.Sign(inputDir.x) == Mathf.Sign(rb.velocity.x))
+            // conserve momentum if same direction
             {
                 newXVel += rb.velocity.x;
             }
 
-            float newYVel = inputDir.y * p.dashingPowerY;
+            float newYVel = inputDir.y * dash.dashVel;
             if (Mathf.Sign(inputDir.y) == Mathf.Sign(rb.velocity.y))
             {
                 newYVel += rb.velocity.y;
@@ -57,4 +60,6 @@ public class DashIndicator : MonoBehaviour
         }
         indicatorTransform.position = new Vector3(indicatorPosition.x, indicatorPosition.y, t.position.z);
     }
+
+
 }
