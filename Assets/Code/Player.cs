@@ -24,37 +24,6 @@ public class Player : MonoBehaviour
     public float fallGravityMultiplier = 1.25f;
     public float fallGravIncreaseRate = 0.25f;
 
-    // jumping stuff
-    public int numJumps = 2;
-    private int jumpsLeft = 2;
-    private float lastJump = 0; // when was the player's last jump
-    private bool isJumping = false;
-    public float jumpCooldown = 0f; // seconds
-    public float jumpForce = 25;
-    public float jumpStopMultiplier = 0.5f;
-
-    // dash variables
-    public float dashingPowerX = 20f;
-    public float dashingPowerY = 20f;
-    private bool canDash = true;
-    private bool isDashing;
-    public float dashingTime = 0.1f;
-    public float dashingCooldown = 2.5f;
-    public float dashDmg = 100;
-
-    // enemy contact variables
-    private bool isInvincible;
-    public float invincibleTime = 3.0f;
-
-    //kick variables
-    public float kickCooldown;
-    public float kickDuration;
-    public float kickVel;
-    public float kickDmgScale = 1;
-    public Vector2 kickSize;
-    public bool isKicking;
-    private bool canKick;
-
     //Colors
     public Color normalColor;
     public Color hurtColor;
@@ -66,23 +35,16 @@ public class Player : MonoBehaviour
     // Dash Indicator
     private DashIndicator dashIndicator;
 
-    public float health, maxHealth;
     public HealthBar healthBar;
+    public Health health;
+    public Dashable dash;
+    public Jumpable jump;
+    public Kickable kick;
 
-    public bool isDead;
 
     // Start is called before the first frame update
     void Start()
     {
-        health = 100;
-        maxHealth = 100;
-        isDead = false;
-
-        canKick = true;
-        kickCooldown = 2;
-        kickVel = 7;
-        kickDuration = 0.1f;
-        kickSize = new Vector2(1.5f, 3);
 
         c = GetComponent<Controller>();
         if (c == null)
@@ -100,6 +62,13 @@ public class Player : MonoBehaviour
 
         box = GetComponent<BoxCollider2D>();
 
+        health = GetComponent<Health>();
+
+        //Actions
+        dash = GetComponent<Dashable>();
+        jump = GetComponent<Jumpable>();
+        kick = GetComponent<Kickable>();
+
         scoreUI = GameObject.Find("ScoreUI");
 
         normalColor = new Color(46f/255f, 173f/255f, 94f/255f);
@@ -116,51 +85,31 @@ public class Player : MonoBehaviour
     {
         if (tutorialTransition.FinishedTutorialHuh())
         {
-            if (isDead && health > 0)
-            // if fallen off edge, have health shoot down
+            if (kick.isKicking)
             {
-                health -= 1 / 2f;
-                healthBar.UpdateHealthBar();
+                spr.color = kickColor;
+            }
+            else if (dash.isDashing)
+            {
+                spr.color = dashColor;
+            }
+            else if (health.isInvincible)
+            {
+                spr.color = hurtColor;
             }
             else
             {
-                health -= 1 / 60f;
-                healthBar.UpdateHealthBar();
+                spr.color = normalColor;
 
-                if (health <= 0)
-                {
-                    health = 0;
-                    isDead = true;
-                }
-                else
-                {
-                    if (isKicking)
-                    {
-                        spr.color = kickColor;
-                    }
-                    else if (isDashing)
-                    {
-                        spr.color = dashColor;
-                    }
-                    else if (isInvincible)
-                    {
-                        spr.color = hurtColor;
-                    }
-                    else
-                    {
-                        spr.color = normalColor;
-                    }
-
-                }
             }
         }
     }
 
     void FixedUpdate()
     {
-        if (!isDead)
+        if (!health.isDead())
         {
-            if (!isDashing)
+            if (!dash.isDashing)
             {
                 HandleMovement();
                 ApplyFriction();
@@ -169,27 +118,6 @@ public class Player : MonoBehaviour
         }      
     }
 
-    public IEnumerator TakeDamage(float dmg)
-    {
-        // Use your own damage handling code, or this example one.
-        health -= dmg;
-        healthBar.UpdateHealthBar();
-        isInvincible = true;
-        Debug.Log("isInvincible: " + isInvincible);
-        yield return new WaitForSeconds(dashingTime);
-        isInvincible = false;
-    }
-
-    public void HealDamage(float healAmt)
-    {
-        health += healAmt;
-        if (health > maxHealth)
-        {
-            health = maxHealth;
-        }
-        healthBar.UpdateHealthBar();
-        scoreUI.GetComponent<ScoreUI>().Score();
-    }
 
     public void HandleMovement()
     {
@@ -239,171 +167,61 @@ public class Player : MonoBehaviour
             rb.gravityScale = gravityScale;
         }
     }
+    
 
-    // called via messages by the Controller
-    public void DoJump()
-    {
-        if (Time.time > lastJump + jumpCooldown && jumpsLeft > 0)
-        {
-            if (isDashing)
-            {
-                isDashing = false;
-            }
-            //Debug.Log("Jumping!");
-            lastJump = Time.time;
-            jumpsLeft -= 1;
-            isJumping = true;
-
-            if (rb.velocity.y < 0)
-                // if falling
-            {
-
-                rb.AddForce(Vector2.down * rb.velocity.y, ForceMode2D.Impulse);
-            }
-
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        }
-    }
-
-    public void DoDash()
-    {
-        if (canDash)
-        {
-            StartCoroutine(Dash());
-        }
-    }
-
-    // called via messages by the Controller
-    public void StopJump()
-    {
-        if (rb.velocity.y > 0 && isJumping)
-        {
-            //Debug.Log("Stopping jump!");
-            rb.AddForce(Vector2.down * rb.velocity.y * (1 - jumpStopMultiplier), ForceMode2D.Impulse);
-
-        }
-    }
-
-    public void DoKick()
-    {
-        if (canKick)
-        {
-            StartCoroutine(Kick());
-
-        }
-    }
-
-    private IEnumerator Kick()
-    {
-
-        canKick = false;
-        isKicking = true;
-
-        Vector2 boxSize = box.size;
-        box.size = kickSize;
-
-        if (isDashing)
-        {
-            Debug.Log("adding velocity!");
-
-            Vector2 addVel = rb.velocity;
-            addVel.Normalize();
-            addVel *= kickVel;
-            rb.velocity += addVel;
-        }
-
-        yield return new WaitForSeconds(kickDuration);
-
-        box.size = boxSize;
-        
-        isKicking = false;
-
-        yield return new WaitForSeconds(kickCooldown);
-        canKick = true;
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject collidingObject = collision.gameObject;
 
         // on collision with the ground
-        if (collidingObject.layer == 6 && collision.collider.bounds.center.y < transform.position.y && jumpsLeft < numJumps)
+        if (collidingObject.layer == 6 && collision.collider.bounds.center.y < transform.position.y)
         {
             //Debug.Log("refreshing Jumps!");
-            if (isDashing)
+            if (dash.isDashing)
             {
-                isDashing = false;
+                dash.StopDash();
             }
 
-            isJumping = false;
-            jumpsLeft = numJumps;
+            jump.RefreshJumps();
         }
         else if (collidingObject.name == "Death Plane")
         {
-            isDead = true;
+            health.deathTime = Time.time;
         }
+
+        Debug.Log("COLLIDING WITH ENEMY IN PLAYER");
     }
 
 
-    public void EnemyCollision(Enemy enemy)
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isKicking || isDashing)
+        GameObject collidingObject = collision.gameObject;
+        Enemy enemy = collidingObject.GetComponent<Enemy>();
+
+        if (enemy != null)
         {
-            float damage = dashDmg;
-            if (isKicking)
+            Debug.Log("COLLIDING WITH ENEMY IN PLAYER");
+            if (kick.isKicking || dash.isDashing)
             {
-                damage = rb.velocity.magnitude * kickDmgScale;
+                float damage = dash.dashDmg;
+                if (kick.isKicking)
+                {
+                    damage = rb.velocity.magnitude * kick.kickDmgScale;
+                }
+                Health enemyHealth = collidingObject.GetComponent<Health>();
+                float bloodValue = enemyHealth.TakeDamage(damage);
+                health.HealDamage(bloodValue);
+
+                // TODO: handle dash reset better
+                dash.canDash = true;
             }
-            enemy.TakeDamage(damage);
-            HealDamage(enemy.bloodValue);
-            canDash = true;
         }
-        else if (!isInvincible)
-        {
-            Debug.Log("Taking Damage");
-            StartCoroutine(TakeDamage(enemy.GetAtkDmg()));
-        }
+
     }
 
-    public void StrongEnemyCollision(StrongEnemy enemy)
-    {
-        if (isKicking || isDashing)
-        {
-            float damage = dashDmg;
-            if (isKicking)
-            {
-                damage = rb.velocity.magnitude * kickDmgScale;
-            }
-            StartCoroutine(enemy.TakeDamage(damage));
-            HealDamage(enemy.bloodValue/2);
-            canDash = true;
-        }
-        else if (!isInvincible)
-        {
-            Debug.Log("Taking Damage");
-            StartCoroutine(TakeDamage(enemy.GetAtkDmg()));
-        }
-    }
-
-    public void StrongerEnemyCollision(StrongerEnemy enemy)
-    {
-        if (isKicking || isDashing)
-        {
-            float damage = dashDmg;
-            if (isKicking)
-            {
-                damage = rb.velocity.magnitude * kickDmgScale;
-            }
-            StartCoroutine(enemy.TakeDamage(damage));
-            HealDamage(enemy.bloodValue/3);
-            canDash = true;
-        }
-        else if (!isInvincible)
-        {
-            Debug.Log("Taking Damage");
-            StartCoroutine(TakeDamage(enemy.GetAtkDmg()));
-        }
-    }
 
     private bool IsGrounded()
     {
@@ -411,52 +229,5 @@ public class Player : MonoBehaviour
         return Physics2D.OverlapBox(box.bounds.center, new Vector2(box.bounds.size.x, box.bounds.size.y), 0, groundMask);
     }
 
-    private IEnumerator Dash()
-    {
-        Vector2 inputDir = c.GetInputDir();
-        if (inputDir.magnitude == 0)
-            // neutral dash
-        {
-            inputDir = new Vector2(1, 0);
-        }
-        canDash = false;
-        isDashing = true;
-        
-        float originalGravity = rb.gravityScale;
-        rb.gravityScale = 0f;
-
-        float newXVel = inputDir.x * dashingPowerX;
-        if (Mathf.Sign(inputDir.x) == Mathf.Sign(rb.velocity.x))
-            // conserve momentum if same direction
-        {
-            newXVel += rb.velocity.x;
-        }
-
-        float newYVel = inputDir.y * dashingPowerY;
-        if (Mathf.Sign(inputDir.y) == Mathf.Sign(rb.velocity.y))
-        {
-            newYVel += rb.velocity.y;
-        }
-
-        rb.velocity = new Vector2(newXVel, newYVel);
-        
-        isInvincible = true;
-        Debug.Log("isInvincible: " + isInvincible);
-        yield return new WaitForSeconds(dashingTime);
-        rb.gravityScale = originalGravity;
-
-        if (isDashing)
-        {
-            // only cancel momentum if the dash hasn't been canceled by something
-            isDashing = false;
-            float xCancel = inputDir.x * dashingPowerX;
-            float yCancel = IsGrounded() ? 0 : inputDir.y * dashingPowerY;
-            rb.velocity -= new Vector2(xCancel, yCancel);
-        }
-        yield return new WaitForSeconds(dashingCooldown);
-        yield return new WaitForSeconds(dashingTime);
-        isInvincible = false;
-        canDash = true;
-    }
 
 }

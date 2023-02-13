@@ -31,6 +31,8 @@ public class CameraFollow : MonoBehaviour
         camOrthsize = mainCam.orthographicSize;
         cameraRatio = mainCam.aspect * camOrthsize;
         tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
+
+        followTransform = GameObject.Find("Player").transform;
     }
 
     void FixedUpdate()

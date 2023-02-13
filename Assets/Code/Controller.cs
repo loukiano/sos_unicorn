@@ -34,17 +34,19 @@ public class Controller : MonoBehaviour
 
     void Update()
     {
+
         if (!tutorialTransition.FinishedTutorialHuh())
         {
             MaybeDash();
         }
-        else if (!p.isDead)
+        else
         {
             MaybeJump();
             MaybeStopJump();
             MaybeDash();
-            //MaybeKick();
+            MaybeKick();
         }
+        
  
     }
 
@@ -117,7 +119,7 @@ public class Controller : MonoBehaviour
         if (Input.GetKeyDown(dashKey) || Input.GetButtonDown("Dash"))
         {
             Debug.Log("Dash!!");
-            gameObject.SendMessage("DoDash");
+            gameObject.SendMessage("DoDash", GetInputDir());
         }
     }
 
