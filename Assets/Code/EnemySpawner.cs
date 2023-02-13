@@ -3,9 +3,10 @@ using System.Collections;
 
 public class EnemySpawner : MonoBehaviour
 {
-	public Enemy enemy;
-	public StrongEnemy strongEnemy;
-	public StrongerEnemy strongerEnemy;
+	public GameObject enemy;
+	public GameObject strongEnemy;
+	public GameObject strongerEnemy;
+
 	public BoxCollider2D mapBounds;
 	public Transform playerTransform;
 	//public LevelDesign levelDesign;
@@ -43,8 +44,7 @@ public class EnemySpawner : MonoBehaviour
 
 		playerTransform = GameObject.Find("Player").transform;
 
-
-		for (int i = 0; i < initialNumEnemies; i++)
+        for (int i = 0; i < initialNumEnemies; i++)
         {
 			SpawnEnemyOutOfCamera();
         }
@@ -146,19 +146,16 @@ public class EnemySpawner : MonoBehaviour
 
 
 		int enemyProbability = Random.Range(0, maxProb);
-
+		GameObject newEnemy;
 		if (enemyProbability < 5)
         {
-			Enemy newEnemy = Instantiate(enemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
-			newEnemy.playerTransform = playerTransform;
+			newEnemy = Instantiate(enemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
 		} else if (enemyProbability < 8)
         {
-			StrongEnemy newStrongEnemy = Instantiate(strongEnemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
-			newStrongEnemy.playerTransform = playerTransform;
+            newEnemy = Instantiate(strongEnemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
 		} else
         {
-			StrongerEnemy newStrongerEnemy = Instantiate(strongerEnemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
-			newStrongerEnemy.playerTransform = playerTransform;
+            newEnemy = Instantiate(strongerEnemy, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
 		}
 		
 	}

@@ -11,9 +11,13 @@ GameObject:
   - component: {fileID: 680816299601697010}
   - component: {fileID: 680816299601697005}
   - component: {fileID: 680816299601697011}
-  - component: {fileID: 5151798882497836661}
+  - component: {fileID: 1206577752775798611}
+  - component: {fileID: -1164518940453408871}
+  - component: {fileID: 4646000366649863767}
+  - component: {fileID: 6314184994961382464}
+  - component: {fileID: 8596180979289250984}
   m_Layer: 0
-  m_Name: Strong Enemy
+  m_Name: StrongEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,7 +116,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.99466556}
   m_EdgeRadius: 0
---- !u!114 &5151798882497836661
+--- !u!114 &1206577752775798611
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,16 +125,85 @@ MonoBehaviour:
   m_GameObject: {fileID: 680816299601697001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 217667240e6cf8042b42f61e154ff316, type: 3}
+  m_Script: {fileID: 11500000, guid: 021cf37d97e6648a3bf96f1633b1654b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  box: {fileID: 0}
+  spr: {fileID: 0}
+  canMove: 1
+  moveSpeed: 7
+  dirToPlayer: {x: 0, y: 0}
+--- !u!114 &-1164518940453408871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680816299601697001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b7d11d939c324a6e9aad2787714e13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
+  maxHealth: 200
+  health: 200
+  bloodValue: 13
+  isInvincible: 0
+  invincibleDur: 0.2
+  deathDur: 0.25
+  deathTime: 0
+  isPlayer: 0
+  bleedRate: 0
+--- !u!114 &4646000366649863767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680816299601697001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e8348b915ac471ab51786373da7c5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   box: {fileID: 0}
+  atkDmg: 15
+  atkRange: 0
+  atkSpeed: 0.25
+  team: 0
+--- !u!114 &6314184994961382464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680816299601697001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce787776eb234a069545d5b31fd827e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   spr: {fileID: 0}
-  playerTransform: {fileID: 0}
-  moveSpeed: 0
-  health: 0
-  maxHealth: 0
-  atkDmg: 0
-  bloodValue: 0
-  deathDur: 0.75
-  dashingTime: 0.2
+--- !u!50 &8596180979289250984
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680816299601697001}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0

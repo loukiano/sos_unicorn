@@ -11,7 +11,8 @@ public class DeathScreen : MonoBehaviour
     public GameObject deathScore;
     public GameObject scoreValue;
     public GameObject scoreText;
-    private Player playerComponent;
+    private GameObject player;
+    private Health playerHealth;
     private bool gameOver;
 
     // Start is called before the first frame update
@@ -19,18 +20,20 @@ public class DeathScreen : MonoBehaviour
     {
         deathMessage.SetActive(false);
         deathScore.SetActive(false);
-        playerComponent = p.GetComponent<Player>();
+        player = GameObject.Find("Player");
+        playerHealth = player.GetComponent<Health>();
+        
         gameOver = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!playerComponent)
+        if (!player)
         {
-            Debug.Log("player component is null");
+            Debug.Log("no Object with name \"Player\"");
         }
-        if (playerComponent.isDead && !gameOver)
+        if (playerHealth.isDead() && !gameOver)
         {
             gameOver = true;
             TMP_Text deathScoreText = deathScore.GetComponent<TMP_Text>();
