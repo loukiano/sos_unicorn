@@ -15,7 +15,8 @@ public class DashIndicator : MonoBehaviour
 
     private Transform indicatorTransform;
 
-    Color readyColor;
+    public Color readyColor;
+    public Color unreadyColor;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +31,6 @@ public class DashIndicator : MonoBehaviour
         indicatorTransform = GetComponent<Transform>();
 
         spr = GetComponent<SpriteRenderer>();
-
-        readyColor = new Color(165/255f, 250/255f, 198/255f);
     }
 
     // Update is called once per frame
@@ -42,7 +41,7 @@ public class DashIndicator : MonoBehaviour
             spr.color = readyColor;
         } else
         {
-            spr.color = Color.gray;
+            spr.color = unreadyColor;
         }
 
         Vector2 inputDir = c.GetInputDir();

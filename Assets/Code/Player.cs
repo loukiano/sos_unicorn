@@ -71,11 +71,6 @@ public class Player : MonoBehaviour
 
         scoreUI = GameObject.Find("ScoreUI");
 
-        normalColor = new Color(46f/255f, 173f/255f, 94f/255f);
-        hurtColor = new Color(165f / 255f, 250f / 255f, 198f / 255f);
-        dashColor = new Color(1f, 13f/255f, 0f);
-        kickColor = new Color(1f, 13f/255f, 0f);
-
         tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
         dashIndicator = GetComponent<DashIndicator>();
     }
