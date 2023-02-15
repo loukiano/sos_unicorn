@@ -25,6 +25,11 @@ public class Health : MonoBehaviour
 
     public bool isPlayer;
     public float bleedRate; // default 1/60f
+    public float initialBleedRate;
+    public float bleedTimeScaling;
+    public float bleedScaleChunks;
+    public float maxBleedRate;
+
     public bool doBleed;
 
 	// Use this for initialization
@@ -53,7 +58,11 @@ public class Health : MonoBehaviour
 
     void Update()
     {
-        if (deathTime > 0)
+        if (health <= 0)
+        {
+            Die();
+        }
+        else if (deathTime > 0)
         {
             if (health > 0)
             {
@@ -61,9 +70,18 @@ public class Health : MonoBehaviour
             }
             Die();
         }
-        else if (isPlayer && doBleed)
+        else if (isPlayer && doBleed && World.timer > 0)
         {
+            if (bleedRate < maxBleedRate)
+            {
+                bleedRate = Mathf.Floor(World.timer / bleedScaleChunks) * bleedTimeScaling + initialBleedRate;
+            }
+            else
+            {
+                bleedRate = maxBleedRate;
+            }
             health -= bleedRate;
+            
         }
 
         if (healthBar != null)

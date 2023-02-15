@@ -78,7 +78,7 @@ public class DashIndicator : MonoBehaviour
             Vector2 indicatorOffset = new Vector2(newXVel * offsetScale / vectorLength, newYVel * offsetScale / vectorLength);
 
             float rotationAngle = 360 - Mathf.Atan2(indicatorOffset.x, indicatorOffset.y) * Mathf.Rad2Deg;
-            Debug.Log("x: " + indicatorOffset.x + ", y: " + indicatorOffset.y + ", Rotationagnel: " + rotationAngle);
+            //Debug.Log("x: " + indicatorOffset.x + ", y: " + indicatorOffset.y + ", Rotationagnel: " + rotationAngle);
             Quaternion desiredRotation = Quaternion.Euler(0, 0, rotationAngle);
 
             indicatorPosition = new Vector2(t.position.x + indicatorOffset.x, t.position.y + indicatorOffset.y);

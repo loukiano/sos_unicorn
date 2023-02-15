@@ -210,6 +210,10 @@ MonoBehaviour:
   deathTime: 0
   isPlayer: 1
   bleedRate: 0.008333334
+  initialBleedRate: 0.00048828125
+  bleedTimeScaling: 0.0020833334
+  bleedScaleChunks: 10
+  maxBleedRate: 0.016666668
   doBleed: 1
 --- !u!114 &-302413187149480044
 MonoBehaviour:
