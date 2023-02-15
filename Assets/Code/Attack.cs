@@ -40,7 +40,7 @@ public class Attack : MonoBehaviour
             if (player != null)
             {
                 Health playerHealth = collidingObject.GetComponent<Health>();
-                Debug.Log("HIT PLAYER");
+                //Debug.Log("HIT PLAYER");
                 playerHealth.TakeDamage(atkDmg);
                 lastAtk = Time.time;
             }

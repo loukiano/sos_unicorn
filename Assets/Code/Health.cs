@@ -25,6 +25,7 @@ public class Health : MonoBehaviour
 
     public bool isPlayer;
     public float bleedRate; // default 1/60f
+    public bool doBleed;
 
 	// Use this for initialization
 	void Start()
@@ -60,7 +61,7 @@ public class Health : MonoBehaviour
             }
             Die();
         }
-        else if (isPlayer)
+        else if (isPlayer && doBleed)
         {
             health -= bleedRate;
         }

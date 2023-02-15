@@ -37,7 +37,7 @@ public class DashIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (dash.canDash)
+        if (dash.CanDash())
         {
             spr.color = readyColor;
         } else

@@ -11,7 +11,7 @@ public class TutorialTransition : MonoBehaviour
     public Vector2 TutorialPoint;
     public Vector2 startPoint;
 
-    private bool tutorial;
+    public bool tutorial = true;
     private Transform backgroundTransform;
     private SpriteRenderer backgroundSpriteRenderer;
     private Transform playerTransform;
@@ -19,8 +19,10 @@ public class TutorialTransition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tutorial = true;
-        backgroundSpriteRenderer = background.GetComponent<SpriteRenderer>();
+        if (background != null)
+        {
+            backgroundSpriteRenderer = background.GetComponent<SpriteRenderer>();
+        }
         playerTransform = GameObject.Find("Player").transform;
     }
 

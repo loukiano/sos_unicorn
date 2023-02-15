@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer spr;
     BoxCollider2D box;
-    GameObject scoreUI;
+    ScoreUI scoreUI;
 
     public float castDist = 1;
 
@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
         jump = GetComponent<Jumpable>();
         kick = GetComponent<Kickable>();
 
-        scoreUI = GameObject.Find("ScoreUI");
+        scoreUI = GameObject.Find("ScoreUI").GetComponent<ScoreUI>();
 
         normalColor = new Color(46f/255f, 173f/255f, 94f/255f);
         hurtColor = new Color(165f / 255f, 250f / 255f, 198f / 255f);
@@ -184,44 +184,73 @@ public class Player : MonoBehaviour
             }
 
             jump.RefreshJumps();
+            dash.RefreshDashes();
         }
         else if (collidingObject.name == "Death Plane")
         {
             health.deathTime = Time.time;
         }
 
-        Debug.Log("COLLIDING WITH ENEMY IN PLAYER");
+        //Debug.Log("COLLIDING WITH ENEMY IN PLAYER");
     }
 
+    public void StartDash()
+    {
+        HandleEnemyOverlap();
+    }
 
+    private void HandleEnemyOverlap()
+    {
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, box.size, 90);
+        Debug.Log("colliders: " + colliders.ToString());
+        foreach (Collider2D col in colliders)
+        {
+            GameObject colObj = col.gameObject;
+            //Debug.Log("STARTED OVERLAPPING WITH ENEMY");
+            if (colObj.GetComponent<Enemy>() != null)
+            {
+                DamageEnemy(colObj);
 
+                if (dash.isDashing)
+                {
+                    dash.AddDash();
+                }
+            }
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject collidingObject = collision.gameObject;
-        Enemy enemy = collidingObject.GetComponent<Enemy>();
 
-        if (enemy != null)
+        if (collidingObject.GetComponent<Enemy>() != null)
         {
-            Debug.Log("COLLIDING WITH ENEMY IN PLAYER");
+            //Debug.Log("COLLIDING WITH ENEMY IN PLAYER");
             if (kick.isKicking || dash.isDashing)
             {
-                float damage = dash.dashDmg;
-                if (kick.isKicking)
-                {
-                    damage = rb.velocity.magnitude * kick.kickDmgScale;
-                }
-                Health enemyHealth = collidingObject.GetComponent<Health>();
-                float bloodValue = enemyHealth.TakeDamage(damage);
-                health.HealDamage(bloodValue);
+                DamageEnemy(collidingObject);
 
-                // TODO: handle dash reset better
-                dash.canDash = true;
+                if (dash.isDashing)
+                {
+                    dash.AddDash();
+                }
             }
         }
 
     }
 
+    private void DamageEnemy(GameObject enemyObj)
+    {
+        float damage = dash.dashDmg;
+        if (kick.isKicking)
+        {
+            damage = rb.velocity.magnitude * kick.kickDmgScale;
+        }
+        Health enemyHealth = enemyObj.GetComponent<Health>();
+        float bloodValue = enemyHealth.TakeDamage(damage);
+        health.HealDamage(bloodValue);
+        scoreUI.Score();
+    }
 
     private bool IsGrounded()
     {
