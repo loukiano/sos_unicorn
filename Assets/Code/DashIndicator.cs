@@ -15,6 +15,11 @@ public class DashIndicator : MonoBehaviour
 
     private Transform indicatorTransform;
 
+    public float colorAlpha;
+    public float offsetScale;
+
+    public Vector3 indicatorScale;
+
     Color readyColor;
 
     // Start is called before the first frame update
@@ -31,7 +36,8 @@ public class DashIndicator : MonoBehaviour
 
         spr = GetComponent<SpriteRenderer>();
 
-        readyColor = new Color(165/255f, 250/255f, 198/255f);
+        readyColor = new Color(165/255f, 250/255f, 198/255f, colorAlpha);
+        transform.localScale = indicatorScale;
     }
 
     // Update is called once per frame
@@ -50,6 +56,8 @@ public class DashIndicator : MonoBehaviour
         // neutral dash
         {
             indicatorPosition = t.position;
+            indicatorTransform.rotation = Quaternion.Euler(0, 0, -90);
+
         }
         else
         {
@@ -67,11 +75,15 @@ public class DashIndicator : MonoBehaviour
             }
 
             float vectorLength = Mathf.Sqrt(newXVel * newXVel + newYVel * newYVel);
-            Vector2 indicatorOffset = new Vector2(newXVel * 4.8f / vectorLength, newYVel * 4.8f / vectorLength);
-            float rotationAngle = 360f - Mathf.Atan(indicatorOffset.x / indicatorOffset.y) * 180f / 2f / Mathf.PI;
+            Vector2 indicatorOffset = new Vector2(newXVel * offsetScale / vectorLength, newYVel * offsetScale / vectorLength);
+
+            float rotationAngle = 360 - Mathf.Atan2(indicatorOffset.x, indicatorOffset.y) * Mathf.Rad2Deg;
+            Debug.Log("x: " + indicatorOffset.x + ", y: " + indicatorOffset.y + ", Rotationagnel: " + rotationAngle);
+            Quaternion desiredRotation = Quaternion.Euler(0, 0, rotationAngle);
+
             indicatorPosition = new Vector2(t.position.x + indicatorOffset.x, t.position.y + indicatorOffset.y);
 
-            //indicatorTransform.Rotate(0f, 0f, rotationAngle);
+            indicatorTransform.rotation = desiredRotation;
         }
         indicatorTransform.position = new Vector3(indicatorPosition.x, indicatorPosition.y, t.position.z);
     }
