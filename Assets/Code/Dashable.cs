@@ -55,6 +55,11 @@ public class Dashable : MonoBehaviour
                 rb.velocity -= cancelVel;
             }
         }
+        if (lastDashTime + dashingTime * 3 < Time.time && IsGrounded())
+        {
+            RefreshDashes();
+        }
+        
 	}
 
     public void DoDash(Vector2 dir)
