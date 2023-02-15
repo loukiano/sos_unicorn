@@ -210,6 +210,7 @@ MonoBehaviour:
   deathTime: 0
   isPlayer: 1
   bleedRate: 0.016666668
+  doBleed: 1
 --- !u!114 &-302413187149480044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,9 +227,9 @@ MonoBehaviour:
   dashVel: 50
   isDashing: 0
   dashingTime: 0.1
-  dashingCooldown: 2.5
+  maxDashes: 1
+  numDashes: 0
   dashDmg: 100
-  canDash: 1
 --- !u!114 &-6791544593589651684
 MonoBehaviour:
   m_ObjectHideFlags: 0
