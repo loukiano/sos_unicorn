@@ -85,6 +85,7 @@ public class Player : MonoBehaviour
     {
         if (tutorialTransition.FinishedTutorialHuh())
         {
+            health.doBleed = true;
             if (kick.isKicking)
             {
                 spr.color = kickColor;
