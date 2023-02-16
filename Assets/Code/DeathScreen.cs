@@ -11,6 +11,7 @@ public class DeathScreen : MonoBehaviour
     public GameObject deathScore;
     public GameObject scoreValue;
     public GameObject scoreText;
+    public GameObject retryButton;
     private GameObject player;
     private Health playerHealth;
     private bool gameOver;
@@ -20,6 +21,7 @@ public class DeathScreen : MonoBehaviour
     {
         deathMessage.SetActive(false);
         deathScore.SetActive(false);
+        retryButton.SetActive(false);
         player = GameObject.Find("Player");
         playerHealth = player.GetComponent<Health>();
         
@@ -43,6 +45,12 @@ public class DeathScreen : MonoBehaviour
             scoreValue.SetActive(false);
             deathMessage.SetActive(true);
             deathScore.SetActive(true);
+            retryButton.SetActive(true);
         }
+    }
+
+    public bool isGameOver()
+    {
+        return gameOver;
     }
 }

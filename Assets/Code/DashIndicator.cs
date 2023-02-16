@@ -14,7 +14,6 @@ public class DashIndicator : MonoBehaviour
     private Dashable dash;
 
     private Transform indicatorTransform;
-
     public float colorAlpha;
     public float offsetScale;
 
@@ -35,7 +34,6 @@ public class DashIndicator : MonoBehaviour
         indicatorTransform = GetComponent<Transform>();
 
         spr = GetComponent<SpriteRenderer>();
-
         readyColor = new Color(165/255f, 250/255f, 198/255f, colorAlpha);
         transform.localScale = indicatorScale;
     }
@@ -48,7 +46,7 @@ public class DashIndicator : MonoBehaviour
             spr.color = readyColor;
         } else
         {
-            spr.color = Color.gray;
+            spr.color = unreadyColor;
         }
 
         Vector2 inputDir = c.GetInputDir();
