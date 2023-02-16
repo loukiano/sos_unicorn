@@ -2953,6 +2953,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -302413187149480044, guid: eeecf27a766e64147b659117d06624eb, type: 3}
+      propertyPath: dashSize
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 331489839896269843, guid: eeecf27a766e64147b659117d06624eb, type: 3}
+      propertyPath: kickVel
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 7179520890071871290, guid: eeecf27a766e64147b659117d06624eb, type: 3}
       propertyPath: doBleed
       value: 0

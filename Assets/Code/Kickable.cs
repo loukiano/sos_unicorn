@@ -17,6 +17,7 @@ public class Kickable : MonoBehaviour
     public float kickSize;
     public bool isKicking;
     private bool canKick;
+    private Vector3 normalTransformScale;
 
     // Use this for initialization
     void Start()
@@ -30,6 +31,7 @@ public class Kickable : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         dash = GetComponent<Dashable>();
         t = GetComponent<Transform>();
+        normalTransformScale = t.localScale;
     }
 
     public void DoKick()
@@ -52,29 +54,33 @@ public class Kickable : MonoBehaviour
         canKick = false;
         isKicking = true;
 
-        //Vector2 boxSize = box.size;
-        Vector3 transformScale = t.localScale;
         float tempKDS = kickDmgScale;
         //box.size *= kickSize;
         float velocityMagnitude = Mathf.Sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y * rb.velocity.y);
         if (velocityMagnitude < 40.0f)
         {
-            t.localScale = t.localScale * kickSize;
+            t.localScale = normalTransformScale * kickSize;
         }
         else if (velocityMagnitude < 80.0f)
         {
-            t.localScale = t.localScale * kickSize * 2;
+            t.localScale = normalTransformScale * kickSize * 2;
             kickDmgScale *= 2;
         }
         else
         {
-            t.localScale = t.localScale * kickSize * 3;
+            t.localScale = normalTransformScale * kickSize * 3;
             kickDmgScale *= 3;
         }
 
         Vector2 addVel = new Vector2 (0, 1);
         addVel *= kickVel;
-        rb.velocity += addVel;
+        
+        if (dash.isDashing || velocityMagnitude > 40.0f)
+            rb.velocity += addVel;
+        else
+        {
+            rb.velocity = addVel;
+        }
 
         //float damage = rb.velocity.magnitude * kickDmgScale;
         //Debug.Log("Damage: " + damage);
@@ -82,7 +88,7 @@ public class Kickable : MonoBehaviour
         yield return new WaitForSeconds(kickDuration);
 
         //box.size = boxSize;
-        t.localScale = transformScale;
+        t.localScale = normalTransformScale;
         kickDmgScale = tempKDS;
 
         isKicking = false;
