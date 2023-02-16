@@ -9,6 +9,7 @@ public class Dashable : MonoBehaviour
     Rigidbody2D rb;
     BoxCollider2D box;
     Transform t;
+    Kickable kick;
 
     // Gravity
     public float originalGravity;
@@ -39,6 +40,7 @@ public class Dashable : MonoBehaviour
         box = GetComponent<BoxCollider2D>();
         t = GetComponent<Transform>();
         normalTransformScale = t.localScale;
+        kick = GetComponent<Kickable>();
     }
 
 	// Update is called once per frame
@@ -56,7 +58,8 @@ public class Dashable : MonoBehaviour
                     cancelVel *= Vector2.right;
                 }
                 rb.velocity -= cancelVel;
-                t.localScale = normalTransformScale;
+                if (!kick.isKicking)
+                    t.localScale = normalTransformScale;
             }
         }
         if (lastDashTime + dashingTime * 3 < Time.time && IsGrounded())
@@ -104,6 +107,7 @@ public class Dashable : MonoBehaviour
 
             t.localScale = normalTransformScale;
             t.localScale *= dashSize;
+            kick.isKicking = false;
 
             gameObject.SendMessage("StartDash"); // allows for action on dash start
 
@@ -136,7 +140,10 @@ public class Dashable : MonoBehaviour
     public void StopDash()
     {
         isDashing = false;
-        t.localScale = normalTransformScale;
+        if (!kick.isKicking)
+        {
+            t.localScale = normalTransformScale;
+        }
     }
 
     private bool IsGrounded()
