@@ -26,7 +26,7 @@ public class World : MonoBehaviour
             var newTimer = Mathf.Floor(timer);
             if (newTimer > lastTimer)
             {
-                Debug.Log("WORLD TIME: " + newTimer);
+                //Debug.Log("WORLD TIME: " + newTimer);
             }
             lastTimer = newTimer;
 

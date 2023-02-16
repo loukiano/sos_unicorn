@@ -46,14 +46,14 @@ public class DashIndicator : MonoBehaviour
             spr.color = readyColor;
         } else
         {
-            spr.color = unreadyColor;
+            spr.color = Color.gray;
         }
 
         Vector2 inputDir = c.GetInputDir();
         if (inputDir.magnitude == 0)
         // neutral dash
         {
-            indicatorPosition = t.position;
+            indicatorPosition = new Vector3 (t.position.x, t.position.y, 1);
             indicatorTransform.rotation = Quaternion.Euler(0, 0, -90);
 
         }

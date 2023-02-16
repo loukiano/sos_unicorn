@@ -44,7 +44,7 @@ public class Controller : MonoBehaviour
             MaybeJump();
             MaybeStopJump();
             MaybeDash();
-            //MaybeKick();
+            MaybeKick();
         }
         
  
@@ -118,7 +118,7 @@ public class Controller : MonoBehaviour
     {
         if (Input.GetKeyDown(dashKey) || Input.GetButtonDown("Dash"))
         {
-            Debug.Log("Dash!!");
+            //Debug.Log("Dash!!");
             gameObject.SendMessage("DoDash", GetInputDir());
         }
     }

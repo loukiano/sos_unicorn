@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
-  m_Color: {r: 0.98039216, g: 0.22352941, b: 0.16470589, a: 1}
+  m_Color: {r: 0.18039216, g: 0.6784314, b: 0.36862746, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -138,6 +138,11 @@ MonoBehaviour:
   deathTime: 0
   isPlayer: 0
   bleedRate: 0
+  initialBleedRate: 0
+  bleedTimeScaling: 0
+  bleedScaleChunks: 0
+  maxBleedRate: 0
+  doBleed: 0
 --- !u!114 &4459720331106317900
 MonoBehaviour:
   m_ObjectHideFlags: 0

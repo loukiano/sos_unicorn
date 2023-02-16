@@ -111,38 +111,40 @@ public class Player : MonoBehaviour
                 ApplyFriction();
                 HandleGravity();
             }
-        }      
+        }
     }
 
 
     public void HandleMovement()
     {
-        Vector2 inputDir = c.GetInputDir();
+        //if (!kick.isKicking)
+        //{
+            Vector2 inputDir = c.GetInputDir();
 
-        if (!(Mathf.Sign(rb.velocity.x) == Mathf.Sign(inputDir.x) && Mathf.Abs(rb.velocity.x) > walkSpeed))
+            if (!(Mathf.Sign(rb.velocity.x) == Mathf.Sign(inputDir.x) && Mathf.Abs(rb.velocity.x) > walkSpeed))
             // skip if we're already moving at faster than max speed and still trying to move in that direction
-        {
-            // how fast do we want to be going
-            float goalSpeed = inputDir.x * walkSpeed;
-            // diff between that and how fast we're going now
-            float velDif = goalSpeed - rb.velocity.x;
-            // how much are we accelerating
-            float accelRate = (Mathf.Abs(goalSpeed) > 0.01f) ? acceleration : decceleration;
-            // calculate movement force
-            float moveForce = Mathf.Pow(Mathf.Abs(velDif) * accelRate, velPower) * Mathf.Sign(velDif);
+            {
+                // how fast do we want to be going
+                float goalSpeed = inputDir.x * walkSpeed;
+                // diff between that and how fast we're going now
+                float velDif = goalSpeed - rb.velocity.x;
+                // how much are we accelerating
+                float accelRate = (Mathf.Abs(goalSpeed) > 0.01f) ? acceleration : decceleration;
+                // calculate movement force
+                float moveForce = Mathf.Pow(Mathf.Abs(velDif) * accelRate, velPower) * Mathf.Sign(velDif);
 
-            rb.AddForce(moveForce * Vector2.right);
-        }
-
+                rb.AddForce(moveForce * Vector2.right);
+            }
+       //}
     }
 
     public void ApplyFriction()
     {
         if (IsGrounded() && Mathf.Abs(c.GetInputDir().x) < Controller.deadzone)
         {
-                // use either our velocity or the default friction amt (~.75)
+            // use either our velocity or the default friction amt (~.75)
             float fricAmt = Mathf.Min(Mathf.Abs(rb.velocity.x), Mathf.Abs(frictionAmount));
-                // set friction to opposite direction of movement
+            // set friction to opposite direction of movement
             fricAmt *= -Mathf.Sign(rb.velocity.x);
 
             rb.AddForce(Vector2.right * fricAmt, ForceMode2D.Impulse);
@@ -163,7 +165,7 @@ public class Player : MonoBehaviour
             rb.gravityScale = gravityScale;
         }
     }
-    
+
 
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -195,10 +197,15 @@ public class Player : MonoBehaviour
         HandleEnemyOverlap();
     }
 
+    public void StartKick()
+    {
+        HandleEnemyOverlap();
+    }
+
     private void HandleEnemyOverlap()
     {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, box.size, 90);
-        Debug.Log("colliders: " + colliders.ToString());
+        //Debug.Log("colliders: " + colliders.ToString());
         foreach (Collider2D col in colliders)
         {
             GameObject colObj = col.gameObject;
@@ -240,7 +247,9 @@ public class Player : MonoBehaviour
         float damage = dash.dashDmg;
         if (kick.isKicking)
         {
-            damage = rb.velocity.magnitude * kick.kickDmgScale;
+            //damage = rb.velocity.magnitude * kick.kickDmgScale;
+            damage = kick.kickDmgScale * 100f;
+            Debug.Log("Kick Damage: " + damage);
         }
         Health enemyHealth = enemyObj.GetComponent<Health>();
         float bloodValue = enemyHealth.TakeDamage(damage);

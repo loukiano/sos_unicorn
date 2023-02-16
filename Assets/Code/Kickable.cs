@@ -6,6 +6,7 @@ public class Kickable : MonoBehaviour
 {
     public BoxCollider2D box;
     public Rigidbody2D rb;
+    public Transform t;
     public Dashable dash;
 
     //kick variables
@@ -13,21 +14,22 @@ public class Kickable : MonoBehaviour
     public float kickDuration;
     public float kickVel;
     public float kickDmgScale;
-    public Vector2 kickSize;
+    public float kickSize;
     public bool isKicking;
     private bool canKick;
 
     // Use this for initialization
     void Start()
 	{
-        //canKick = true;
-        //kickCooldown = 2;
-        //kickVel = 7;
-        //kickDuration = 0.1f;
-        //kickSize = new Vector2(1.5f, 3);
+        canKick = true;
+        kickCooldown = 1;
+        kickVel = 10;
+        kickDuration = 0.3f;
+        kickSize = 1.5f;
         box = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         dash = GetComponent<Dashable>();
+        t = GetComponent<Transform>();
     }
 
     public void DoKick()
@@ -35,8 +37,13 @@ public class Kickable : MonoBehaviour
         if (canKick)
         {
             StartCoroutine(Kick());
-
+            gameObject.SendMessage("StartKick"); // allows for action on dash start
         }
+    }
+
+    public bool CanKick()
+    {
+        return canKick;
     }
 
     private IEnumerator Kick()
@@ -45,22 +52,38 @@ public class Kickable : MonoBehaviour
         canKick = false;
         isKicking = true;
 
-        Vector2 boxSize = box.size;
-        box.size = kickSize;
-
-        if (dash.isDashing)
+        //Vector2 boxSize = box.size;
+        Vector3 transformScale = t.localScale;
+        float tempKDS = kickDmgScale;
+        //box.size *= kickSize;
+        float velocityMagnitude = Mathf.Sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y * rb.velocity.y);
+        if (velocityMagnitude < 40.0f)
         {
-            Debug.Log("adding velocity!");
-
-            Vector2 addVel = rb.velocity;
-            addVel.Normalize();
-            addVel *= kickVel;
-            rb.velocity += addVel;
+            t.localScale = t.localScale * kickSize;
         }
+        else if (velocityMagnitude < 80.0f)
+        {
+            t.localScale = t.localScale * kickSize * 2;
+            kickDmgScale *= 2;
+        }
+        else
+        {
+            t.localScale = t.localScale * kickSize * 3;
+            kickDmgScale *= 3;
+        }
+
+        Vector2 addVel = new Vector2 (0, 1);
+        addVel *= kickVel;
+        rb.velocity += addVel;
+
+        //float damage = rb.velocity.magnitude * kickDmgScale;
+        //Debug.Log("Damage: " + damage);
 
         yield return new WaitForSeconds(kickDuration);
 
-        box.size = boxSize;
+        //box.size = boxSize;
+        t.localScale = transformScale;
+        kickDmgScale = tempKDS;
 
         isKicking = false;
 

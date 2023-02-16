@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     private Health health;
 	TutorialTransition tutorialTransition;
 
-    private Color enemyRed;
+    private Color enemyGreen;
 
     // Use this for initialization
     void Start()
@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
 		tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
         health = GetComponent<Health>();
 
-        enemyRed = new Color(1f, 13f / 255f, 0f); ;
+        enemyGreen = new Color(46f / 255f, 173f / 255f, 94f / 255f);
 
     }
 
@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour
         }
         else if (health.health <= 100)
         {
-            spr.color = enemyRed;
+            spr.color = enemyGreen;
         }
         else if (health.health <= 200)
         {

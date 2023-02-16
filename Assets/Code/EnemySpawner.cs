@@ -68,7 +68,7 @@ public class EnemySpawner : MonoBehaviour
 			if (spawnRate > maxSpawnrate)
             {
 				spawnRate = (1f / (Mathf.Floor(World.timer / spawnrateScaleChunks) * spawnrateTimeScaling + initialSpawnRate));
-				Debug.Log("step: " + (Mathf.Floor(World.timer / spawnrateScaleChunks)));
+				//Debug.Log("step: " + (Mathf.Floor(World.timer / spawnrateScaleChunks)));
             } else
             {
 				spawnRate = maxSpawnrate;
@@ -77,7 +77,7 @@ public class EnemySpawner : MonoBehaviour
 
 			if (World.timer >= lastSpawn + spawnRate)
 			{
-				Debug.Log("Spawning...");
+				//Debug.Log("Spawning...");
 				SpawnEnemyOutOfCamera();
 				lastSpawn = World.timer;
 			}

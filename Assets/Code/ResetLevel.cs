@@ -20,7 +20,7 @@ public class ResetLevel : MonoBehaviour
     {
         if (deathScreen.isGameOver())
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Jump"))
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Fire1"))
             {
                 ReloadScene();
             }
