@@ -10,13 +10,19 @@ public class EnemySpawner : MonoBehaviour
 	public BoxCollider2D mapBounds;
 	public Transform playerTransform;
 	//public LevelDesign levelDesign;
+
 	public Camera cam;
-	public float spawnCheck;
-	public int initialNumEnemies;
+	public float spawnRate;
+	public float initialSpawnRate;
+    public float spawnrateTimeScaling;
+	public float spawnrateScaleChunks;
+	public float maxSpawnrate;
+
+    public int initialNumEnemies;
 	public float timeSpawnStrong = 5;
 	public float timeSpawnStronger = 10;
 
-	private float timer;
+	private float lastSpawn;
 	private float xMin, xMax, yMin, yMax;
 	private float camOrthsize;
 	private float camRatio;
@@ -28,10 +34,11 @@ public class EnemySpawner : MonoBehaviour
 	private int strongProb = 8;
 	private int strongerProb = 10;
 
+	
+
 	// Use this for initialization
 	void Start()
 	{
-		timer = 0.0f;
 		xMin = mapBounds.bounds.min.x;
 		xMax = mapBounds.bounds.max.x;
 		yMin = mapBounds.bounds.min.y;
@@ -49,6 +56,7 @@ public class EnemySpawner : MonoBehaviour
 			SpawnEnemyOutOfCamera();
         }
 		tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
+		//spawnRate = initialSpawnRate;
 	}
 
 	// Update is called once per frame
@@ -56,16 +64,26 @@ public class EnemySpawner : MonoBehaviour
 	{
 		if (tutorialTransition.FinishedTutorialHuh())
 		{
-			timer += Time.deltaTime;
-			if (timer >= spawnCheck)
+
+			if (spawnRate > maxSpawnrate)
+            {
+				spawnRate = (1f / (Mathf.Floor(World.timer / spawnrateScaleChunks) * spawnrateTimeScaling + initialSpawnRate));
+				Debug.Log("step: " + (Mathf.Floor(World.timer / spawnrateScaleChunks)));
+            } else
+            {
+				spawnRate = maxSpawnrate;
+            }
+
+
+			if (World.timer >= lastSpawn + spawnRate)
 			{
-				timer -= spawnCheck;
 				Debug.Log("Spawning...");
 				SpawnEnemyOutOfCamera();
+				lastSpawn = World.timer;
 			}
 		} else
         {
-			Debug.Log("Timer: " + Time.deltaTime);
+			//Debug.Log("Timer: " + Time.deltaTime);
         }
 	}
 
