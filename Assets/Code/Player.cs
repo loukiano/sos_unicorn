@@ -239,7 +239,19 @@ public class Player : MonoBehaviour
                 }
             }
         }
+        else if (collidingObject.GetComponent<SignPostText>() != null)
+        {
+            collidingObject.GetComponent<SignPostText>().DisplayText();
+        }
+    }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        GameObject collidingObject = collision.gameObject;
+        if (collidingObject.GetComponent<SignPostText>() != null)
+        {
+            collidingObject.GetComponent<SignPostText>().RemoveText();
+        }
     }
 
     private void DamageEnemy(GameObject enemyObj)
