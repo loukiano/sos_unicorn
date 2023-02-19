@@ -7618,7 +7618,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7179520890071871290, guid: eeecf27a766e64147b659117d06624eb, type: 3}
       propertyPath: doBleed
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8382719377896486670, guid: eeecf27a766e64147b659117d06624eb, type: 3}
       propertyPath: m_RootOrder
