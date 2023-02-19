@@ -71,8 +71,10 @@ public class GroundedAI : AIController
             canMove = true;
         }
         if ((dirMove.x > 0 && box.bounds.max.x >= corner.x) ||
-            (dirMove.x < 0 && box.bounds.min.x <= corner.x))
-            // if we're hangin off the edge
+            (dirMove.x < 0 && box.bounds.min.x <= corner.x) ||
+                // if we're hangin off the edge
+            AmFacingWall())
+                // if we're facing a wall
         {
             dirMove.x *= -1; // turn around
         }
@@ -94,6 +96,13 @@ public class GroundedAI : AIController
             }
         }
         return Vector2.positiveInfinity;
+    }
+
+    public bool AmFacingWall()
+    {
+        LayerMask groundMask = LayerMask.GetMask("Ground");
+        RaycastHit2D lookAhead = Physics2D.Raycast(transform.position, dirMove, box.size.x+0.01f, groundMask);
+        return lookAhead.collider != null;
     }
 
     public void MaybeJump()

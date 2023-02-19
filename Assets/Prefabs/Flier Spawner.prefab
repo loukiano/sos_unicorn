@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8419176309694332164}
   - component: {fileID: 4037370013144785886}
   m_Layer: 7
-  m_Name: Enemy Spawner
+  m_Name: Flier Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

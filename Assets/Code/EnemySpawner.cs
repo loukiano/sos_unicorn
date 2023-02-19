@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
 	//public LevelDesign levelDesign;
 
 	public Camera cam;
+    private Bounds camBounds;
 	public float spawnRate; // interval betweeen enemy spawns
 	public float initialSpawnRate;
     public float spawnrateTimeScaling;
@@ -67,6 +68,7 @@ public class EnemySpawner : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+        camBounds = new Bounds(cam.transform.position, new Vector3(camOrthsize * cam.aspect, camOrthsize, 1));
 		if (World.isRunning)
 		{
 			if (spawnRate > maxSpawnrate)
@@ -172,12 +174,22 @@ public class EnemySpawner : MonoBehaviour
             // Spawn left of player
             if (xPosition <= 1.0f)
             {
-                xPosition = Random.value * (cam.transform.position.x - camRatio - xMin) + xMin - enemySizeX;
+                //xPosition = Random.value * (cam.transform.position.x - camRatio - xMin) + xMin - enemySizeX;
+                xPosition = Random.Range(xMin, camBounds.min.x - enemySizeX);
+                if (xPosition < xMin)
+                {
+                    xPosition = xMin;
+                }
             }
             // Spawn right of player
             else
             {
-                xPosition = Random.value * (xMax - (cam.transform.position.x + camRatio)) + cam.transform.position.x + camRatio + enemySizeX;
+                //xPosition = Random.value * (xMax - (cam.transform.position.x + camRatio)) + cam.transform.position.x + camRatio + enemySizeX;
+                xPosition = Random.Range(camBounds.max.x + enemySizeX, xMax);
+                if (xPosition > xMax)
+                {
+                    xPosition = xMax;
+                }
             }
 
             yPosition = Random.value * (yMax - yMin) + yMin;
@@ -188,12 +200,22 @@ public class EnemySpawner : MonoBehaviour
             // Spawn above player
             if (yPosition <= 1.0f)
             {
-                yPosition = Random.value * (cam.transform.position.y - camOrthsize - yMin) + yMin - enemySizeY;
+                //yPosition = Random.value * (cam.transform.position.y - camOrthsize - yMin) + yMin - enemySizeY;
+                yPosition = Random.Range(camBounds.max.y + enemySizeY, yMax);
+                if (yPosition > yMax)
+                {
+                    yPosition = yMax;
+                }
             }
             // Spawn below player
             else
             {
-                yPosition = Random.value * (yMax - (cam.transform.position.y + camOrthsize)) + cam.transform.position.y + camOrthsize - enemySizeY;
+                //yPosition = Random.value * (yMax - (cam.transform.position.y + camOrthsize)) + cam.transform.position.y + camOrthsize - enemySizeY;
+                yPosition = Random.Range(yMin, camBounds.min.y - enemySizeY);
+                if (yPosition < yMin)
+                {
+                    yPosition = yMin;
+                }
             }
 
             xPosition = Random.value * (xMax - xMin) + xMin;
