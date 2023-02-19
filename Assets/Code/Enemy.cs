@@ -48,6 +48,11 @@ public class Enemy : MonoBehaviour
 
 	}
 
+    public void OnDeath()
+    {
+        spr.color = Color.grey;
+    }
+
 	
 
 

@@ -24,12 +24,15 @@ public class World : MonoBehaviour
 
     public static void StartGame()
     {
+
         isRunning = true;
         TutorialTransition tutTrans =  GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
         if (tutTrans != null)
         {
             tutTrans.StartGame();
         }
+        GameObject.Find("Player").GetComponent<Player>().StartBleeding();
+        
     }
 
     // Update is called once per frame

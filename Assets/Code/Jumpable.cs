@@ -11,7 +11,7 @@ public class Jumpable : MonoBehaviour
     public int numJumps = 2;
     private int jumpsLeft = 2;
     private float lastJump = 0; // when was the player's last jump
-    private bool isJumping = false;
+    public bool isJumping = false;
     public float jumpCooldown = 0f; // seconds
     public float jumpForce = 25;
     public float jumpStopMultiplier = 0.5f;

@@ -33,6 +33,10 @@ public class GroundedAI : AIController
                 DoMovement();
                 MaybeJump();
             }
+            if (jump.isJumping)
+            {
+                MaybeStopJump();
+            }
         }
     }
 
@@ -98,18 +102,31 @@ public class GroundedAI : AIController
         RaycastHit2D lookUp = Physics2D.Raycast(transform.position, Vector2.up, detectionRadius, mask);
         if (lookUp.collider != null)
         {
-            Debug.Log("Hit Something: " + lookUp.collider.ToString());
+            //Debug.Log("Hit Something: " + lookUp.collider.ToString());
             Player player = lookUp.collider.gameObject.GetComponent<Player>();
             if (player != null)
                 // we saw the player!
             {
-                canMove = false;
-                rb.velocity = Vector2.zero;
-                jump.DoJump();
+                Debug.Log("Hit Player!");
+                if (playerTransform.position.y > transform.position.y + 1)
+                {
+                    canMove = false;
+                    rb.velocity = Vector2.zero;
+                    jump.DoJump();
+                }
+                
             } else
             {
-                Debug.Log("Thing we hit was " + lookUp.collider.gameObject.ToString());
+                //Debug.Log("Thing we hit was " + lookUp.collider.gameObject.ToString());
             }
+        }
+    }
+
+    public void MaybeStopJump()
+    {
+        if (jump.isJumping && playerTransform.position.y < transform.position.y)
+        {
+            jump.StopJump();
         }
     }
 
@@ -117,6 +134,12 @@ public class GroundedAI : AIController
     {
         LayerMask groundMask = LayerMask.GetMask("Ground");
         return Physics2D.OverlapBox(box.bounds.center, new Vector2(box.bounds.size.x, box.bounds.size.y), 0, groundMask);
+    }
+
+    public void OnChildDestroy()
+    {
+        Debug.Log("Child died");
+        Destroy(gameObject);
     }
 
 }

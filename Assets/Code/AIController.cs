@@ -55,6 +55,11 @@ public class AIController : MonoBehaviour
 
 	public virtual void DoTargeting() { }
 
+	public void OnDeath()
+    {
+		Freeze();
+		box.enabled = false;
+    }
 
 }
 

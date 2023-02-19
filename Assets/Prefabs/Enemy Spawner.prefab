@@ -54,6 +54,7 @@ MonoBehaviour:
   spawnrateTimeScaling: 0.25
   spawnrateScaleChunks: 5
   maxSpawnrate: 0.5
+  maxNumChildren: 30
   initialNumEnemies: 5
   timeSpawnStrong: 10
   timeSpawnStronger: 20

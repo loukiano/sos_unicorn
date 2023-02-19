@@ -17,6 +17,8 @@ public class EnemySpawner : MonoBehaviour
 	public float spawnrateScaleChunks;
 	public float maxSpawnrate;
 
+    public int maxNumChildren;
+
     public int initialNumEnemies;
 	public float timeSpawnStrong = 5;
 	public float timeSpawnStronger = 10;
@@ -67,7 +69,6 @@ public class EnemySpawner : MonoBehaviour
 	{
 		if (World.isRunning)
 		{
-
 			if (spawnRate > maxSpawnrate)
             {
 				spawnRate = initialSpawnRate - Mathf.Floor(World.timer / spawnrateScaleChunks) * spawnrateTimeScaling;
@@ -80,8 +81,17 @@ public class EnemySpawner : MonoBehaviour
 
 			if (World.timer >= lastSpawn + spawnRate)
 			{
-				//Debug.Log("Spawning...");
-				SpawnEnemyOutOfCamera(spawnOnGround);
+                //Debug.Log("Spawning...");
+                string spawnMsg = transform.childCount + "/" + maxNumChildren + " children exist... ";
+                if (transform.childCount < maxNumChildren)
+                {
+                    spawnMsg += "did spawn!";
+				    SpawnEnemyOutOfCamera(spawnOnGround);
+                } else
+                {
+                    spawnMsg += "didn't spawn!";
+                }
+                //Debug.Log(spawnMsg);
 				lastSpawn = World.timer;
 			}
 		} else
@@ -105,9 +115,10 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        GameObject selectedEnemy = SelectEnemy();
-		Instantiate(selectedEnemy, new Vector3(spawnPoint.x, spawnPoint.y, 0), Quaternion.identity);
-		Debug.Log("Spawned at " + spawnPoint.ToString());
+
+		GameObject newEnemy = Instantiate(SelectEnemy(), new Vector3(spawnPoint.x, spawnPoint.y, 0), Quaternion.identity);
+        newEnemy.transform.parent = transform;
+
 		if (spawnPoint.x > xMax || spawnPoint.x < xMin)
         {
 			Debug.Log("WARNING! X: " + spawnPoint.x + " outside bounds: " + new Vector2(xMin, xMax));
@@ -193,16 +204,27 @@ public class EnemySpawner : MonoBehaviour
 		if (grounded)
         {
 			LayerMask groundMask = LayerMask.GetMask("Ground");
-			RaycastHit2D rayDown = Physics2D.Raycast(spawnPoint, Vector2.down, yPosition - yMin, groundMask);
-			if (rayDown.collider != null)
+			RaycastHit2D rayOne = Physics2D.Raycast(spawnPoint, Vector2.down, yPosition - yMin, groundMask);
+            RaycastHit2D rayTwo = Physics2D.Raycast(spawnPoint, Vector2.up, yMax - yPosition, groundMask);
+
+            if (Random.value > 0.5)
+                // half the time, check up first
             {
-				spawnPoint.y = rayDown.collider.bounds.max.y + groundedSpawnOffset;
+                RaycastHit2D temp = rayOne;
+                rayOne = rayTwo;
+                rayTwo = temp;
+            }
+
+            if (rayOne.collider != null)
+            {
+				spawnPoint.y = rayOne.collider.bounds.max.y + groundedSpawnOffset;
+                
             } else
             {
-				RaycastHit2D rayUp = Physics2D.Raycast(spawnPoint, Vector2.up, yMax - yPosition, groundMask);
-				if (rayUp.collider != null)
+				
+				if (rayTwo.collider != null)
                 {
-					spawnPoint.y = rayUp.collider.bounds.max.y + groundedSpawnOffset;
+					spawnPoint.y = rayTwo.collider.bounds.max.y + groundedSpawnOffset;
                 } else
                 {
                     Debug.Log("Couldn't find valid spawning area -- trying again!");
@@ -210,9 +232,19 @@ public class EnemySpawner : MonoBehaviour
                 }
             }
 
+            if ((spawnPoint.x > cam.transform.position.x - camOrthsize && spawnPoint.x < cam.transform.position.x + camOrthsize) ||
+                (spawnPoint.y > cam.transform.position.y - camOrthsize && spawnPoint.y < cam.transform.position.y + camOrthsize))
+                // new spawn is inside the camera :(
+            {
+                Debug.Log(spawnPoint.ToString() + "Would have spawned in camera -- trying again!");
+                return GetOutOfCamPoint(grounded, tryDepth + 1);
+            }
+
         }
 
-		return spawnPoint;
+
+
+        return spawnPoint;
     }
 }
 

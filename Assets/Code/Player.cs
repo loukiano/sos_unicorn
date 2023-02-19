@@ -80,7 +80,6 @@ public class Player : MonoBehaviour
     {
         if (World.isRunning)
         {
-            health.doBleed = true;
             if (kick.isKicking)
             {
                 spr.color = kickColor;
@@ -101,6 +100,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void StartBleeding()
+    {
+        health.doBleed = true;
+    }
+
     void FixedUpdate()
     {
         if (!health.isDead())
@@ -112,6 +116,11 @@ public class Player : MonoBehaviour
                 HandleGravity();
             }
         }
+    }
+
+    public void OnDeath()
+    {
+        rb.simulated = false;
     }
 
 
