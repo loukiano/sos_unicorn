@@ -38,6 +38,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1605701219
+    locked: 0
+  - name: Mountain 1
+    uniqueID: 638575993
+    locked: 0
+  - name: Mountain 2
+    uniqueID: 2036900011
+    locked: 0
+  - name: Behind Player
+    uniqueID: 2808257423
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Foreground
+    uniqueID: 3502054861
     locked: 0
