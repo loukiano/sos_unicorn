@@ -13,7 +13,6 @@ public class AIController : MonoBehaviour
 
     public virtual void Start()
     {
-		canMove = true;
 
         rb = gameObject.GetComponent<Rigidbody2D>();
 		if (rb == null)

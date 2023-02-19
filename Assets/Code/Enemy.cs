@@ -6,7 +6,6 @@ public class Enemy : MonoBehaviour
 	public SpriteRenderer spr;
 
     private Health health;
-	TutorialTransition tutorialTransition;
 
     private Color enemyGreen;
 
@@ -19,8 +18,6 @@ public class Enemy : MonoBehaviour
         {
             spr = gameObject.AddComponent<SpriteRenderer>();
         }
-
-		tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
         health = GetComponent<Health>();
 
         enemyGreen = new Color(46f / 255f, 173f / 255f, 94f / 255f);
@@ -32,8 +29,8 @@ public class Enemy : MonoBehaviour
 	{
         if (health.isDead())
         {
-            if (!(tutorialTransition.FinishedTutorialHuh()))
-                tutorialTransition.SendMessage("StartGame");
+            if (!World.isRunning)
+                World.StartGame();
             spr.color = Color.grey;
         }
         else if (health.health <= 100)

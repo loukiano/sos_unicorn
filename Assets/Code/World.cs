@@ -5,22 +5,43 @@ using UnityEngine;
 public class World : MonoBehaviour
 {
 
-    // TODO: move this timer code to World component
     public static float timer;
     private float lastTimer;
+    public static bool isRunning;
+
+    public bool hasTutorial;
     private TutorialTransition tutorialTransition;
     // Start is called before the first frame update
     void Start()
     {
         timer = 0;
 
-        tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
+        if (hasTutorial)
+        {
+            tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
+        }
+    }
+
+    public static void StartGame()
+    {
+        isRunning = true;
+        TutorialTransition tutTrans =  GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
+        if (tutTrans != null)
+        {
+            tutTrans.StartGame();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (tutorialTransition.FinishedTutorialHuh())
+
+        if (!isRunning && (!hasTutorial ||
+                            (hasTutorial && tutorialTransition.FinishedTutorialHuh())))
+        {
+            isRunning = true;
+        }
+        if (isRunning)
         {
             timer += Time.deltaTime;
             var newTimer = Mathf.Floor(timer);
@@ -29,7 +50,7 @@ public class World : MonoBehaviour
                 //Debug.Log("WORLD TIME: " + newTimer);
             }
             lastTimer = newTimer;
-
         }
+            
     }
 }

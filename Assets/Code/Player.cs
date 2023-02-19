@@ -30,8 +30,6 @@ public class Player : MonoBehaviour
     public Color dashColor;
     public Color kickColor;
 
-    private TutorialTransition tutorialTransition;
-
     // Dash Indicator
     private DashIndicator dashIndicator;
 
@@ -69,16 +67,18 @@ public class Player : MonoBehaviour
         jump = GetComponent<Jumpable>();
         kick = GetComponent<Kickable>();
 
-        scoreUI = GameObject.Find("ScoreUI").GetComponent<ScoreUI>();
-
-        tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
+        GameObject maybeScoreUI = GameObject.Find("ScoreUI");
+        if (maybeScoreUI != null)
+        {
+            scoreUI = maybeScoreUI.GetComponent<ScoreUI>();
+        }
         dashIndicator = GetComponent<DashIndicator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (tutorialTransition.FinishedTutorialHuh())
+        if (World.isRunning)
         {
             health.doBleed = true;
             if (kick.isKicking)
@@ -266,7 +266,11 @@ public class Player : MonoBehaviour
         Health enemyHealth = enemyObj.GetComponent<Health>();
         float bloodValue = enemyHealth.TakeDamage(damage);
         health.HealDamage(bloodValue);
-        scoreUI.Score();
+        if (scoreUI != null)
+        {
+            scoreUI.Score();
+
+        }
     }
 
     private bool IsGrounded()

@@ -39,7 +39,7 @@ public class Jumpable : MonoBehaviour
     {
         if (Time.time > lastJump + jumpCooldown && jumpsLeft > 0)
         {
-            if (dash.isDashing)
+            if (dash != null && dash.isDashing)
             {
                 dash.StopDash();
             }

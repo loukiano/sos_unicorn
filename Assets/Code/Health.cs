@@ -52,7 +52,12 @@ public class Health : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         if (isPlayer)
         {
-            healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
+            GameObject maybeHealthBar = GameObject.Find("HealthBar");
+            if (maybeHealthBar != null)
+            {
+                healthBar = maybeHealthBar.GetComponent<HealthBar>();
+
+            }
         }
     }
 

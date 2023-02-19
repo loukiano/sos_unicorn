@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8419176309694332165}
   - component: {fileID: 8419176309694332164}
-  m_Layer: 0
+  - component: {fileID: 4037370013144785886}
+  m_Layer: 7
   m_Name: Enemy Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8419176309694332167}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.361881, y: -3.8931189, z: 0.13143861}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47,14 +48,40 @@ MonoBehaviour:
   enemy: {fileID: 680816299601697001, guid: e3c109809a07e454c9ddea6bfa6ee25e, type: 3}
   strongEnemy: {fileID: 680816299601697001, guid: acb12b6ed51a424408ec488c6bd50dd5, type: 3}
   strongerEnemy: {fileID: 680816299601697001, guid: 8cc4ee4e610b3a3499d7edfb4fc27ce0, type: 3}
-  mapBounds: {fileID: 0}
-  playerTransform: {fileID: 0}
   cam: {fileID: 0}
   spawnRate: 2
-  initialSpawnRate: 0.25
-  spawnrateTimeScaling: 0.15
+  initialSpawnRate: 2
+  spawnrateTimeScaling: 0.25
   spawnrateScaleChunks: 5
-  maxSpawnrate: 1
+  maxSpawnrate: 0.5
   initialNumEnemies: 5
   timeSpawnStrong: 10
   timeSpawnStronger: 20
+  spawnOnGround: 0
+  groundedSpawnOffset: 0
+--- !u!61 &4037370013144785886
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8419176309694332167}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

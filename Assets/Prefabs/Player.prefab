@@ -234,6 +234,7 @@ MonoBehaviour:
   maxDashes: 1
   numDashes: 0
   dashDmg: 100
+  dashSize: 0
 --- !u!114 &-6791544593589651684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,10 +265,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   box: {fileID: 0}
   rb: {fileID: 0}
+  t: {fileID: 0}
   dash: {fileID: 0}
   kickCooldown: 2
   kickDuration: 0.1
   kickVel: 7
   kickDmgScale: 1
-  kickSize: {x: 1.5, y: 3}
+  kickSize: 0
   isKicking: 0
