@@ -41,6 +41,7 @@ public class DashIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (dash.CanDash())
         {
             spr.color = readyColor;
@@ -54,11 +55,12 @@ public class DashIndicator : MonoBehaviour
         // neutral dash
         {
             indicatorPosition = new Vector3 (t.position.x, t.position.y, 1);
-            indicatorTransform.rotation = Quaternion.Euler(0, 0, -90);
+            //indicatorTransform.rotation = Quaternion.Euler(0, 0, -90);
 
         }
         else
         {
+            dash.aimDir = inputDir;
             float newXVel = inputDir.x * dash.dashVel;
             if (Mathf.Sign(inputDir.x) == Mathf.Sign(rb.velocity.x))
             // conserve momentum if same direction

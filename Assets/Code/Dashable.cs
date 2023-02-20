@@ -23,6 +23,8 @@ public class Dashable : MonoBehaviour
     public float dashDmg;
     public float dashSize;
 
+    public Vector2 aimDir;
+
     private float lastDashTime;
     private Vector2 cancelVel; // velocity to cancel the most recent dash
     private Vector3 normalTransformScale;
@@ -31,6 +33,7 @@ public class Dashable : MonoBehaviour
     // Use this for initialization
     void Start()
 	{
+        aimDir = Vector2.right;
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
@@ -78,9 +81,9 @@ public class Dashable : MonoBehaviour
             if (dir.magnitude == 0)
             // neutral dash
             {
-                dir = new Vector2(1, 0);
+                dir = aimDir;
             }
-            else if (dir.magnitude != 1)
+            if (dir.magnitude != 1)
             {
                 dir.Normalize();
             }
