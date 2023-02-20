@@ -126,7 +126,7 @@ public class GroundedAI : AIController
                 
             } else
             {
-                //Debug.Log("Thing we hit was " + lookUp.collider.gameObject.ToString());
+                Debug.Log("Hit " + lookUp.collider.gameObject.ToString());
             }
         }
     }

@@ -121,15 +121,7 @@ public class EnemySpawner : MonoBehaviour
 		GameObject newEnemy = Instantiate(SelectEnemy(), new Vector3(spawnPoint.x, spawnPoint.y, 0), Quaternion.identity);
         newEnemy.transform.parent = transform;
 
-		if (spawnPoint.x > xMax || spawnPoint.x < xMin)
-        {
-			Debug.Log("WARNING! X: " + spawnPoint.x + " outside bounds: " + new Vector2(xMin, xMax));
-        }
-        if (spawnPoint.y > yMax || spawnPoint.y < yMin)
-        {
-            Debug.Log("WARNING! Y: " + spawnPoint.y + " outside bounds: " + new Vector2(yMin, yMax));
-        }
-
+		
     }
 
 	public GameObject SelectEnemy()
@@ -263,6 +255,20 @@ public class EnemySpawner : MonoBehaviour
             }
 
         }
+
+        if (spawnPoint.x > xMax || spawnPoint.x < xMin)
+        {
+            Debug.Log("WARNING! X: " + spawnPoint.x + " outside bounds: " + new Vector2(xMin, xMax) +
+                    "\n grounded = " + grounded + ", clamping to be in bounds");
+            spawnPoint.x = spawnPoint.x > xMax ? xMax : xMin;
+        }
+        if (spawnPoint.y > yMax || spawnPoint.y < yMin)
+        {
+            Debug.Log("WARNING! Y: " + spawnPoint.y + " outside bounds: " + new Vector2(yMin, yMax) +
+                    "\n grounded = " + grounded + ", clamping to be in bounds");
+            spawnPoint.y = spawnPoint.y > yMax ? yMax :yMin;
+        }
+
 
 
 
