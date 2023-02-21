@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
 	public GameObject strongEnemy;
 	public GameObject strongerEnemy;
 
-	private BoxCollider2D spawnArea;
+	public BoxCollider2D spawnArea;
 	//public LevelDesign levelDesign;
 
 	public Camera cam;

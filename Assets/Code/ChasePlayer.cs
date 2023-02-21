@@ -7,11 +7,13 @@ public class ChasePlayer : AIController
     public float detectionRadius;
 
 	private Transform playerTransform; // transform of player
+    private EnemySpawner spawner;
     // Use this for initialization
     public override void Start()
 	{
 		base.Start();
 		playerTransform = GameObject.Find("Player").transform;
+        spawner = GetComponentInParent<EnemySpawner>();
         
     }
 
@@ -51,7 +53,7 @@ public class ChasePlayer : AIController
     public override void DoTargeting()
     {
         dirMove = playerTransform.position - transform.position;
-        if (dirMove.magnitude > detectionRadius)
+        if (!spawner.spawnArea.bounds.Contains(playerTransform.position) && dirMove.magnitude > detectionRadius)
             // player is far away
         {
             dirMove = Vector2.zero;

@@ -101,7 +101,7 @@ MonoBehaviour:
   canMove: 1
   moveSpeed: 3
   dirMove: {x: 0, y: 0}
-  detectionRadius: 20
+  detectionRadius: 40
 --- !u!114 &4797668219923226213
 MonoBehaviour:
   m_ObjectHideFlags: 0
