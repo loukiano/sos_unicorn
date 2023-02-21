@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4646000366649863767}
   - component: {fileID: 6314184994961382464}
   - component: {fileID: 8596180979289250984}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StrongEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,8 @@ MonoBehaviour:
   spr: {fileID: 0}
   canMove: 1
   moveSpeed: 7
-  dirToPlayer: {x: 0, y: 0}
+  dirMove: {x: 0, y: 0}
+  detectionRadius: 10
 --- !u!114 &-1164518940453408871
 MonoBehaviour:
   m_ObjectHideFlags: 0

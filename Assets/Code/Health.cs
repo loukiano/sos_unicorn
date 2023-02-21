@@ -52,7 +52,12 @@ public class Health : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         if (isPlayer)
         {
-            healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
+            GameObject maybeHealthBar = GameObject.Find("HealthBar");
+            if (maybeHealthBar != null)
+            {
+                healthBar = maybeHealthBar.GetComponent<HealthBar>();
+
+            }
         }
     }
 
@@ -113,8 +118,8 @@ public class Health : MonoBehaviour
         if (health <= 0)
         {
             // once dead, dont interact with anything anymore;
-            box.enabled = false;
-            rb.simulated = false;
+            gameObject.SendMessage("OnDeath", SendMessageOptions.DontRequireReceiver);
+            transform.parent.SendMessage("OnDeath", SendMessageOptions.DontRequireReceiver);
             deathTime = Time.time;
         }
         StartCoroutine(TurnInvincible());
@@ -152,6 +157,8 @@ public class Health : MonoBehaviour
         {
             if (!isPlayer)
             {
+                
+                transform.parent.SendMessage("OnChildDestroy", SendMessageOptions.DontRequireReceiver);
                 Destroy(gameObject);
             }
         }

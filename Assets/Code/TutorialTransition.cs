@@ -8,12 +8,11 @@ public class TutorialTransition : MonoBehaviour
     public GameObject tutorialText;
     public Color pinkColor;
 
-    public Vector2 TutorialPoint;
-    public Vector2 startPoint;
 
     public bool tutorial = true;
     private Transform backgroundTransform;
     private SpriteRenderer backgroundSpriteRenderer;
+    private World world;
     private Transform playerTransform;
 
     // Start is called before the first frame update
@@ -22,8 +21,16 @@ public class TutorialTransition : MonoBehaviour
         if (background != null)
         {
             backgroundSpriteRenderer = background.GetComponent<SpriteRenderer>();
+            world = background.GetComponent<World>();
         }
+
+
         playerTransform = GameObject.Find("Player").transform;
+        if (!world.hasTutorial)
+        {
+            StartGame();
+        }
+        
     }
 
     // Update is called once per frame

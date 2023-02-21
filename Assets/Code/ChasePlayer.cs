@@ -3,27 +3,30 @@ using System.Collections;
 
 public class ChasePlayer : AIController
 {
-	public Vector2 dirToPlayer; // normalized vector pointing towards player
+	public Vector2 dirMove; // normalized vector pointing towards player
+    public float detectionRadius;
 
 	private Transform playerTransform; // transform of player
-    TutorialTransition tutorialTransition;
+    private EnemySpawner spawner;
     // Use this for initialization
     public override void Start()
 	{
 		base.Start();
 		playerTransform = GameObject.Find("Player").transform;
-        tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
-        canMove = tutorialTransition.FinishedTutorialHuh();
+        spawner = GetComponentInParent<EnemySpawner>();
+        
     }
 
 	// Update is called once per frame
 	public override void FixedUpdate()
 	{
-        canMove = tutorialTransition.FinishedTutorialHuh();
-        if (canMove)
+        if (World.isRunning)
         {
 			DoTargeting();
-			DoMovement();
+            if (canMove)
+            {
+			    DoMovement();
+            }
         }
 	}
 
@@ -43,14 +46,19 @@ public class ChasePlayer : AIController
         rb.AddForce(moveForce * dirToPlayer);
         */
 
-        rb.velocity = moveSpeed * dirToPlayer;
+        rb.velocity = moveSpeed * dirMove;
         
     }
 
     public override void DoTargeting()
     {
-        dirToPlayer = playerTransform.position - transform.position;
-        dirToPlayer.Normalize();
+        dirMove = playerTransform.position - transform.position;
+        if (!spawner.spawnArea.bounds.Contains(playerTransform.position) && dirMove.magnitude > detectionRadius)
+            // player is far away
+        {
+            dirMove = Vector2.zero;
+        }
+        dirMove.Normalize();
     }
 
 

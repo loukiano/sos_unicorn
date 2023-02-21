@@ -19,7 +19,6 @@ public class Controller : MonoBehaviour
 
     Player p;
 
-    private TutorialTransition tutorialTransition;
 
     // Dash Indicator
     private DashIndicator dashIndicator;
@@ -28,14 +27,13 @@ public class Controller : MonoBehaviour
     void Start()
 	{
         p = GetComponent<Player>();
-        tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
         dashIndicator = GetComponent<DashIndicator>();
     }
 
     void Update()
     {
 
-        if (!tutorialTransition.FinishedTutorialHuh())
+        if (!World.isRunning)
         {
             MaybeDash();
         }
@@ -72,7 +70,7 @@ public class Controller : MonoBehaviour
         float xin = 0.0f;
         float yin = 0.0f;
 
-        if (tutorialTransition.FinishedTutorialHuh())
+        if (World.isRunning)
         {
             if (Input.GetJoystickNames().Length == 0)
             // No controller, use keyboard

@@ -47,5 +47,10 @@ public class Attack : MonoBehaviour
         }
         
     }
+
+    public void OnDeath()
+    {
+        atkDmg = 0;
+    }
 }
 
