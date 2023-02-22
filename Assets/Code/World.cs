@@ -8,10 +8,12 @@ public class World : MonoBehaviour
     public static float timer;
     private float lastTimer;
     public static bool isRunning;
+    public bool copyisRunning;
 
     public bool hasTutorial;
     private TutorialTransition tutorialTransition;
     // Start is called before the first frame update
+
     void Start()
     {
         timer = 0;
@@ -19,6 +21,11 @@ public class World : MonoBehaviour
         if (hasTutorial)
         {
             tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
+        }
+
+        if (!isRunning && !hasTutorial)
+        {
+            isRunning = true;
         }
     }
 
@@ -32,18 +39,26 @@ public class World : MonoBehaviour
             tutTrans.StartGame();
         }
         GameObject.Find("Player").GetComponent<Player>().StartBleeding();
-        
+    }
+
+    public static void PauseGame()
+    {
+        isRunning = false;
+    }
+
+    public static void ContinueGame()
+    {
+        isRunning = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (!isRunning && (!hasTutorial ||
-                            (hasTutorial && tutorialTransition.FinishedTutorialHuh())))
+        if (!isRunning && hasTutorial && tutorialTransition.FinishedTutorialHuh())
         {
             isRunning = true;
         }
+
         if (isRunning)
         {
             timer += Time.deltaTime;
@@ -54,6 +69,7 @@ public class World : MonoBehaviour
             }
             lastTimer = newTimer;
         }
-            
+
+        copyisRunning = isRunning;
     }
 }

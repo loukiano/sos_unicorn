@@ -8,9 +8,11 @@ public class EnemySpawner : MonoBehaviour
 	public GameObject strongerEnemy;
 
 	public BoxCollider2D spawnArea;
-	//public LevelDesign levelDesign;
+    //public LevelDesign levelDesign;
 
-	public Camera cam;
+    public bool shouldSpawn;
+
+    public Camera cam;
     private Bounds camBounds;
 	public float spawnRate; // interval betweeen enemy spawns
 	public float initialSpawnRate;
@@ -38,8 +40,6 @@ public class EnemySpawner : MonoBehaviour
 	private int normalProb = 5;
 	private int strongProb = 8;
 	private int strongerProb = 10;
-
-	
 
 	// Use this for initialization
 	void Start()
@@ -69,7 +69,7 @@ public class EnemySpawner : MonoBehaviour
 	void Update()
 	{
         camBounds = new Bounds(cam.transform.position, new Vector3(camOrthsize * cam.aspect, camOrthsize, 1));
-		if (World.isRunning)
+		if (World.isRunning && shouldSpawn)
 		{
 			if (spawnRate > maxSpawnrate)
             {
@@ -273,6 +273,16 @@ public class EnemySpawner : MonoBehaviour
 
 
         return spawnPoint;
+    }
+
+    public void StartSpawn()
+    {
+        shouldSpawn = true;
+    }
+
+    public void StopSpawn()
+    {
+        shouldSpawn = false;
     }
 }
 

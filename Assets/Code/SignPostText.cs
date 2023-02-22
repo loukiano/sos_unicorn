@@ -12,12 +12,14 @@ public class SignPostText : MonoBehaviour
 
     private BoxCollider2D signCollider;
     private TMP_Text signText;
+    private Transform t;
 
     // Start is called before the first frame update
     void Start()
     {
         signCollider = GetComponent<BoxCollider2D>();
         signText = signTextObject.GetComponent<TMP_Text>();
+        t = signTextObject.GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -51,11 +53,21 @@ public class SignPostText : MonoBehaviour
 
     public void DisplayText()
     {
-        signText.text = "Jump, jump, dash to get on top of the castle!";
+        if (tag == "title")
+        {
+            t.localPosition = new Vector3(0, 300f, 0f);
+            signText.fontSize = 200f;
+            signText.text = "SOS Unicorn";
+        }
+        if (tag == "dash")
+            signText.text = "Jump, jump, dash to get on top of the castle!";
+    
     }
 
     public void RemoveText()
     {
+        t.localPosition = new Vector3(-200f, 300f, 0f);
+        signText.fontSize = 100f;
         signText.text = "";
     }
 }

@@ -28,6 +28,10 @@ public class ChasePlayer : AIController
 			    DoMovement();
             }
         }
+        else
+        {
+            rb.velocity = 0f * dirMove;
+        }
 	}
 
     public override void DoMovement()

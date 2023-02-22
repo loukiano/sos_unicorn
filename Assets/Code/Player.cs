@@ -78,25 +78,22 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (World.isRunning)
+        if (kick.isKicking)
         {
-            if (kick.isKicking)
-            {
-                spr.color = kickColor;
-            }
-            else if (dash.isDashing)
-            {
-                spr.color = dashColor;
-            }
-            else if (health.isInvincible)
-            {
-                spr.color = hurtColor;
-            }
-            else
-            {
-                spr.color = normalColor;
+            spr.color = kickColor;
+        }
+        else if (dash.isDashing)
+        {
+            spr.color = dashColor;
+        }
+        else if (health.isInvincible)
+        {
+            spr.color = hurtColor;
+        }
+        else
+        {
+            spr.color = normalColor;
 
-            }
         }
     }
 
@@ -251,6 +248,11 @@ public class Player : MonoBehaviour
         else if (collidingObject.GetComponent<SignPostText>() != null)
         {
             collidingObject.GetComponent<SignPostText>().DisplayText();
+            World.PauseGame();
+        }
+        else if (collidingObject.GetComponent<EnemySpawner>() != null)
+        {
+            collidingObject.GetComponent<EnemySpawner>().StartSpawn();
         }
     }
 
@@ -260,6 +262,11 @@ public class Player : MonoBehaviour
         if (collidingObject.GetComponent<SignPostText>() != null)
         {
             collidingObject.GetComponent<SignPostText>().RemoveText();
+            World.ContinueGame();
+        }
+        else if (collidingObject.GetComponent<EnemySpawner>() != null)
+        {
+            collidingObject.GetComponent<EnemySpawner>().StopSpawn();
         }
     }
 
