@@ -12,12 +12,19 @@ public class SignPostText : MonoBehaviour
 
     private BoxCollider2D signCollider;
     private TMP_Text signText;
+    private Transform t;
+
+    public TMP_FontAsset titleFont;
+    public TMP_FontAsset hintFont;
+    public Color titleColor;
+    public Color hintColor;
 
     // Start is called before the first frame update
     void Start()
     {
         signCollider = GetComponent<BoxCollider2D>();
         signText = signTextObject.GetComponent<TMP_Text>();
+        t = signTextObject.GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -51,11 +58,31 @@ public class SignPostText : MonoBehaviour
 
     public void DisplayText()
     {
-        signText.text = "Jump, jump, dash to get on top of the castle!";
+        if (tag == "title")
+        {
+            signText.font = titleFont;
+            t.localPosition = new Vector3(0, 300f, 0f);
+            signText.fontSize = 200f;
+            signText.color = titleColor;
+            signText.text = "SOS Unicorn";
+        }
+        else if (tag == "dash")
+            signText.text = "Jump, Jump, Dash\nto get on top of the castle!";
+        else if (tag == "jump")
+            signText.text = "Hmm, such a tall climb!\nTry using your Jump out of your Dash!";
+        else if (tag == "danger")
+        {
+            signText.text = "Be careful!\nFaeries are more dangerous out here.\nTry using your Puff out of your Dash to deal with big swarms!";
+        }
+    
     }
 
     public void RemoveText()
     {
+        signText.font = hintFont;
+        t.localPosition = new Vector3(0f, -200f, 0f);
+        signText.fontSize = 80f;
+        signText.color = hintColor;
         signText.text = "";
     }
 }

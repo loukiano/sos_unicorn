@@ -75,7 +75,7 @@ public class Health : MonoBehaviour
             }
             Die();
         }
-        else if (isPlayer && doBleed && World.timer > 0)
+        else if (isPlayer && doBleed && World.timer > 0 && World.isRunning)
         {
             if (bleedRate < maxBleedRate)
             {

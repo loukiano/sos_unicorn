@@ -12,7 +12,7 @@ public class TutorialTransition : MonoBehaviour
     public bool tutorial = true;
     private Transform backgroundTransform;
     private SpriteRenderer backgroundSpriteRenderer;
-    private World world;
+    public World world;
     private Transform playerTransform;
 
     // Start is called before the first frame update
