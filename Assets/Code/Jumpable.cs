@@ -53,6 +53,10 @@ public class Jumpable : MonoBehaviour
             }
             else
             {
+                if (dash != null && dash.inCoyoteTime)
+                {
+                    dash.RefreshDashes();
+                }
                 if (rb.velocity.y < 0)
                 // if falling
                 {
