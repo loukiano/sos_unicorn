@@ -22,10 +22,13 @@ public class Dashable : MonoBehaviour
     public int numDashes;
     public float dashDmg;
     public float dashSize;
+    public bool inCoyoteTime;
+    public float coyoteTime;
 
     public Vector2 aimDir;
 
     private float lastDashTime;
+    private float lastDashStopTime;
     private Vector2 cancelVel; // velocity to cancel the most recent dash
     private Vector3 normalTransformScale;
     //public Vector2 nextDash;
@@ -56,6 +59,8 @@ public class Dashable : MonoBehaviour
             {
                 // only cancel momentum if the dash hasn't been canceled by something
                 isDashing = false;
+                lastDashStopTime = Time.time;
+                inCoyoteTime = true;
                 if (IsGrounded())
                 {
                     cancelVel *= Vector2.right;
@@ -64,6 +69,10 @@ public class Dashable : MonoBehaviour
                 if (!kick.isKicking)
                     t.localScale = normalTransformScale;
             }
+        }
+        if (lastDashStopTime + coyoteTime < Time.time && inCoyoteTime)
+        {
+            inCoyoteTime = false;
         }
         if (lastDashTime + dashingTime * 3 < Time.time && IsGrounded())
         {
@@ -147,6 +156,11 @@ public class Dashable : MonoBehaviour
         {
             t.localScale = normalTransformScale;
         }
+    }
+
+    public void AdjustVelocity()
+    {
+        rb.velocity -= new Vector2(cancelVel.x / 2, cancelVel.y / 3);
     }
 
     private bool IsGrounded()

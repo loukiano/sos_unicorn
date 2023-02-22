@@ -39,23 +39,28 @@ public class Jumpable : MonoBehaviour
     {
         if (Time.time > lastJump + jumpCooldown && jumpsLeft > 0)
         {
-            if (dash != null && dash.isDashing)
-            {
-                dash.StopDash();
-            }
             //Debug.Log("Jumping!");
             lastJump = Time.time;
             jumpsLeft -= 1;
             isJumping = true;
 
-            if (rb.velocity.y < 0)
-            // if falling
+            if (dash != null && dash.isDashing)
             {
-
-                rb.AddForce(Vector2.down * rb.velocity.y, ForceMode2D.Impulse);
+                dash.StopDash();
+                dash.AdjustVelocity();
+                dash.RefreshDashes();
+                //rb.AddForce(Vector2.up * jumpForce / 2, ForceMode2D.Impulse);
             }
+            else
+            {
+                if (rb.velocity.y < 0)
+                // if falling
+                {
+                    rb.AddForce(Vector2.down * rb.velocity.y, ForceMode2D.Impulse);
+                }
 
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
         }
     }
 

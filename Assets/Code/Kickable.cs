@@ -57,30 +57,31 @@ public class Kickable : MonoBehaviour
         float tempKDS = kickDmgScale;
         //box.size *= kickSize;
         float velocityMagnitude = Mathf.Sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y * rb.velocity.y);
-        if (velocityMagnitude < 40.0f)
+
+        Vector2 addVel = new Vector2(0, 1);
+        addVel *= kickVel;
+
+        if (velocityMagnitude < 40.0f && !dash.inCoyoteTime)
         {
             t.localScale = normalTransformScale * kickSize;
         }
-        else if (velocityMagnitude < 80.0f)
+        else if (velocityMagnitude < 80.0f || dash.inCoyoteTime)
         {
             t.localScale = normalTransformScale * kickSize * 2;
             kickDmgScale *= 2;
+            rb.velocity += addVel;
         }
         else
         {
             t.localScale = normalTransformScale * kickSize * 3;
             kickDmgScale *= 3;
-        }
-
-        Vector2 addVel = new Vector2 (0, 1);
-        addVel *= kickVel;
-        
-        if (dash.isDashing || velocityMagnitude > 40.0f)
             rb.velocity += addVel;
+        }
+        /*
         else
         {
             rb.velocity = addVel;
-        }
+        }*/
 
         //float damage = rb.velocity.magnitude * kickDmgScale;
         //Debug.Log("Damage: " + damage);
