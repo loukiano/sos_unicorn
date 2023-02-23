@@ -147,7 +147,7 @@ public class GroundedAI : AIController
 
     public void OnChildDestroy()
     {
-        Debug.Log("Child died");
+        //Debug.Log("Child died");
         Destroy(gameObject);
     }
 

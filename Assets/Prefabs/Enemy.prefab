@@ -211,7 +211,7 @@ MonoBehaviour:
   bloodValue: 7
   isInvincible: 0
   invincibleDur: 0.2
-  deathDur: 0.25
+  deathDur: 0.15
   deathTime: 0
   isPlayer: 0
   bleedRate: 0

@@ -25,17 +25,18 @@ public class World : MonoBehaviour
 
         if (!isRunning && !hasTutorial)
         {
-            isRunning = true;
+            World.StartRunning();
         }
     }
 
-    public static void StartGame()
+    public static void StartRunning()
     {
 
         isRunning = true;
         TutorialTransition tutTrans =  GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
-        if (tutTrans != null)
+        if (!tutTrans.Equals(null))
         {
+            Debug.Log(tutTrans.ToString());
             tutTrans.StartGame();
         }
         GameObject.Find("Player").GetComponent<Player>().StartBleeding();

@@ -43,7 +43,11 @@ public class TutorialTransition : MonoBehaviour
     {
         tutorial = false;
         tutorialText.SetActive(false);
-        backgroundSpriteRenderer.color = pinkColor;
+        if (backgroundSpriteRenderer != null)
+        {
+            backgroundSpriteRenderer.color = pinkColor;
+
+        }
     }
 
     public bool FinishedTutorialHuh()

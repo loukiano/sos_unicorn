@@ -18,7 +18,7 @@ public class BloodSuck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("start called!");
+        //Debug.Log("blood suck start called!");
 
         InitializeIfNeeded();
 
