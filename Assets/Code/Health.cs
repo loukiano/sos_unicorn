@@ -86,7 +86,15 @@ public class Health : MonoBehaviour
                 bleedRate = maxBleedRate;
             }
             health -= bleedRate;
-            
+
+            if (health <= 0)
+            {
+                // once dead, dont interact with anything anymore;
+                gameObject.SendMessage("OnDeath", SendMessageOptions.DontRequireReceiver);
+                transform.parent.SendMessage("OnDeath", SendMessageOptions.DontRequireReceiver);
+                deathTime = Time.time;
+            }
+
         }
 
         if (healthBar != null)
