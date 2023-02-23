@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 1999699964654650381}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -268,6 +268,9 @@ MonoBehaviour:
   numDashes: 0
   dashDmg: 100
   dashSize: 1.2
+  inCoyoteTime: 0
+  coyoteTime: 0
+  aimDir: {x: 0, y: 0}
 --- !u!114 &4532445220266845954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numJumps: 2
+  isJumping: 0
   jumpCooldown: 0
   jumpForce: 25
   jumpStopMultiplier: 0.5

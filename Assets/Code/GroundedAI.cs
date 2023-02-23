@@ -116,7 +116,7 @@ public class GroundedAI : AIController
             if (player != null)
                 // we saw the player!
             {
-                Debug.Log("Hit Player!");
+                //Debug.Log("Hit Player!");
                 if (playerTransform.position.y > transform.position.y + 1)
                 {
                     canMove = false;
@@ -126,7 +126,7 @@ public class GroundedAI : AIController
                 
             } else
             {
-                Debug.Log("Hit " + lookUp.collider.gameObject.ToString());
+                //Debug.Log("Hit " + lookUp.collider.gameObject.ToString());
             }
         }
     }

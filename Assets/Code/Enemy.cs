@@ -4,6 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour
 {
 	public SpriteRenderer spr;
+    public ParticleSystem bloodExplosion;
 
     private Health health;
 
@@ -51,6 +52,8 @@ public class Enemy : MonoBehaviour
     public void OnDeath()
     {
         spr.color = Color.grey;
+        Instantiate(bloodExplosion, transform.position, Quaternion.identity);
+        //bloodExplosion.GetComponent<BloodSuck>().Explode();
     }
 
 	

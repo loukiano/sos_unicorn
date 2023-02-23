@@ -91,7 +91,7 @@ public class Health : MonoBehaviour
             {
                 // once dead, dont interact with anything anymore;
                 gameObject.SendMessage("OnDeath", SendMessageOptions.DontRequireReceiver);
-                transform.parent.SendMessage("OnDeath", SendMessageOptions.DontRequireReceiver);
+                Debug.Log("Setting player death time");
                 deathTime = Time.time;
             }
 
@@ -126,7 +126,8 @@ public class Health : MonoBehaviour
         if (health <= 0)
         {
             // once dead, dont interact with anything anymore;
-            gameObject.SendMessage("OnDeath", SendMessageOptions.DontRequireReceiver);
+            Debug.Log("Died!");
+            gameObject.BroadcastMessage("OnDeath", SendMessageOptions.DontRequireReceiver);
             transform.parent.SendMessage("OnDeath", SendMessageOptions.DontRequireReceiver);
             deathTime = Time.time;
         }
