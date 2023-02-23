@@ -27,6 +27,26 @@ public class AfterImage : MonoBehaviour
         main.simulationSpace = ParticleSystemSimulationSpace.World;
 
         dash = GetComponentInParent<Dashable>();
+
+        //setting proper color
+        Player player = GetComponentInParent<Player>();
+        var col = ps.colorOverLifetime;
+        col.enabled = true;
+
+        Gradient grad = new Gradient();
+        grad.SetKeys(new GradientColorKey[] { new GradientColorKey(player.dashColor, 0.0f), new GradientColorKey(player.dashColor, 1.0f) }, new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(0.0f, 1.0f) });
+
+        col.color = grad;
+
+
+        //setting proper sprite
+        var tex = ps.textureSheetAnimation;
+        tex.enabled = true;
+        tex.mode = ParticleSystemAnimationMode.Sprites;
+        var plSpr = GetComponentInParent<SpriteRenderer>();
+        tex.SetSprite(0, plSpr.sprite);
+
+
     }
 
     void Update()
