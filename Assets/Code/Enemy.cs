@@ -4,7 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour
 {
 	public SpriteRenderer spr;
-    public ParticleSystem bloodExplosion;
+    public GameObject bloodExplosion;
 
     private Health health;
 
