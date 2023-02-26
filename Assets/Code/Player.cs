@@ -40,6 +40,9 @@ public class Player : MonoBehaviour
     public Kickable kick;
     public Stompable stomp;
 
+    public Transform bulletSpawnPoint;
+    public GameObject bulletPrefab;
+    public float bulletSpeed = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -96,6 +99,16 @@ public class Player : MonoBehaviour
         {
             spr.color = normalColor;
 
+        }
+
+
+
+        if (Input.GetKeyDown(KeyCode.K)) {
+            Vector2 inputDir = c.GetInputDir();
+            var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+            bullet.GetComponent<Rigidbody2D>().velocity = inputDir * bulletSpeed;
+            Vector2 propulsion = new Vector2(-500,-50);
+            rb.AddForce(new Vector2(propulsion.x*inputDir.x, propulsion.y*inputDir.y), ForceMode2D.Impulse);
         }
     }
 
