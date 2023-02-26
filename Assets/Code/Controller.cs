@@ -17,6 +17,8 @@ public class Controller : MonoBehaviour
 
     public KeyCode kickKey = KeyCode.K;
 
+    public KeyCode stompKey = KeyCode.L;
+
     Player p;
 
 
@@ -114,6 +116,7 @@ public class Controller : MonoBehaviour
             gameObject.SendMessage("DoKick");
         } 
     }
+
 
     private void MaybeJump()
     {

@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     public Dashable dash;
     public Jumpable jump;
     public Kickable kick;
+    public Stompable stomp;
 
 
     // Start is called before the first frame update
@@ -66,6 +67,7 @@ public class Player : MonoBehaviour
         dash = GetComponent<Dashable>();
         jump = GetComponent<Jumpable>();
         kick = GetComponent<Kickable>();
+        stomp = GetComponent<Stompable>();
 
         GameObject maybeScoreUI = GameObject.Find("ScoreUI");
         if (maybeScoreUI != null)
@@ -235,7 +237,7 @@ public class Player : MonoBehaviour
         if (collidingObject.GetComponent<Enemy>() != null)
         {
             //Debug.Log("COLLIDING WITH ENEMY IN PLAYER");
-            if (kick.isKicking || dash.isDashing)
+            if (stomp.isStomping || kick.isKicking || dash.isDashing)
             {
                 DamageEnemy(collidingObject);
 
@@ -273,7 +275,7 @@ public class Player : MonoBehaviour
     private void DamageEnemy(GameObject enemyObj)
     {
         float damage = dash.dashDmg;
-        if (kick.isKicking)
+        if (kick.isKicking || stomp.isStomping)
         {
             //damage = rb.velocity.magnitude * kick.kickDmgScale;
             damage = kick.kickDmgScale * 100f;
@@ -289,7 +291,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         LayerMask groundMask = LayerMask.GetMask("Ground");
         return Physics2D.OverlapBox(box.bounds.center, new Vector2(box.bounds.size.x, box.bounds.size.y), 0, groundMask);

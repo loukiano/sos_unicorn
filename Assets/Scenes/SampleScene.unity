@@ -10442,6 +10442,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1683476700}
   m_CullTransparentMesh: 1
+--- !u!1 &1700496934 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7713692103779067659, guid: 24bbeebc75f934de2ad10a3a73827836, type: 3}
+  m_PrefabInstance: {fileID: 984297442}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1703468991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12423,6 +12428,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7713692103779067664, guid: 24bbeebc75f934de2ad10a3a73827836, type: 3}
   m_PrefabInstance: {fileID: 984297442}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1961090259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700496934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ee7756a2d753749948052fb4f69b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropForce: 100
+  stopTime: 0.3
+  gravityScale: 0
+  stompKey: 108
+  isStomping: 0
+  t: {fileID: 0}
+  box: {fileID: 0}
+  kickCooldown: 0
+  kickDuration: 0
+  kickVel: 0
+  kickDmgScale: 0
+  kickSize: 0
+  isKicking: 0
 --- !u!4 &1965980555 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4280961164421236594, guid: da4c7c56b761942f9b25a4ab08f2b259, type: 3}
