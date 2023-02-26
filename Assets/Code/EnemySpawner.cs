@@ -113,7 +113,7 @@ public class EnemySpawner : MonoBehaviour
 		Vector2 spawnPoint = GetOutOfCamPoint(isGrounded);
         if (spawnPoint.Equals(Vector2.positiveInfinity))
         {
-            Debug.Log("failed to find spawn location -- skipping");
+            //Debug.Log("failed to find spawn location -- skipping");
             return;
         }
 
@@ -250,7 +250,7 @@ public class EnemySpawner : MonoBehaviour
                 (spawnPoint.y > cam.transform.position.y - camOrthsize && spawnPoint.y < cam.transform.position.y + camOrthsize))
                 // new spawn is inside the camera :(
             {
-                Debug.Log(spawnPoint.ToString() + "Would have spawned in camera -- trying again!");
+                //Debug.Log(spawnPoint.ToString() + "Would have spawned in camera -- trying again!");
                 return GetOutOfCamPoint(grounded, tryDepth + 1);
             }
 

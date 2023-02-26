@@ -211,7 +211,7 @@ MonoBehaviour:
   bloodValue: 7
   isInvincible: 0
   invincibleDur: 0.2
-  deathDur: 0.25
+  deathDur: 0.15
   deathTime: 0
   isPlayer: 0
   bleedRate: 0
@@ -252,6 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spr: {fileID: 0}
+  bloodExplosion: {fileID: 7433063616485181098, guid: c63ccfaecf070456093713006c39eb43, type: 3}
 --- !u!50 &7527512849071575263
 Rigidbody2D:
   serializedVersion: 4

@@ -4,6 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour
 {
 	public SpriteRenderer spr;
+    public GameObject bloodExplosion;
 
     private Health health;
 
@@ -30,7 +31,7 @@ public class Enemy : MonoBehaviour
         if (health.isDead())
         {
             if (!World.isRunning)
-                World.StartGame();
+                World.StartRunning();
             spr.color = Color.grey;
         }
         else if (health.health <= 100)
@@ -51,6 +52,8 @@ public class Enemy : MonoBehaviour
     public void OnDeath()
     {
         spr.color = Color.grey;
+        Instantiate(bloodExplosion, transform.position, Quaternion.identity);
+        //bloodExplosion.GetComponent<BloodSuck>().Explode();
     }
 
 	
