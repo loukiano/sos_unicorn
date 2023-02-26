@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 31ed545efbcae8045a10bbf7ded844ab
+guid: ceeb1c65c6ecbcb44afd538becefa5db
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: unicorn-sprite_0
+      name: super-cyan-unicorn_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,19 +119,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 047fd2fa397475d41bf5d2358ddf2a95
-      internalID: -980219114
+      spriteID: 54969d32d6329ea4a836dcc914b63258
+      internalID: -205943489
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: unicorn-sprite_1
+      name: super-cyan-unicorn_1
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 150
+        width: 149
         height: 118
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -140,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 635d3c024439cd64083cee14627a2411
-      internalID: 1960038828
+      spriteID: 916452c132491be4aa8a8a3ca8d7d4d3
+      internalID: 2000207806
       vertices: []
       indices: 
       edges: []
@@ -157,8 +157,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      unicorn-sprite_1: -980219114
-      unicorn-sprite_0: -1585179386
+      super-cyan-unicorn_1: 2000207806
+      super-cyan-unicorn_0: -205943489
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

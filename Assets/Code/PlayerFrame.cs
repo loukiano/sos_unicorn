@@ -10,6 +10,7 @@ public class PlayerFrame : MonoBehaviour
     public float colorAlpha;
     public Kickable kick;
     public Player player;
+    private Color playerFrameColor;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,7 @@ public class PlayerFrame : MonoBehaviour
         player = GetComponentInParent<Player>();
         kick = player.GetComponent<Kickable>();
         spr = GetComponent<SpriteRenderer>();
+        playerFrameColor = spr.color;
     }
 
     // Update is called once per frame
@@ -28,7 +30,7 @@ public class PlayerFrame : MonoBehaviour
         }
         else
         {
-            spr.color = new Color(player.kickColor.r, player.kickColor.g, player.kickColor.b, colorAlpha);
+            spr.color = new Color(playerFrameColor.r, playerFrameColor.g, playerFrameColor.b, colorAlpha);
         }
     }
 }
