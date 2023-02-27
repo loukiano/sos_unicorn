@@ -8,6 +8,7 @@ public class Kickable : MonoBehaviour
     public Rigidbody2D rb;
     public Transform t;
     public Dashable dash;
+    public PlayerSpriteHandler spriteHandler;
 
     //kick variables
     public float kickCooldown;
@@ -31,6 +32,7 @@ public class Kickable : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         dash = GetComponent<Dashable>();
         t = GetComponent<Transform>();
+        spriteHandler = GetComponent<PlayerSpriteHandler>();
         normalTransformScale = t.localScale;
     }
 
@@ -77,6 +79,7 @@ public class Kickable : MonoBehaviour
             kickDmgScale *= 3;
             rb.velocity += addVel;
         }
+        //spriteHandler.UpdateDirection();
         /*
         else
         {
@@ -90,6 +93,7 @@ public class Kickable : MonoBehaviour
 
         //box.size = boxSize;
         t.localScale = normalTransformScale;
+        //spriteHandler.UpdateDirection;
         kickDmgScale = tempKDS;
 
         isKicking = false;

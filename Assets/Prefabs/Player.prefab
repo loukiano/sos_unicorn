@@ -4941,8 +4941,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 1, g: 0.050980393, b: 0, a: 1}
+  m_Sprite: {fileID: -980219114, guid: 31ed545efbcae8045a10bbf7ded844ab, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5003,6 +5003,10 @@ MonoBehaviour:
   dash: {fileID: 0}
   jump: {fileID: 0}
   kick: {fileID: 0}
+  stomp: {fileID: 0}
+  bulletSpawnPoint: {fileID: 0}
+  bulletPrefab: {fileID: 0}
+  bulletSpeed: 10
 --- !u!114 &7713692103779067660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5022,6 +5026,7 @@ MonoBehaviour:
   jumpKey: 32
   dashKey: 106
   kickKey: 107
+  stompKey: 108
 --- !u!61 &7713692103779067665
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5039,7 +5044,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
+    oldSize: {x: 1.5, y: 1.18}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
