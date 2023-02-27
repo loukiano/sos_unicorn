@@ -535,6 +535,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LollipopBackground
       objectReference: {fileID: 0}
+    - target: {fileID: 6100270913785331013, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.41
+      objectReference: {fileID: 0}
     - target: {fileID: 8097210639166014138, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -596,6 +600,10 @@ PrefabInstance:
     - target: {fileID: 1359588786699373843, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
       propertyPath: m_Name
       value: LollipopBackground (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100270913785331013, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.9
       objectReference: {fileID: 0}
     - target: {fileID: 8097210639166014138, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
       propertyPath: m_RootOrder
@@ -659,6 +667,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LollipopBackground (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6100270913785331013, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.34
+      objectReference: {fileID: 0}
     - target: {fileID: 8097210639166014138, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -720,6 +732,10 @@ PrefabInstance:
     - target: {fileID: 1359588786699373843, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
       propertyPath: m_Name
       value: LollipopBackground (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100270913785331013, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.18
       objectReference: {fileID: 0}
     - target: {fileID: 8097210639166014138, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
       propertyPath: m_RootOrder
@@ -1175,6 +1191,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LollipopBackground (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 6100270913785331013, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8097210639166014138, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -1558,6 +1578,10 @@ PrefabInstance:
     - target: {fileID: 1359588786699373843, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
       propertyPath: m_Name
       value: LollipopBackground (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100270913785331013, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.01
       objectReference: {fileID: 0}
     - target: {fileID: 8097210639166014138, guid: c91cdf582beb34461a46d9b51906f060, type: 3}
       propertyPath: m_RootOrder
