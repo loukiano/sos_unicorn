@@ -13793,6 +13793,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1977950402}
     m_Modifications:
+    - target: {fileID: 1961090259, guid: a2ecf31ee6aebc549b8be621b3a77338, type: 3}
+      propertyPath: stopTime
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 1961090260, guid: a2ecf31ee6aebc549b8be621b3a77338, type: 3}
       propertyPath: gallop
       value: 
@@ -13801,6 +13805,10 @@ PrefabInstance:
       propertyPath: stationary
       value: 
       objectReference: {fileID: -980219114, guid: 31ed545efbcae8045a10bbf7ded844ab, type: 3}
+    - target: {fileID: 6166672740072890403, guid: a2ecf31ee6aebc549b8be621b3a77338, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 541445917907476337, guid: 3e6d65bb537618f47940f7c65c09d35d, type: 3}
     - target: {fileID: 6166672740072890405, guid: a2ecf31ee6aebc549b8be621b3a77338, type: 3}
       propertyPath: m_Name
       value: Player
