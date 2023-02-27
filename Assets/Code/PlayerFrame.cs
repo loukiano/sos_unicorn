@@ -28,7 +28,7 @@ public class PlayerFrame : MonoBehaviour
         }
         else
         {
-            spr.color = new Color(player.kickColor.r, player.kickColor.g, player.kickColor.b, colorAlpha);
+            spr.color = new Color(player.stompColor.r, player.stompColor.g, player.stompColor.b, colorAlpha);
         }
     }
 }

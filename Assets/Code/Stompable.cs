@@ -13,32 +13,33 @@ public class Stompable : MonoBehaviour
     [SerializeField]
     private float gravityScale;
 
+    private float RotateSpeed = 3.0f;
     private Player p;
     public KeyCode stompKey = KeyCode.L;
     private bool doStomp = false;
     private Rigidbody2D rb;
     public bool isStomping = false;
+    public bool isSpinning = false;
 
     public Transform t;
     public BoxCollider2D box;
     
     //kick variables i'm stealing lol
-    public float kickCooldown;
-    public float kickDuration;
-    public float kickVel;
-    public float kickDmgScale;
-    public float kickSize;
-    public bool isKicking;
-    private bool canKick;
+    public float stompCooldown;
+    public float stompDuration;
+    public float stompVel;
+    public float stompDmgScale = 1f;
+    public float stompSize;
+    private bool canStomp;
     private Vector3 normalTransformScale;
 
     private void Start()
     {
-        canKick = true;
-        kickCooldown = 1;
-        kickVel = 10;
-        kickDuration = 0.3f;
-        kickSize = 1.5f;
+        canStomp = true;
+        stompCooldown = 1;
+        stompVel = 10;
+        stompDuration = 0.3f;
+        stompSize = 1.5f;
         box = GetComponent<BoxCollider2D>();
         t = GetComponent<Transform>();
         normalTransformScale = t.localScale;
@@ -52,9 +53,9 @@ public class Stompable : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(stompKey))
+        if (Input.GetKeyDown(stompKey) || Input.GetButtonDown("Kick"))
         {
-            if (!p.IsGrounded())
+            if (!p.IsGrounded() && canStomp)
             {
                 doStomp = true;
             }
@@ -86,6 +87,7 @@ public class Stompable : MonoBehaviour
     private void Stomp()
     {
         Debug.Log("NYOOM!");
+        canStomp = false;
         isStomping = true;
         StopAndSpin();
         StartCoroutine( DropAndSmash());
@@ -94,13 +96,16 @@ public class Stompable : MonoBehaviour
     private void StopAndSpin()
     {
         ClearForces();
+        transform.Rotate(-Vector3.up * RotateSpeed * Time.deltaTime);
         gravityScale = rb.gravityScale;
         rb.gravityScale = 0;
+        isSpinning = true;
     }
 
     private IEnumerator DropAndSmash()
     {
         yield return new WaitForSeconds(stopTime);
+        isSpinning = false;
         rb.AddForce(Vector2.down * dropForce, ForceMode2D.Impulse);
 
 
@@ -108,27 +113,27 @@ public class Stompable : MonoBehaviour
 
     private IEnumerator Explode()
     {
-        float tempKDS = kickDmgScale;
+        float tempKDS = stompDmgScale;
         //box.size *= kickSize;
         float velocityMagnitude = Mathf.Sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y * rb.velocity.y);
 
         Vector2 addVel = new Vector2(0, 1);
-        addVel *= kickVel;
+        addVel *= stompVel;
 
         if (velocityMagnitude < 40.0f)
         {
-            t.localScale = normalTransformScale * kickSize;
+            t.localScale = normalTransformScale * stompSize;
         }
         else if (velocityMagnitude < 80.0f)
         {
-            t.localScale = normalTransformScale * kickSize * 2;
-            kickDmgScale *= 2;
+            t.localScale = normalTransformScale * stompSize * 2;
+            stompDmgScale *= 2;
             rb.velocity += addVel;
         }
         else
         {
-            t.localScale = normalTransformScale * kickSize * 3;
-            kickDmgScale *= 3;
+            t.localScale = normalTransformScale * stompSize * 3;
+            stompDmgScale *= 3;
             rb.velocity += addVel;
         }
         /*
@@ -140,22 +145,21 @@ public class Stompable : MonoBehaviour
         //float damage = rb.velocity.magnitude * kickDmgScale;
         //Debug.Log("Damage: " + damage);
 
-        yield return new WaitForSeconds(kickDuration);
+        yield return new WaitForSeconds(stompDuration);
 
         //box.size = boxSize;
         t.localScale = normalTransformScale;
-        kickDmgScale = tempKDS;
+        stompDmgScale = tempKDS;
 
-        isKicking = false;
-
-        yield return new WaitForSeconds(kickCooldown);
-        canKick = true;
+        yield return new WaitForSeconds(stompCooldown);
+        canStomp = true;
     }
 
     private void CompleteStomp()
     {
         rb.gravityScale = gravityScale;
         isStomping = false;
+        canStomp = true;
     }
     private void ClearForces()
     {

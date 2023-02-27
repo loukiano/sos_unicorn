@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     public Color normalColor;
     public Color hurtColor;
     public Color dashColor;
-    public Color kickColor;
+    public Color stompColor;
 
     // Dash Indicator
     private DashIndicator dashIndicator;
@@ -37,8 +37,9 @@ public class Player : MonoBehaviour
     public Health health;
     public Dashable dash;
     public Jumpable jump;
-    public Kickable kick;
+    //public Kickable kick;
     public Stompable stomp;
+    public Bullet bullet;
 
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
@@ -66,10 +67,12 @@ public class Player : MonoBehaviour
 
         health = GetComponent<Health>();
 
+        bullet = GetComponent<Bullet>();
+
         //Actions
         dash = GetComponent<Dashable>();
         jump = GetComponent<Jumpable>();
-        kick = GetComponent<Kickable>();
+        //kick = GetComponent<Kickable>();
         stomp = GetComponent<Stompable>();
 
         GameObject maybeScoreUI = GameObject.Find("ScoreUI");
@@ -83,9 +86,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (kick.isKicking)
+        if (stomp.isStomping)
         {
-            spr.color = kickColor;
+            //spr.color = stompColor;
         }
         else if (dash.isDashing)
         {
@@ -101,9 +104,12 @@ public class Player : MonoBehaviour
 
         }
 
+        if (stomp.isStomping)
+        {
+            HandleEnemyOverlap();
+        }
 
-
-        if (Input.GetKeyDown(KeyCode.K)) {
+        if (Input.GetKeyDown(KeyCode.K) || Input.GetButtonDown("Fire1")) {
             Vector2 inputDir = c.GetInputDir();
             var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
             bullet.GetComponent<Rigidbody2D>().velocity = inputDir * bulletSpeed;
@@ -234,7 +240,10 @@ public class Player : MonoBehaviour
             if (colObj.GetComponent<Enemy>() != null)
             {
                 DamageEnemy(colObj);
-
+                if (stomp.isStomping)
+                {
+                    DamageEnemy(colObj);
+                }
                 if (dash.isDashing)
                 {
                     dash.AddDash();
@@ -250,7 +259,7 @@ public class Player : MonoBehaviour
         if (collidingObject.GetComponent<Enemy>() != null)
         {
             //Debug.Log("COLLIDING WITH ENEMY IN PLAYER");
-            if (stomp.isStomping || kick.isKicking || dash.isDashing)
+            if (stomp.isStomping || dash.isDashing)
             {
                 DamageEnemy(collidingObject);
 
@@ -285,15 +294,23 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void DamageEnemy(GameObject enemyObj)
+    public void DamageEnemy(GameObject enemyObj)
     {
         float damage = dash.dashDmg;
-        if (kick.isKicking || stomp.isStomping)
+        if (stomp.isStomping)
         {
             //damage = rb.velocity.magnitude * kick.kickDmgScale;
-            damage = kick.kickDmgScale * 100f;
-            Debug.Log("Kick Damage: " + damage);
+            if (!stomp.isSpinning)
+            {
+                damage = 100f;
+                Debug.Log("Stomp Damage: " + damage);
+            } else
+            {
+                damage = 0f;
+            }
+            
         }
+        Debug.Log("Damage dealt: " + damage);
         Health enemyHealth = enemyObj.GetComponent<Health>();
         float bloodValue = enemyHealth.TakeDamage(damage);
         health.HealDamage(bloodValue);
