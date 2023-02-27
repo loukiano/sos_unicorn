@@ -44,11 +44,12 @@ public class Player : MonoBehaviour
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
     public float bulletSpeed = 10;
+    private float fireCooldown = 0.5f;
+    private bool canFire = true;
 
     // Start is called before the first frame update
     void Start()
     {
-
         c = GetComponent<Controller>();
         if (c == null)
         {
@@ -109,13 +110,24 @@ public class Player : MonoBehaviour
             HandleEnemyOverlap();
         }
 
-        if (Input.GetKeyDown(KeyCode.K) || Input.GetButtonDown("Fire1")) {
-            Vector2 inputDir = c.GetInputDir();
-            var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-            bullet.GetComponent<Rigidbody2D>().velocity = inputDir * bulletSpeed;
-            Vector2 propulsion = new Vector2(-500,-50);
-            rb.AddForce(new Vector2(propulsion.x*inputDir.x, propulsion.y*inputDir.y), ForceMode2D.Impulse);
+        if ((Input.GetKeyDown(KeyCode.K) || Input.GetButtonDown("Fire1")) && canFire) {
+            StartCoroutine(Fire());
         }
+    }
+
+    private IEnumerator Fire()
+    {
+        canFire = false;
+        Vector2 inputDir = c.GetInputDir();
+        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        var tempGravity = rb.gravityScale;
+        rb.gravityScale = 0;
+        bullet.GetComponent<Rigidbody2D>().velocity = inputDir * bulletSpeed;
+        Vector2 propulsion = new Vector2(-75, -25);
+        rb.AddForce(new Vector2(propulsion.x * inputDir.x, propulsion.y * inputDir.y), ForceMode2D.Impulse);
+        rb.gravityScale = tempGravity;
+        yield return new WaitForSeconds(fireCooldown);
+        canFire = true;
     }
 
     public void StartBleeding()

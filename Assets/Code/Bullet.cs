@@ -6,11 +6,15 @@ public class Bullet : MonoBehaviour
 {
     public float life = 3;
     private Player p;
+    public bool hit = false;
 
-    private void Awake()
+    private void Start()
     {
         p = GetComponent<Player>();
-
+    }
+    private void Awake()
+    {
+        
         Destroy(gameObject, life);
     }
 
@@ -22,8 +26,11 @@ public class Bullet : MonoBehaviour
         {
             Debug.Log("shot em");
             Health enemyHealth = collidingObject.GetComponent<Health>();
+            Health playerHealth = FindObjectOfType<Player>().GetComponent<Health>();
             float bloodValue = enemyHealth.TakeDamage(100f);
-
+            playerHealth.HealDamage(bloodValue);
+            ScoreUI scoreUI = FindObjectOfType<ScoreUI>();
+            scoreUI.Score();
         }
 
     }

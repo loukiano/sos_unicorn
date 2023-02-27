@@ -33,7 +33,7 @@ public class Kickable : MonoBehaviour
         dash = GetComponent<Dashable>();
         t = GetComponent<Transform>();
         spriteHandler = GetComponent<PlayerSpriteHandler>();
-        normalTransformScale = t.localScale;
+        //normalTransformScale = t.localScale;
     }
 
     public void DoKick()
@@ -65,17 +65,17 @@ public class Kickable : MonoBehaviour
 
         if (velocityMagnitude < 40.0f && !dash.inCoyoteTime)
         {
-            t.localScale = normalTransformScale * kickSize;
+            //t.localScale = normalTransformScale * kickSize;
         }
         else if (velocityMagnitude < 80.0f || dash.inCoyoteTime)
         {
-            t.localScale = normalTransformScale * kickSize * 2;
+            //t.localScale = normalTransformScale * kickSize * 2;
             kickDmgScale *= 2;
             rb.velocity += addVel;
         }
         else
         {
-            t.localScale = normalTransformScale * kickSize * 3;
+            //t.localScale = normalTransformScale * kickSize * 3;
             kickDmgScale *= 3;
             rb.velocity += addVel;
         }
@@ -92,7 +92,7 @@ public class Kickable : MonoBehaviour
         yield return new WaitForSeconds(kickDuration);
 
         //box.size = boxSize;
-        t.localScale = normalTransformScale;
+        //t.localScale = normalTransformScale;
         //spriteHandler.UpdateDirection;
         kickDmgScale = tempKDS;
 

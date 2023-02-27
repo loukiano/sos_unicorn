@@ -37,7 +37,7 @@ public class Controller : MonoBehaviour
         MaybeJump();
         MaybeStopJump();
         MaybeDash();
-        MaybeKick();
+        //MaybeKick();
     }
 
     void FixedUpdate()
