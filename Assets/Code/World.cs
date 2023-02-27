@@ -33,11 +33,16 @@ public class World : MonoBehaviour
     {
 
         isRunning = true;
-        TutorialTransition tutTrans =  GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
-        if (!tutTrans.Equals(null))
+        GameObject tutObj = GameObject.Find("Tutorial Transition");
+        if (tutObj != null)
         {
-            Debug.Log(tutTrans.ToString());
-            tutTrans.StartGame();
+            TutorialTransition tutTrans = tutObj.GetComponent<TutorialTransition>();
+            if (!tutTrans.Equals(null))
+            {
+                Debug.Log(tutTrans.ToString());
+                tutTrans.StartGame();
+            }
+
         }
         GameObject.Find("Player").GetComponent<Player>().StartBleeding();
     }

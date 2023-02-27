@@ -7,6 +7,7 @@ public class GroundedAI : AIController
 {
     public Vector2 dirMove; // normalized vector pointing towards player
     public float detectionRadius;
+    public float maxFallDist;
 
     private Jumpable jump;
 
@@ -66,18 +67,29 @@ public class GroundedAI : AIController
         if (corner.Equals(Vector2.positiveInfinity))
         {
             canMove = false;
-        } else
+        }
+        else
         {
             canMove = true;
         }
-        if ((dirMove.x > 0 && box.bounds.max.x >= corner.x) ||
-            (dirMove.x < 0 && box.bounds.min.x <= corner.x) ||
-                // if we're hangin off the edge
-            AmFacingWall())
+        if ((dirMove.x > 0 && box.bounds.max.x >= corner.x && IsFall(corner)) ||
+            (dirMove.x < 0 && box.bounds.min.x <= corner.x && IsFall(corner)) ||
+                // if we're hangin off the edge and there's a significant drop
+            AmFacingWall() ||
                 // if we're facing a wall
+            AmOutsideSpawnArea()
+            )
         {
             dirMove.x *= -1; // turn around
         }
+    }
+
+    public bool IsFall(Vector2 corner)
+    {
+        LayerMask groundMask = LayerMask.GetMask("Ground");
+        Vector2 fallPoint = new Vector2(corner.x + 0.1f * Mathf.Sign(dirMove.x), corner.y);
+        RaycastHit2D lookDown = Physics2D.Raycast(fallPoint, Vector2.down, maxFallDist, groundMask);
+        return lookDown.collider == null;
     }
 
     public Vector2 ClosestFacingCorner()
@@ -103,6 +115,16 @@ public class GroundedAI : AIController
         LayerMask groundMask = LayerMask.GetMask("Ground");
         RaycastHit2D lookAhead = Physics2D.Raycast(transform.position, dirMove, box.size.x+0.01f, groundMask);
         return lookAhead.collider != null;
+    }
+
+    public bool AmOutsideSpawnArea()
+    {
+        if (spawnArea == null)
+        {
+            return false;
+        }
+
+        return !spawnArea.bounds.Contains(transform.position);
     }
 
     public void MaybeJump()

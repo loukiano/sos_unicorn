@@ -48,6 +48,8 @@ MonoBehaviour:
   enemy: {fileID: 32558203496570008, guid: cb5e107fd67554eb1bc8384e158f8ecc, type: 3}
   strongEnemy: {fileID: 32558203496570008, guid: cb5e107fd67554eb1bc8384e158f8ecc, type: 3}
   strongerEnemy: {fileID: 32558203496570008, guid: cb5e107fd67554eb1bc8384e158f8ecc, type: 3}
+  spawnArea: {fileID: 0}
+  shouldSpawn: 0
   cam: {fileID: 0}
   spawnRate: 2
   initialSpawnRate: 2
@@ -58,8 +60,12 @@ MonoBehaviour:
   initialNumEnemies: 5
   timeSpawnStrong: 10
   timeSpawnStronger: 20
-  spawnOnGround: 0
-  groundedSpawnOffset: 0
+  spawnOnGround: 1
+  groundedSpawnOffset: 2
+  isClearableArea: 0
+  loadCooldown: 30
+  loadDist: 100
+  unloadDist: 200
 --- !u!61 &8468544525449588639
 BoxCollider2D:
   m_ObjectHideFlags: 0
