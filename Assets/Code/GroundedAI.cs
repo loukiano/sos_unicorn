@@ -16,7 +16,7 @@ public class GroundedAI : AIController
     public override void Start()
     {
         base.Start();
-        playerTransform = GameObject.Find("Player").transform;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         dirMove = Random.value <= 0.5f ? Vector2.left : Vector2.right;
 
         jump = GetComponent<Jumpable>();

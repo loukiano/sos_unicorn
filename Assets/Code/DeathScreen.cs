@@ -22,7 +22,7 @@ public class DeathScreen : MonoBehaviour
         deathMessage.SetActive(false);
         deathScore.SetActive(false);
         retryButton.SetActive(false);
-        player = GameObject.Find("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         playerHealth = player.GetComponent<Health>();
         
         gameOver = false;

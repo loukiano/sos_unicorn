@@ -7,7 +7,7 @@ public class HealthBar : MonoBehaviour
 
     void Start()
     {
-        playerHealth = GameObject.Find("Player").GetComponent<Health>();    
+        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();    
     }
 
     public void UpdateHealthBar()

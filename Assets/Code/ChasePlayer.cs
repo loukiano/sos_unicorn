@@ -5,6 +5,7 @@ public class ChasePlayer : AIController
 {
 	public Vector2 dirMove; // normalized vector pointing towards player
     public float detectionRadius;
+    private bool hasAggro;
 
 	private Transform playerTransform; // transform of player
     private EnemySpawner spawner;
@@ -12,8 +13,9 @@ public class ChasePlayer : AIController
     public override void Start()
 	{
 		base.Start();
-		playerTransform = GameObject.Find("Player").transform;
+		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         spawner = GetComponentInParent<EnemySpawner>();
+        hasAggro = !spawner.isClearableArea;
         
     }
 
@@ -56,13 +58,21 @@ public class ChasePlayer : AIController
 
     public override void DoTargeting()
     {
-        dirMove = playerTransform.position - transform.position;
-        if (!spawner.spawnArea.bounds.Contains(playerTransform.position) && dirMove.magnitude > detectionRadius)
-            // player is far away
+        if (spawnArea != null && !hasAggro)
+            // check if player has entered the area
         {
-            dirMove = Vector2.zero;
+            //Debug.Log(spawnArea.bounds.ToString());
+            hasAggro = spawner.spawnArea.bounds.Contains(new Vector2(playerTransform.position.x, playerTransform.position.y));
+        } else
+        {
+            dirMove = playerTransform.position - transform.position;
+            if (!spawner.spawnArea.bounds.Contains(playerTransform.position) && dirMove.magnitude > detectionRadius)
+                // player is far away
+            {
+                dirMove = Vector2.zero;
+            }
+            dirMove.Normalize();
         }
-        dirMove.Normalize();
     }
 
 

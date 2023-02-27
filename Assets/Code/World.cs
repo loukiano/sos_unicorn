@@ -39,12 +39,12 @@ public class World : MonoBehaviour
             TutorialTransition tutTrans = tutObj.GetComponent<TutorialTransition>();
             if (!tutTrans.Equals(null))
             {
-                Debug.Log(tutTrans.ToString());
+                //Debug.Log(tutTrans.ToString());
                 tutTrans.StartGame();
             }
 
         }
-        GameObject.Find("Player").GetComponent<Player>().StartBleeding();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().StartBleeding();
     }
 
     public static void PauseGame()

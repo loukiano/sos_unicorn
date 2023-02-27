@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UIElements;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class EnemySpawner : MonoBehaviour
 	public GameObject strongerEnemy;
 
 	public BoxCollider2D spawnArea;
+
+    public GameObject objOnClear;
     //public LevelDesign levelDesign;
 
     public bool shouldSpawn;
@@ -62,6 +65,7 @@ public class EnemySpawner : MonoBehaviour
 			spawnArea = GetComponent<BoxCollider2D>();
 			if (spawnArea == null)
             {
+                Debug.Log("Resorting to background bounds");
 				spawnArea = GameObject.Find("Background").GetComponent<BoxCollider2D>();
             }
         }
@@ -141,6 +145,8 @@ public class EnemySpawner : MonoBehaviour
             {
                 clearTime = Time.time;
                 Debug.Log(gameObject.name + " area cleared at " + clearTime);
+                OnClear();
+
             }
         }
         else if (clearTime + loadCooldown < Time.time && CamDistSqr() >= Mathf.Pow(loadDist, 2))
@@ -280,20 +286,17 @@ public class EnemySpawner : MonoBehaviour
             {
                 //xPosition = Random.value * (cam.transform.position.x - camRatio - xMin) + xMin - enemySizeX;
                 xPosition = Random.Range(xMin, camBounds.min.x - enemySizeX);
-                if (xPosition < xMin)
-                {
-                    xPosition = xMin;
-                }
             }
             // Spawn right of player
             else
             {
                 //xPosition = Random.value * (xMax - (cam.transform.position.x + camRatio)) + cam.transform.position.x + camRatio + enemySizeX;
                 xPosition = Random.Range(camBounds.max.x + enemySizeX, xMax);
-                if (xPosition > xMax)
-                {
-                    xPosition = xMax;
-                }
+            }
+
+            if (xPosition > xMax || xPosition < xMin)
+            {
+                xPosition = Random.Range(xMin, xMax);
             }
 
             yPosition = Random.value * (yMax - yMin) + yMin;
@@ -306,64 +309,32 @@ public class EnemySpawner : MonoBehaviour
             {
                 //yPosition = Random.value * (cam.transform.position.y - camOrthsize - yMin) + yMin - enemySizeY;
                 yPosition = Random.Range(camBounds.max.y + enemySizeY, yMax);
-                if (yPosition > yMax)
-                {
-                    yPosition = yMax;
-                }
             }
             // Spawn below player
             else
             {
                 //yPosition = Random.value * (yMax - (cam.transform.position.y + camOrthsize)) + cam.transform.position.y + camOrthsize - enemySizeY;
                 yPosition = Random.Range(yMin, camBounds.min.y - enemySizeY);
-                if (yPosition < yMin)
-                {
-                    yPosition = yMin;
-                }
+                
+            }
+
+            if (yPosition > yMax || yPosition < yMin)
+            {
+                yPosition = Random.Range(yMin, yMax);
             }
 
             xPosition = Random.value * (xMax - xMin) + xMin;
         }
 
 		Vector2 spawnPoint = new Vector2(xPosition, yPosition);
+        //spawnPoint += transform.localToWorldMatrix
+        //Debug.Log("spawnPoint: " + spawnPoint);
 
 		if (grounded)
         {
-			LayerMask groundMask = LayerMask.GetMask("Ground");
-			RaycastHit2D rayOne = Physics2D.Raycast(spawnPoint, Vector2.down, yPosition - yMin, groundMask);
-            RaycastHit2D rayTwo = Physics2D.Raycast(spawnPoint, Vector2.up, yMax - yPosition, groundMask);
-
-            if (Random.value > 0.5)
-                // half the time, check up first
+            spawnPoint = MakeGrounded(spawnPoint);
+            if (spawnPoint == Vector2.negativeInfinity)
             {
-                RaycastHit2D temp = rayOne;
-                rayOne = rayTwo;
-                rayTwo = temp;
-            }
-
-            if (rayOne.collider != null)
-            {
-				spawnPoint.y = rayOne.collider.bounds.max.y + groundedSpawnOffset;
-                
-            } else
-            {
-				
-				if (rayTwo.collider != null)
-                {
-					spawnPoint.y = rayTwo.collider.bounds.max.y + groundedSpawnOffset;
-                } else
-                {
-                    Debug.Log("Couldn't find valid spawning area -- trying again!");
-                    return GetOutOfCamPoint(grounded, tryDepth + 1);
-                }
-            }
-
-
-            if ((spawnPoint.x > cam.transform.position.x - camOrthsize && spawnPoint.x < cam.transform.position.x + camOrthsize) &&
-                (spawnPoint.y > cam.transform.position.y - camOrthsize && spawnPoint.y < cam.transform.position.y + camOrthsize))
-                // new spawn is inside the camera :(
-            {
-                Debug.Log(spawnPoint.ToString() + "Would have spawned in camera -- trying again!");
                 return GetOutOfCamPoint(grounded, tryDepth + 1);
             }
 
@@ -382,10 +353,67 @@ public class EnemySpawner : MonoBehaviour
             spawnPoint.y = spawnPoint.y > yMax ? yMax :yMin;
         }
 
-
-
-
         return spawnPoint;
+    }
+
+    public Vector2 MakeGrounded(Vector2 point)
+    {
+        LayerMask groundMask = LayerMask.GetMask("Ground");
+        RaycastHit2D rayOne = Physics2D.Raycast(point, Vector2.down, point.y - yMin, groundMask);
+        RaycastHit2D rayTwo = Physics2D.Raycast(point, Vector2.up, yMax - point.y, groundMask);
+
+        if (Random.value > 0.5)
+        // half the time, check up first
+        {
+            RaycastHit2D temp = rayOne;
+            rayOne = rayTwo;
+            rayTwo = temp;
+        }
+
+        if (rayOne.collider != null)
+        {
+            point.y = rayOne.collider.bounds.max.y + groundedSpawnOffset;
+
+        }
+        else
+        {
+
+            if (rayTwo.collider != null)
+            {
+                point.y = rayTwo.collider.bounds.max.y + groundedSpawnOffset;
+            }
+            else
+            {
+                Debug.Log("Couldn't find valid spawning area -- trying again!");
+                return Vector2.negativeInfinity;
+            }
+        }
+
+
+        if ((point.x > cam.transform.position.x - camOrthsize && point.x < cam.transform.position.x + camOrthsize) &&
+            (point.y > cam.transform.position.y - camOrthsize && point.y < cam.transform.position.y + camOrthsize))
+        // new spawn is inside the camera :(
+        {
+            Debug.Log(point.ToString() + "Would have spawned in camera -- trying again!");
+            return Vector2.negativeInfinity; ;
+        }
+
+        return point;
+    }
+
+    public void OnClear()
+    {
+        StartCoroutine(ExplodeHella());
+    }
+
+    private IEnumerator ExplodeHella()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject obj = Instantiate(objOnClear, spawnArea.bounds.center, Quaternion.identity);
+            obj.transform.localScale *= 5;
+            yield return new WaitForSeconds(.5f);
+        }
     }
 
     public void StartSpawn()

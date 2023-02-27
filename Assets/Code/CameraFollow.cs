@@ -23,6 +23,8 @@ public class CameraFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+
         xMin = mapBounds.bounds.min.x;
         xMax = mapBounds.bounds.max.x;
         yMin = mapBounds.bounds.min.y;
@@ -41,8 +43,14 @@ public class CameraFollow : MonoBehaviour
             }
 
         }
-
-        followTransform = GameObject.Find("Player").transform;
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            followTransform = player.transform;
+        } else
+        {
+            Debug.Log("Couldn't find!");
+        }
     }
 
     void FixedUpdate()

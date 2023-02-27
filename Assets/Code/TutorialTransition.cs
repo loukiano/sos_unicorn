@@ -25,7 +25,7 @@ public class TutorialTransition : MonoBehaviour
         }
 
 
-        playerTransform = GameObject.Find("Player").transform;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         if (!world.hasTutorial)
         {
             StartGame();
