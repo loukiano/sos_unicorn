@@ -13805,6 +13805,10 @@ PrefabInstance:
       propertyPath: stationary
       value: 
       objectReference: {fileID: -980219114, guid: 31ed545efbcae8045a10bbf7ded844ab, type: 3}
+    - target: {fileID: 4783881388671006730, guid: a2ecf31ee6aebc549b8be621b3a77338, type: 3}
+      propertyPath: maxBleedRate
+      value: 0.0125
+      objectReference: {fileID: 0}
     - target: {fileID: 6166672740072890403, guid: a2ecf31ee6aebc549b8be621b3a77338, type: 3}
       propertyPath: bullet
       value: 

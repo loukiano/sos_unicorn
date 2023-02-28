@@ -34,4 +34,14 @@ public class Bullet : MonoBehaviour
         }
 
     }
+
+    private void OnCollisionEnter2D(Collision collision)
+    {
+        GameObject collidingObject = collision.gameObject;
+
+        if (collidingObject.GetComponent<Ground>() != null)
+        {
+            Destroy(gameObject);
+        }
+    }
 }
