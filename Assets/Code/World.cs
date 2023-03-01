@@ -6,6 +6,8 @@ public class World : MonoBehaviour
 {
 
     public static float timer;
+    public static int lvlNum;
+    public static int numLvls = 4;
     private float lastTimer;
     public static bool isRunning;
     public bool copyisRunning;
@@ -26,6 +28,15 @@ public class World : MonoBehaviour
         if (!isRunning && !hasTutorial)
         {
             World.StartRunning();
+        }
+    }
+
+    public static void CheckpointPassed(int checkpointId)
+    {
+        if (lvlNum % numLvls == checkpointId)
+            // if we're progressing, move to next level!
+        {
+            lvlNum += 1;
         }
     }
 

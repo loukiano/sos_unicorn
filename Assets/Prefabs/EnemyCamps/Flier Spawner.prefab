@@ -49,7 +49,7 @@ MonoBehaviour:
   strongEnemy: {fileID: 680816299601697001, guid: acb12b6ed51a424408ec488c6bd50dd5, type: 3}
   strongerEnemy: {fileID: 680816299601697001, guid: 8cc4ee4e610b3a3499d7edfb4fc27ce0, type: 3}
   spawnArea: {fileID: 0}
-  objOnClear: {fileID: 7433063616485181098, guid: c63ccfaecf070456093713006c39eb43, type: 3}
+  objOnClear: {fileID: 0}
   shouldSpawn: 0
   cam: {fileID: 0}
   spawnRate: 2
