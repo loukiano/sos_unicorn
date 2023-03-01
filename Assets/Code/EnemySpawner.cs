@@ -165,6 +165,7 @@ public class EnemySpawner : MonoBehaviour
             GameObject.Destroy(transform.GetChild(i).gameObject);
         }
         clearTime = 1;
+        isOccupied = false;
     }
 
     float CamDistSqr()
