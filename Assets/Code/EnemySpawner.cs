@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
 
 	public BoxCollider2D spawnArea;
 
-    public GameObject objOnClear;
+    //public GameObject objOnClear;
     //public LevelDesign levelDesign;
 
     public bool shouldSpawn;
@@ -51,6 +51,8 @@ public class EnemySpawner : MonoBehaviour
 	private int strongProb = 8;
 	private int strongerProb = 10;
 
+    private World world;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -59,7 +61,7 @@ public class EnemySpawner : MonoBehaviour
         {
             cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         }
-
+        world = GameObject.Find("Background").GetComponent<World>();
 		if (spawnArea == null)
         {
 			spawnArea = GetComponent<BoxCollider2D>();
@@ -404,18 +406,19 @@ public class EnemySpawner : MonoBehaviour
 
     public void OnClear()
     {
-        StartCoroutine(ExplodeHella());
+        //StartCoroutine(ExplodeHella());
+        world.AreaCleared();
     }
 
-    private IEnumerator ExplodeHella()
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            GameObject obj = Instantiate(objOnClear, spawnArea.bounds.center, Quaternion.identity);
-            obj.transform.localScale *= 5;
-            yield return new WaitForSeconds(.5f);
-        }
-    }
+    //private IEnumerator ExplodeHella()
+    //{
+    //    for (int i = 0; i < 5; i++)
+    //    {
+    //        GameObject obj = Instantiate(objOnClear, spawnArea.bounds.center, Quaternion.identity);
+    //        obj.transform.localScale *= 5;
+    //        yield return new WaitForSeconds(.5f);
+    //    }
+    //}
 
     public void StartSpawn()
     {

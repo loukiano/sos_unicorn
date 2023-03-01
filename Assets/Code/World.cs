@@ -14,6 +14,8 @@ public class World : MonoBehaviour
 
     public bool hasTutorial;
     private TutorialTransition tutorialTransition;
+
+    public ScoreUI scoreUI;
     // Start is called before the first frame update
 
     void Start()
@@ -56,6 +58,11 @@ public class World : MonoBehaviour
 
         }
         GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().StartBleeding();
+    }
+
+    public void AreaCleared()
+    {
+        scoreUI.ClearArea();
     }
 
     public static void PauseGame()
