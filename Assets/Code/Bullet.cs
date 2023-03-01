@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float life = 1;
+    public float life = 0.5f;
     private Player p;
     public bool hit = false;
 
@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         
-        Destroy(gameObject, life);
+        Destroy(gameObject, 0.5f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -31,9 +31,8 @@ public class Bullet : MonoBehaviour
             playerHealth.HealDamage(bloodValue);
             ScoreUI scoreUI = FindObjectOfType<ScoreUI>();
             scoreUI.Score();
-        }
+            Destroy(gameObject);
+        } 
 
     }
-
-    
 }

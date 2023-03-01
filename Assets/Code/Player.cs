@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
 
         }
 
-        if (stomp.isStomping)
+        if (stomp.isStomping || stomp.isSpinning)
         {
             HandleEnemyOverlap();
         }
@@ -252,7 +252,7 @@ public class Player : MonoBehaviour
             if (colObj.GetComponent<Enemy>() != null)
             {
                 DamageEnemy(colObj);
-                if (stomp.isStomping)
+                if (stomp.isStomping || stomp.isSpinning)
                 {
                     DamageEnemy(colObj);
                 }
@@ -271,7 +271,7 @@ public class Player : MonoBehaviour
         if (collidingObject.GetComponent<Enemy>() != null)
         {
             //Debug.Log("COLLIDING WITH ENEMY IN PLAYER");
-            if (stomp.isStomping || dash.isDashing)
+            if (stomp.isStomping || dash.isDashing || stomp.isSpinning)
             {
                 DamageEnemy(collidingObject);
 
@@ -309,17 +309,13 @@ public class Player : MonoBehaviour
     public void DamageEnemy(GameObject enemyObj)
     {
         float damage = dash.dashDmg;
-        if (stomp.isStomping)
+        if (stomp.isStomping || stomp.isSpinning)
         {
             //damage = rb.velocity.magnitude * kick.kickDmgScale;
-            if (!stomp.isSpinning)
-            {
-                damage = 100f;
-                Debug.Log("Stomp Damage: " + damage);
-            } else
-            {
-                damage = 0f;
-            }
+            
+            damage = 100f;
+            Debug.Log("Stomp Damage: " + damage);
+
             
         }
         Debug.Log("Damage dealt: " + damage);
