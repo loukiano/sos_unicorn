@@ -141,7 +141,11 @@ public class Player : MonoBehaviour
         {
             if (!dash.isDashing)
             {
-                HandleMovement();
+                if (!stomp.isStomping)
+                {
+                    HandleMovement();
+
+                }
                 ApplyFriction();
                 HandleGravity();
             }
