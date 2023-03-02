@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 680816299601697010}
   - component: {fileID: 680816299601697005}
   - component: {fileID: 680816299601697011}
-  - component: {fileID: 1206577752775798611}
-  - component: {fileID: -1164518940453408871}
-  - component: {fileID: 4646000366649863767}
-  - component: {fileID: 6314184994961382464}
-  - component: {fileID: 8596180979289250984}
+  - component: {fileID: -5749494947858287057}
+  - component: {fileID: -7632099135783852874}
+  - component: {fileID: -3206964634865355368}
+  - component: {fileID: -5700592258276921108}
+  - component: {fileID: -2207939981959538947}
   m_Layer: 7
-  m_Name: StrongEnemy
+  m_Name: StrongerEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 20
   m_Sprite: {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
-  m_Color: {r: 0, g: 0.15447235, b: 1, a: 1}
+  m_Color: {r: 0.93372107, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -116,7 +116,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.99466556}
   m_EdgeRadius: 0
---- !u!114 &1206577752775798611
+--- !u!114 &-5749494947858287057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680816299601697001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e8348b915ac471ab51786373da7c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  box: {fileID: 0}
+  atkDmg: 20
+  atkRange: 0
+  atkSpeed: 0.25
+  team: 0
+--- !u!114 &-7632099135783852874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,11 +148,12 @@ MonoBehaviour:
   rb: {fileID: 0}
   box: {fileID: 0}
   spr: {fileID: 0}
+  spawnArea: {fileID: 0}
   canMove: 1
-  moveSpeed: 7
+  moveSpeed: 9
   dirMove: {x: 0, y: 0}
-  detectionRadius: 10
---- !u!114 &-1164518940453408871
+  detectionRadius: 200
+--- !u!114 &-3206964634865355368
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,9 +166,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 0}
-  maxHealth: 200
-  health: 200
-  bloodValue: 13
+  maxHealth: 300
+  health: 0
+  bloodValue: 20
   isInvincible: 0
   invincibleDur: 0.2
   deathDur: 0.25
@@ -162,24 +180,7 @@ MonoBehaviour:
   bleedScaleChunks: 0
   maxBleedRate: 0
   doBleed: 0
---- !u!114 &4646000366649863767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 680816299601697001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55e8348b915ac471ab51786373da7c5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  box: {fileID: 0}
-  atkDmg: 15
-  atkRange: 0
-  atkSpeed: 0.25
-  team: 0
---- !u!114 &6314184994961382464
+--- !u!114 &-5700592258276921108
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,7 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spr: {fileID: 0}
   bloodExplosion: {fileID: 7433063616485181098, guid: c63ccfaecf070456093713006c39eb43, type: 3}
---- !u!50 &8596180979289250984
+--- !u!50 &-2207939981959538947
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0

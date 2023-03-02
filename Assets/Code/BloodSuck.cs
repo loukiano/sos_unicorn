@@ -57,6 +57,9 @@ public class BloodSuck : MonoBehaviour
             }
 
             ps.SetParticles(particles, numLivingParticles);
+        } else if (!ps.IsAlive())
+        {
+            Destroy(gameObject);
         }
     }
 

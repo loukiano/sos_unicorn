@@ -24,7 +24,7 @@ public class DashIndicator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         c = player.GetComponent<Controller>();
         p = player.GetComponent<Player>();
         rb = player.GetComponent<Rigidbody2D>();

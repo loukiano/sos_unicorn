@@ -10,6 +10,8 @@ public class ScoreUI : MonoBehaviour
     public Transform scoreValue;
     public int score;
 
+    public int areaClearScore;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +28,12 @@ public class ScoreUI : MonoBehaviour
 
     public void Score()
     {
-        score += 13;
+        AddScore(13);
+    }
+
+    public void AddScore(int val)
+    {
+        score += val;
         TMP_Text scoreText = scoreValue.GetComponent<TMP_Text>();
         int leadingZeroes = 5;
         float tempScore = score;
@@ -43,5 +50,11 @@ public class ScoreUI : MonoBehaviour
             finalScoreText += "0";
         }
         scoreText.text = finalScoreText + score.ToString();
+    }
+
+    public void ClearArea()
+    {
+        AddScore(areaClearScore);
+        Debug.Log("WOOOO adding clear score");
     }
 }

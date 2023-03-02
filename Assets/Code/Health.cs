@@ -77,14 +77,7 @@ public class Health : MonoBehaviour
         }
         else if (isPlayer && doBleed && World.timer > 0 && World.isRunning)
         {
-            if (bleedRate < maxBleedRate)
-            {
-                bleedRate = Mathf.Floor(World.timer / bleedScaleChunks) * bleedTimeScaling + initialBleedRate;
-            }
-            else
-            {
-                bleedRate = maxBleedRate;
-            }
+            IncreaseBleedRate();
             health -= bleedRate;
 
             if (health <= 0)
@@ -108,6 +101,17 @@ public class Health : MonoBehaviour
         return deathTime != 0;
     }
 
+    public void IncreaseBleedRate()
+    {
+        if (bleedRate < maxBleedRate)
+        {
+            bleedRate = World.lvlNum * bleedTimeScaling + initialBleedRate;
+        }
+        else
+        {
+            bleedRate = maxBleedRate;
+        }
+    }
 
     public float TakeDamage(float dmg)
     {

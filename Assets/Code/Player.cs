@@ -141,7 +141,11 @@ public class Player : MonoBehaviour
         {
             if (!dash.isDashing)
             {
-                HandleMovement();
+                if (!stomp.isStomping)
+                {
+                    HandleMovement();
+
+                }
                 ApplyFriction();
                 HandleGravity();
             }
@@ -318,7 +322,7 @@ public class Player : MonoBehaviour
 
             
         }
-        Debug.Log("Damage dealt: " + damage);
+        //Debug.Log("Damage dealt: " + damage);
         Health enemyHealth = enemyObj.GetComponent<Health>();
         float bloodValue = enemyHealth.TakeDamage(damage);
         health.HealDamage(bloodValue);

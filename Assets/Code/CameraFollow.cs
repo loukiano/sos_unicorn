@@ -23,6 +23,8 @@ public class CameraFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+
         xMin = mapBounds.bounds.min.x;
         xMax = mapBounds.bounds.max.x;
         yMin = mapBounds.bounds.min.y;
@@ -30,14 +32,30 @@ public class CameraFollow : MonoBehaviour
         mainCam = GetComponent<Camera>();
         camOrthsize = mainCam.orthographicSize;
         cameraRatio = mainCam.aspect * camOrthsize;
-        tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
+        GameObject tutObj = GameObject.Find("Tutorial Transition");
+        if (tutObj != null)
+        {
+            TutorialTransition tutTrans = tutObj.GetComponent<TutorialTransition>();
+            if (!tutTrans.Equals(null))
+            {
+                Debug.Log(tutTrans.ToString());
+                tutTrans.StartGame();
+            }
 
-        followTransform = GameObject.Find("Player").transform;
+        }
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            followTransform = player.transform;
+        } else
+        {
+            Debug.Log("Couldn't find!");
+        }
     }
 
     void FixedUpdate()
     {
-        if (tutorialTransition.FinishedTutorialHuh())
+        if (tutorialTransition == null || tutorialTransition.FinishedTutorialHuh())
         {
             float xOff = Controller.GetAxisFilter("RightHorizontal") * maxXOff;
             float yOff = Controller.GetAxisFilter("RightVertical") * maxYOff;

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8419176309694332167
+--- !u!1 &4131809654247895366
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,46 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8419176309694332165}
-  - component: {fileID: 8419176309694332164}
-  - component: {fileID: 4037370013144785886}
+  - component: {fileID: 4131809654247895364}
+  - component: {fileID: 4131809654247895365}
+  - component: {fileID: 8468544525449588639}
   m_Layer: 7
-  m_Name: Flier Spawner
+  m_Name: Grounded Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8419176309694332165
+--- !u!4 &4131809654247895364
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8419176309694332167}
+  m_GameObject: {fileID: 4131809654247895366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 131.9, y: 34.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8419176309694332164
+--- !u!114 &4131809654247895365
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8419176309694332167}
+  m_GameObject: {fileID: 4131809654247895366}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16952f145f4bc48a9b7770cb6d0e149c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 680816299601697001, guid: e3c109809a07e454c9ddea6bfa6ee25e, type: 3}
-  strongEnemy: {fileID: 680816299601697001, guid: acb12b6ed51a424408ec488c6bd50dd5, type: 3}
-  strongerEnemy: {fileID: 680816299601697001, guid: 8cc4ee4e610b3a3499d7edfb4fc27ce0, type: 3}
+  enemy: {fileID: 32558203496570008, guid: cb5e107fd67554eb1bc8384e158f8ecc, type: 3}
+  strongEnemy: {fileID: 32558203496570008, guid: cb5e107fd67554eb1bc8384e158f8ecc, type: 3}
+  strongerEnemy: {fileID: 32558203496570008, guid: cb5e107fd67554eb1bc8384e158f8ecc, type: 3}
+  spawnArea: {fileID: 0}
+  shouldSpawn: 0
   cam: {fileID: 0}
   spawnRate: 2
   initialSpawnRate: 2
@@ -58,15 +60,19 @@ MonoBehaviour:
   initialNumEnemies: 5
   timeSpawnStrong: 10
   timeSpawnStronger: 20
-  spawnOnGround: 0
-  groundedSpawnOffset: 0
---- !u!61 &4037370013144785886
+  spawnOnGround: 1
+  groundedSpawnOffset: 2
+  isClearableArea: 0
+  loadCooldown: 30
+  loadDist: 100
+  unloadDist: 200
+--- !u!61 &8468544525449588639
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8419176309694332167}
+  m_GameObject: {fileID: 4131809654247895366}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -84,5 +90,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 150, y: 120}
+  m_Size: {x: 145, y: 115}
   m_EdgeRadius: 0

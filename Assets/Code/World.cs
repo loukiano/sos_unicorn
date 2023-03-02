@@ -6,12 +6,16 @@ public class World : MonoBehaviour
 {
 
     public static float timer;
+    public static int lvlNum;
+    public static int numLvls = 4;
     private float lastTimer;
     public static bool isRunning;
     public bool copyisRunning;
 
     public bool hasTutorial;
     private TutorialTransition tutorialTransition;
+
+    public ScoreUI scoreUI;
     // Start is called before the first frame update
 
     void Start()
@@ -29,17 +33,36 @@ public class World : MonoBehaviour
         }
     }
 
+    public static void CheckpointPassed(int checkpointId)
+    {
+        if (lvlNum % numLvls == checkpointId)
+            // if we're progressing, move to next level!
+        {
+            lvlNum += 1;
+        }
+    }
+
     public static void StartRunning()
     {
 
         isRunning = true;
-        TutorialTransition tutTrans =  GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
-        if (!tutTrans.Equals(null))
+        GameObject tutObj = GameObject.Find("Tutorial Transition");
+        if (tutObj != null)
         {
-            Debug.Log(tutTrans.ToString());
-            tutTrans.StartGame();
+            TutorialTransition tutTrans = tutObj.GetComponent<TutorialTransition>();
+            if (!tutTrans.Equals(null))
+            {
+                //Debug.Log(tutTrans.ToString());
+                tutTrans.StartGame();
+            }
+
         }
-        GameObject.Find("Player").GetComponent<Player>().StartBleeding();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().StartBleeding();
+    }
+
+    public void AreaCleared()
+    {
+        scoreUI.ClearArea();
     }
 
     public static void PauseGame()

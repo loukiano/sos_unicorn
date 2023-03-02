@@ -8,6 +8,8 @@ public class AIController : MonoBehaviour
 	public BoxCollider2D box;
 	public SpriteRenderer spr;
 
+	public BoxCollider2D spawnArea;
+
 	public bool canMove;
 	public float moveSpeed;
 

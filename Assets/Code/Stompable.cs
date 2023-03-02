@@ -55,6 +55,7 @@ public class Stompable : MonoBehaviour
     {
         if (Input.GetKeyDown(stompKey) || Input.GetButtonDown("Kick"))
         {
+            Debug.Log("Stomp pressed!");
             if (!p.IsGrounded() && canStomp)
             {
                 doStomp = true;
