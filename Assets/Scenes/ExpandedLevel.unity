@@ -19280,6 +19280,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1977950402}
     m_Modifications:
+    - target: {fileID: 4783881388671006730, guid: a2ecf31ee6aebc549b8be621b3a77338, type: 3}
+      propertyPath: doBleed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6166672740072890403, guid: a2ecf31ee6aebc549b8be621b3a77338, type: 3}
       propertyPath: walkSpeed
       value: 15
@@ -30927,7 +30931,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4131809654247895364, guid: d683d2c819a94443fa842a637c7e6756, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.8
+      value: -82
       objectReference: {fileID: 0}
     - target: {fileID: 4131809654247895364, guid: d683d2c819a94443fa842a637c7e6756, type: 3}
       propertyPath: m_LocalPosition.y

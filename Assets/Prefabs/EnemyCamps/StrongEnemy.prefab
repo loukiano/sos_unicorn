@@ -131,10 +131,11 @@ MonoBehaviour:
   rb: {fileID: 0}
   box: {fileID: 0}
   spr: {fileID: 0}
+  spawnArea: {fileID: 0}
   canMove: 1
   moveSpeed: 7
   dirMove: {x: 0, y: 0}
-  detectionRadius: 10
+  detectionRadius: 200
 --- !u!114 &-1164518940453408871
 MonoBehaviour:
   m_ObjectHideFlags: 0
