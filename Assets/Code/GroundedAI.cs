@@ -167,6 +167,17 @@ public class GroundedAI : AIController
         return Physics2D.OverlapBox(box.bounds.center, new Vector2(box.bounds.size.x, box.bounds.size.y), 0, groundMask);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject collidingObject = collision.gameObject;
+
+        // on collision with the ground
+        if (collidingObject.layer == 6 && collision.collider.bounds.center.y < transform.position.y)
+        {
+            jump.RefreshJumps();
+        }
+    }
+
     public void OnChildDestroy()
     {
         //Debug.Log("Child died");
