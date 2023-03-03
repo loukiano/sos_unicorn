@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4646000366649863767}
   - component: {fileID: 6314184994961382464}
   - component: {fileID: 8596180979289250984}
+  - component: {fileID: 4004741887255500841}
   m_Layer: 7
   m_Name: StrongEnemy
   m_TagString: Untagged
@@ -30,14 +31,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680816299601697001}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 7.5, y: 7.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &680816299601697005
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -79,8 +80,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 20
-  m_Sprite: {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
-  m_Color: {r: 0, g: 0.15447235, b: 1, a: 1}
+  m_Sprite: {fileID: 992961988, guid: 0e30008b51c506c4a84d9bd4e555c26f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -107,14 +108,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.34, y: 0.35}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.99466556}
+  m_Size: {x: 0.32, y: 0.35}
   m_EdgeRadius: 0
 --- !u!114 &1206577752775798611
 MonoBehaviour:
@@ -194,6 +195,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spr: {fileID: 0}
   bloodExplosion: {fileID: 7433063616485181098, guid: c63ccfaecf070456093713006c39eb43, type: 3}
+  spriteHandler: {fileID: 0}
+  powerLevel: 0
 --- !u!50 &8596180979289250984
 Rigidbody2D:
   serializedVersion: 4
@@ -215,3 +218,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &4004741887255500841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680816299601697001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3b89a0c80a4de41ac47dcf4d508741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stationaryLevelThree: {fileID: 1916912341, guid: bb0b111d933e1a54eb497db39c618f9e, type: 3}
+  flapLevelThree: {fileID: 559460910, guid: bb0b111d933e1a54eb497db39c618f9e, type: 3}
+  stationaryLevelTwo: {fileID: 992961988, guid: 0e30008b51c506c4a84d9bd4e555c26f, type: 3}
+  flapLevelTwo: {fileID: 1634685433, guid: 0e30008b51c506c4a84d9bd4e555c26f, type: 3}
+  stationaryLevelOne: {fileID: -934611302, guid: 0e30008b51c506c4a84d9bd4e555c26f, type: 3}
+  flapLevelOne: {fileID: 1073088718, guid: 0e30008b51c506c4a84d9bd4e555c26f, type: 3}
+  stationary: {fileID: 992961988, guid: 0e30008b51c506c4a84d9bd4e555c26f, type: 3}
+  flap: {fileID: 1634685433, guid: 0e30008b51c506c4a84d9bd4e555c26f, type: 3}
+  spriteHolder: {fileID: 0}
+  spriteTag: 
+  nextflapTime: 0
+  flapInterval: 0
+  nextStationaryTime: 0
+  stationaryInterval: 0

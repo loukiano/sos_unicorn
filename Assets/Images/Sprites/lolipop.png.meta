@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0e30008b51c506c4a84d9bd4e555c26f
+guid: df9671a892bb361448a764671000f6a5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: monstro-fada-2_0
+      name: lolipop_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 315
-        width: 34
-        height: 33
+        x: 0
+        y: 7
+        width: 16
+        height: 9
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e168d2ba902d2c1479c265d8ed3660bd
-      internalID: -934611302
+      spriteID: 9ccad170ec569c9478843961a1908cea
+      internalID: 35935170
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: monstro-fada-2_1
+      name: lolipop_1
       rect:
         serializedVersion: 2
-        x: 260
-        y: 312
-        width: 34
-        height: 35
+        x: 0
+        y: 0
+        width: 16
+        height: 7
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,50 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a68e5e456b0ef840b2303c76cd6d1bc
-      internalID: 992961988
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: monstro-fada-2_2
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 314
-        width: 34
-        height: 33
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: adfee5bba1a28d34da6298ecf4e507cc
-      internalID: 1073088718
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: monstro-fada-2_3
-      rect:
-        serializedVersion: 2
-        x: 223
-        y: 313
-        width: 34
-        height: 35
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a3054b1c09973a244b91c27ef0f80de9
-      internalID: 1634685433
+      spriteID: b702feb767042a04fa445df6de9cd518
+      internalID: -17267521
       vertices: []
       indices: 
       edges: []
@@ -199,10 +157,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      monstro-fada-2_2: 1073088718
-      monstro-fada-2_0: -934611302
-      monstro-fada-2_1: 992961988
-      monstro-fada-2_3: 1634685433
+      lolipop_1: -17267521
+      lolipop_0: 35935170
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

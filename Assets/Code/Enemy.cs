@@ -5,10 +5,11 @@ public class Enemy : MonoBehaviour
 {
 	public SpriteRenderer spr;
     public GameObject bloodExplosion;
+    public FlierSpriteHandler spriteHandler;
 
     private Health health;
-
     private Color enemyGreen;
+    public int powerLevel;
 
     // Use this for initialization
     void Start()
@@ -21,8 +22,21 @@ public class Enemy : MonoBehaviour
         }
         health = GetComponent<Health>();
 
-        enemyGreen = new Color(46f / 255f, 173f / 255f, 94f / 255f);
+        enemyGreen = spr.color;
 
+
+        if (health.health <= 100)
+        {
+            powerLevel = 1;
+        }
+        else if (health.health <= 200)
+        {
+            powerLevel = 2;
+        }
+        else
+        {
+            powerLevel = 3;
+        }
     }
 
 	// Update is called once per frame
@@ -36,15 +50,15 @@ public class Enemy : MonoBehaviour
         }
         else if (health.health <= 100)
         {
-            spr.color = enemyGreen;
+            powerLevel = 1;
         }
         else if (health.health <= 200)
         {
-            spr.color = Color.blue;
+            powerLevel = 2;
         }
         else
         {
-            spr.color = Color.yellow;
+            powerLevel = 3;
         }
 
 	}

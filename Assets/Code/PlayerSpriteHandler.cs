@@ -44,10 +44,24 @@ public class PlayerSpriteHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (rb.velocity.magnitude > 0.1)
+        {
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+
         if (dashable.isDashing || kickable.isKicking)
         {
             spriteHolder.sprite = dash;
             spriteTag = "attacking";
+        }
+        else if (!isMoving)
+        {
+            spriteHolder.sprite = stationary;
+            spriteTag = "stationary";
         }
         else if (Time.time > nextGallopTime)
         {
@@ -69,7 +83,7 @@ public class PlayerSpriteHandler : MonoBehaviour
 
     public void UpdateDirection()
     {
-        if ((transform.localScale.x > 0 && rb.velocity.x < -0.05) || (transform.localScale.x < 0 && rb.velocity.x > 0.05))
+        if ((transform.localScale.x > 0 && rb.velocity.x < -0.1) || (transform.localScale.x < 0 && rb.velocity.x > 0.1))
         {
             facingRight = !facingRight;
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
