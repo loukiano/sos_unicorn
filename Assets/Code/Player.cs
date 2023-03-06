@@ -41,6 +41,8 @@ public class Player : MonoBehaviour
     public Stompable stomp;
     public Bullet bullet;
 
+    public Transform t;
+
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
     public float bulletSpeed = 10;
@@ -50,6 +52,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        t = GetComponent<Transform>();
         c = GetComponent<Controller>();
         if (c == null)
         {
@@ -122,9 +126,19 @@ public class Player : MonoBehaviour
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         var tempGravity = rb.gravityScale;
         rb.gravityScale = 0;
-        bullet.GetComponent<Rigidbody2D>().velocity = inputDir * bulletSpeed;
         Vector2 propulsion = new Vector2(-75, -25);
-        rb.AddForce(new Vector2(propulsion.x * inputDir.x, propulsion.y * inputDir.y), ForceMode2D.Impulse);
+
+        if (inputDir.magnitude == 0)
+        {
+            bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(t.localScale.x, 0) * bulletSpeed;
+            rb.AddForce(new Vector2(propulsion.x * t.localScale.x, 0), ForceMode2D.Impulse);
+        }
+        else
+        {
+            bullet.GetComponent<Rigidbody2D>().velocity = inputDir * bulletSpeed;
+            rb.AddForce(new Vector2(propulsion.x * inputDir.x, propulsion.y * inputDir.y), ForceMode2D.Impulse);
+        }
+
         rb.gravityScale = tempGravity;
         yield return new WaitForSeconds(fireCooldown);
         canFire = true;

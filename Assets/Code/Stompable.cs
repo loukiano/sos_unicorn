@@ -75,12 +75,11 @@ public class Stompable : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.contacts[0].normal.y > 0.5)
-        {
+        {   
             if (isStomping)
             {
-                StartCoroutine(Explode());
+                CompleteStomp();
             }
-            CompleteStomp();
         }
         
     }
@@ -116,7 +115,7 @@ public class Stompable : MonoBehaviour
     {
         float tempKDS = stompDmgScale;
         //box.size *= kickSize;
-        float velocityMagnitude = Mathf.Sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y * rb.velocity.y);
+        float velocityMagnitude = Mathf.Sqrt(rb.velocity.y * rb.velocity.y);
 
         Vector2 addVel = new Vector2(0, 1);
         addVel *= stompVel;
@@ -158,6 +157,7 @@ public class Stompable : MonoBehaviour
 
     private void CompleteStomp()
     {
+        StartCoroutine(Explode());
         rb.gravityScale = gravityScale;
         isStomping = false;
         canStomp = true;
