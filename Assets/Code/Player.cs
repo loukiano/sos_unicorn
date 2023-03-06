@@ -46,12 +46,21 @@ public class Player : MonoBehaviour
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
     public float bulletSpeed = 10;
-    private float fireCooldown = 0.5f;
-    private bool canFire = true;
+    private float fireCooldown = .75f;
+    public bool canFire = true;
+
+    public bool jumpCooldown;
+    public bool dashCooldown;
+    public bool stompCooldown;
+    public bool puffCooldown;
 
     // Start is called before the first frame update
     void Start()
     {
+        jumpCooldown = false;
+        dashCooldown = false;
+        stompCooldown = false;
+        puffCooldown = false;
 
         t = GetComponent<Transform>();
         c = GetComponent<Controller>();
@@ -91,6 +100,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
+
+
+
         if (stomp.isStomping)
         {
             //spr.color = stompColor;

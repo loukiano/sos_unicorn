@@ -31,6 +31,7 @@ public class Dashable : MonoBehaviour
     private float lastDashStopTime;
     private Vector2 cancelVel; // velocity to cancel the most recent dash
     private Vector3 normalTransformScale;
+    public bool canDash = true;
     //public Vector2 nextDash;
 
     // Use this for initialization
@@ -47,11 +48,19 @@ public class Dashable : MonoBehaviour
         t = GetComponent<Transform>();
         normalTransformScale = t.localScale;
         kick = GetComponent<Kickable>();
+        canDash = true;
     }
 
 	// Update is called once per frame
 	void Update()
 	{
+        if (numDashes == 0)
+        {
+            canDash = false;
+        } else
+        {
+            canDash = true;
+        }
         if (lastDashTime + dashingTime < Time.time)
         {
             rb.gravityScale = originalGravity;

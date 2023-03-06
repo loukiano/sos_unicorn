@@ -17,7 +17,7 @@ public class Kickable : MonoBehaviour
     public float kickDmgScale;
     public float kickSize;
     public bool isKicking;
-    private bool canKick;
+    public bool canKick;
     private Vector3 normalTransformScale;
 
     // Use this for initialization

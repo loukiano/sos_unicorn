@@ -30,7 +30,7 @@ public class Stompable : MonoBehaviour
     public float stompVel;
     public float stompDmgScale = 1f;
     public float stompSize;
-    private bool canStomp;
+    public bool canStomp;
     private Vector3 normalTransformScale;
 
     private void Start()

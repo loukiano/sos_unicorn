@@ -15,7 +15,7 @@ public class Jumpable : MonoBehaviour
     public float jumpCooldown = 0f; // seconds
     public float jumpForce = 25;
     public float jumpStopMultiplier = 0.5f;
-
+    public bool canJump = true;
 
     // Use this for initialization
     void Start()
@@ -26,12 +26,19 @@ public class Jumpable : MonoBehaviour
             rb = gameObject.AddComponent<Rigidbody2D>();
         }
         dash = GetComponent<Dashable>();
+        canJump = true;
     }
 
 	// Update is called once per frame
 	void Update()
 	{
-			
+	    if (jumpsLeft == 0)
+        {
+            canJump = false;
+        } else
+        {
+            canJump = true;
+        }		
 	}
 
     // called via messages by the Controller
@@ -83,6 +90,7 @@ public class Jumpable : MonoBehaviour
     {
         isJumping = false;
         jumpsLeft = numJumps;
+        canJump = true;
     }
 }
 
