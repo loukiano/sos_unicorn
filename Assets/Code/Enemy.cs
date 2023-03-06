@@ -67,6 +67,7 @@ public class Enemy : MonoBehaviour
     {
         spr.color = Color.grey;
         Instantiate(bloodExplosion, transform.position, Quaternion.identity);
+        SoundPlayer.PlaySound(SoundPlayer.Sounds.enemyDeath);
         //bloodExplosion.GetComponent<BloodSuck>().Explode();
     }
 

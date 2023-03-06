@@ -50,7 +50,7 @@ public class Jumpable : MonoBehaviour
             lastJump = Time.time;
             jumpsLeft -= 1;
             isJumping = true;
-
+            PlayJumpSound();
             if (dash != null && dash.isDashing)
             {
                 dash.StopDash();
@@ -91,6 +91,17 @@ public class Jumpable : MonoBehaviour
         isJumping = false;
         jumpsLeft = numJumps;
         canJump = true;
+    }
+
+    private void PlayJumpSound()
+    {
+        float volume = 1;
+        if (gameObject.tag == "Enemy")
+        {
+            Debug.Log("Enemyjump!");
+            volume = 0.5f;
+        }
+        SoundPlayer.PlaySound(SoundPlayer.Sounds.jump, volume);
     }
 }
 
