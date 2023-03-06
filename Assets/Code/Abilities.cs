@@ -46,12 +46,12 @@ public class Abilities : MonoBehaviour
         
         if (jump.canJump)
         {
-            Debug.Log("can jump");
+            //Debug.Log("can jump");
             jumpCover.enabled = false;
         } 
         else if (!jump.canJump)
         {
-            Debug.Log("no jumps left");
+            //Debug.Log("no jumps left");
             jumpCover.enabled = true;
         }
 

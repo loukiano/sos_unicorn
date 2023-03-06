@@ -57,6 +57,7 @@ public class World : MonoBehaviour
             }
 
         }
+        SoundPlayer.PlaySound(SoundPlayer.Sounds.background);
         GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().StartBleeding();
     }
 
@@ -68,11 +69,13 @@ public class World : MonoBehaviour
     public static void PauseGame()
     {
         isRunning = false;
+        SoundPlayer.PauseSound(SoundPlayer.Sounds.background);
     }
 
     public static void ContinueGame()
     {
         isRunning = true;
+        SoundPlayer.PlaySound(SoundPlayer.Sounds.background);
     }
 
     // Update is called once per frame

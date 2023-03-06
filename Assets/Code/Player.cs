@@ -142,6 +142,8 @@ public class Player : MonoBehaviour
         rb.gravityScale = 0;
         Vector2 propulsion = new Vector2(-75, -25);
 
+        SoundPlayer.PlaySound(SoundPlayer.Sounds.shoot);
+
         if (inputDir.magnitude == 0)
         {
             bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(t.localScale.x, 0) * bulletSpeed;
@@ -183,6 +185,8 @@ public class Player : MonoBehaviour
     public void OnDeath()
     {
         rb.simulated = false;
+        SoundPlayer.PlaySound(SoundPlayer.Sounds.playerDeath);
+        SoundPlayer.StopSound(SoundPlayer.Sounds.background);
     }
 
 
