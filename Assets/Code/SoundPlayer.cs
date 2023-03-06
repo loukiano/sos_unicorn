@@ -14,7 +14,9 @@ public class SoundPlayer : MonoBehaviour
         dash,
         shoot,
         jump,
+        stompFall,
         playerDeath,
+        playerDmg,
         enemyDeath
     }
 
@@ -24,10 +26,15 @@ public class SoundPlayer : MonoBehaviour
     public AudioSource dash;
     public AudioSource shoot;
     public AudioSource jump;
+    public AudioSource stompFall;
     public AudioSource playerDeath;
+    public AudioSource playerDmg;
+    public RandomSound randDmgClip;
 
     // ENEMY ACTIONS
     public AudioSource enemyDeath;
+    public float enemyDeathSoundCooldown;
+    private float lastEnemyDeathSound;
 
     // Use this for initialization
     void Start()
@@ -73,12 +80,24 @@ public class SoundPlayer : MonoBehaviour
             case Sounds.jump:
                 DoSoundCue(cue, jump, vol);
                 break;
+            case Sounds.stompFall:
+                DoSoundCue(cue, stompFall, vol);
+                break;
             case Sounds.playerDeath:
                 Debug.Log("Player died!");
                 DoSoundCue(cue, playerDeath, vol);
                 break;
+            case Sounds.playerDmg:
+                playerDmg.clip = randDmgClip.GetRandomClip();
+                Debug.Log("OUCH! Clip: " + playerDmg.clip.name);
+                DoSoundCue(cue, playerDmg, vol);
+                break;
             case Sounds.enemyDeath:
-                DoSoundCue(cue, enemyDeath, vol);
+                if (Time.time > lastEnemyDeathSound + enemyDeathSoundCooldown)
+                {
+                    DoSoundCue(cue, enemyDeath, vol);
+                    lastEnemyDeathSound = Time.time;
+                }
                 break;
 
             default:

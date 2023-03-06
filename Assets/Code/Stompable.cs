@@ -107,7 +107,7 @@ public class Stompable : MonoBehaviour
         yield return new WaitForSeconds(stopTime);
         isSpinning = false;
         rb.AddForce(Vector2.down * dropForce, ForceMode2D.Impulse);
-
+        SoundPlayer.PlaySound(SoundPlayer.Sounds.stompFall);
 
     }
 
@@ -161,6 +161,7 @@ public class Stompable : MonoBehaviour
         rb.gravityScale = gravityScale;
         isStomping = false;
         canStomp = true;
+        SoundPlayer.StopSound(SoundPlayer.Sounds.stompFall);
     }
     private void ClearForces()
     {
