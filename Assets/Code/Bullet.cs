@@ -10,11 +10,17 @@ public class Bullet : MonoBehaviour
     public Transform t;
     private Vector3 normalTransform;
 
+    private ParticleSystem expl;
+    private SpriteRenderer spr;
+
     private void Start()
     {
         p = GetComponent<Player>();
         t = GetComponent<Transform>();
+        spr = GetComponent<SpriteRenderer>();
         normalTransform = t.localScale * 15;
+
+        expl = GetComponentInChildren<ParticleSystem>();
     }
     private void Awake()
     {
@@ -43,7 +49,9 @@ public class Bullet : MonoBehaviour
     private IEnumerator Expand()
     {
         t.localScale = normalTransform;
-        yield return new WaitForSeconds(0.05f);
+        spr.enabled = false;
+        expl.Play();
+        yield return new WaitForSeconds(0.1f);
         Destroy(gameObject);
 
     }
