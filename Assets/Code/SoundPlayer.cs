@@ -132,7 +132,6 @@ public class SoundPlayer : MonoBehaviour
                 }
                 break;
             case Cue.pause:
-                
                 sound.Pause();
                 break;
             case Cue.stop:
