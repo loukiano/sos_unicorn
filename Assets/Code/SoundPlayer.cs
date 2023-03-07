@@ -6,7 +6,7 @@ public class SoundPlayer : MonoBehaviour
 {
     static public SoundPlayer s;
 
-    public enum Cue { start, pause, stop};
+    public enum Cue { start, pause, unpause, stop};
 
     public enum Sounds
     {
@@ -59,6 +59,11 @@ public class SoundPlayer : MonoBehaviour
         s.RouteSoundCue(Cue.pause, soundName, vol);
     }
 
+    public static void UnPauseSound(Sounds soundName, float vol = 1)
+    {
+        s.RouteSoundCue(Cue.unpause, soundName, vol);
+    }
+
     public static void StopSound(Sounds soundName, float vol = 1)
     {
         s.RouteSoundCue(Cue.stop, soundName, vol);
@@ -70,10 +75,6 @@ public class SoundPlayer : MonoBehaviour
         switch (soundName)
         {
             case Sounds.background:
-                if (cue == Cue.pause)
-                {
-                    backgroundPaused = true;
-                }
                 DoSoundCue(cue, backgroundMusic, vol);
                 break;
             case Sounds.dash:
@@ -119,20 +120,13 @@ public class SoundPlayer : MonoBehaviour
         switch (cue)
         {
             case Cue.start:
-                Debug.Log("Playing sound, time = " + sound.time);
-                if (backgroundPaused)
-                    // if we're paused, not starting from beginning
-                {
-                    backgroundPaused = false;
-                    Debug.Log("UNPAUSE!");
-                    sound.UnPause();
-                } else
-                {
-                    sound.PlayOneShot(sound.clip, vol);
-                }
+                sound.PlayOneShot(sound.clip, vol);
                 break;
             case Cue.pause:
                 sound.Pause();
+                break;
+            case Cue.unpause:
+                sound.UnPause();
                 break;
             case Cue.stop:
                 sound.Stop();

@@ -75,7 +75,7 @@ public class World : MonoBehaviour
     public static void ContinueGame()
     {
         isRunning = true;
-        SoundPlayer.PlaySound(SoundPlayer.Sounds.background);
+        SoundPlayer.UnPauseSound(SoundPlayer.Sounds.background);
     }
 
     // Update is called once per frame
