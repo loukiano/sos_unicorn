@@ -121,6 +121,10 @@ public class Health : MonoBehaviour
         {
             health -= dmg;
             bloodRet = bloodValue;
+            if (isPlayer)
+            {
+                SoundPlayer.PlaySound(SoundPlayer.Sounds.playerDmg);
+            }
             if (healthBar != null)
             {
                 healthBar.UpdateHealthBar();

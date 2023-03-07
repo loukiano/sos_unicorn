@@ -131,6 +131,7 @@ public class Dashable : MonoBehaviour
             kick.isKicking = false;
 
             gameObject.SendMessage("StartDash"); // allows for action on dash start
+            SoundPlayer.PlaySound(SoundPlayer.Sounds.dash);
 
             float xCancel = dir.x * dashVel;
             float yCancel = dir.y * dashVel;
