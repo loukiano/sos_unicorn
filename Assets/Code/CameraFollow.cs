@@ -80,6 +80,8 @@ public class CameraFollow : MonoBehaviour
     {
         if (currentWidth != Screen.width || currentHeight != Screen.height)
         {
+            camOrthsize = mainCam.orthographicSize;
+            cameraRatio = mainCam.aspect * camOrthsize;
             currentWidth = Screen.width;
             currentHeight = Screen.height;
             canvasScaler.scaleFactor = Mathf.Min(currentWidth / 1920.0f, currentHeight / 1080.0f);
