@@ -24676,6 +24676,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2108675790}
     - target: {fileID: 7804833220576474731, guid: 5ec879fb6e4414a34adfa2710020536e, type: 3}
+      propertyPath: canvasScaler
+      value: 
+      objectReference: {fileID: 1431393961}
+    - target: {fileID: 7804833220576474731, guid: 5ec879fb6e4414a34adfa2710020536e, type: 3}
       propertyPath: followTransform
       value: 
       objectReference: {fileID: 1594967869}
@@ -26496,6 +26500,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1564131767119891957, guid: 3dd4e29a6535f4e09b34e2571f850d45, type: 3}
   m_PrefabInstance: {fileID: 1427740374}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1431393961 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2033409225998379228, guid: 203d9d204d7b3c043be89d86fbb84f7a, type: 3}
+  m_PrefabInstance: {fileID: 2096143710}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1437378141
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27375,6 +27390,10 @@ PrefabInstance:
       propertyPath: mapBounds
       value: 
       objectReference: {fileID: 2108675790}
+    - target: {fileID: 5817595599824164947, guid: 3cb82ac0173014b6d90cbdad0f067fa2, type: 3}
+      propertyPath: canvasScaler
+      value: 
+      objectReference: {fileID: 1431393961}
     - target: {fileID: 5817595599824164947, guid: 3cb82ac0173014b6d90cbdad0f067fa2, type: 3}
       propertyPath: followTransform
       value: 
