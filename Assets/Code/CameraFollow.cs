@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class CameraFollow : MonoBehaviour
     public float maxXOff = 5;
 
     public float moveDamp = 0.2f;
+    public CanvasScaler canvasScaler;
 
     private float xMin, xMax, yMin, yMax;
     private float camY, camX;
@@ -19,12 +21,16 @@ public class CameraFollow : MonoBehaviour
     private float cameraRatio;
     private Camera mainCam;
     private TutorialTransition tutorialTransition;
+    private float currentWidth;
+    private float currentHeight;
 
     // Start is called before the first frame update
     void Start()
     {
-
-
+        currentHeight = Screen.height;
+        currentWidth = Screen.width;
+        canvasScaler.scaleFactor = Mathf.Min(currentWidth / 1920.0f, currentHeight/1080.0f);
+        //Screen.SetResolution(1920, 1080, true);
         xMin = mapBounds.bounds.min.x;
         xMax = mapBounds.bounds.max.x;
         yMin = mapBounds.bounds.min.y;
@@ -72,6 +78,11 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (currentWidth != Screen.width || currentHeight != Screen.height)
+        {
+            currentWidth = Screen.width;
+            currentHeight = Screen.height;
+            canvasScaler.scaleFactor = Mathf.Min(currentWidth / 1920.0f, currentHeight / 1080.0f);
+        }
     }
 }
