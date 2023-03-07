@@ -19,12 +19,17 @@ public class SignPostText : MonoBehaviour
     public Color titleColor;
     public Color hintColor;
 
+    public GameObject box1;
+    public GameObject box2;
+
     // Start is called before the first frame update
     void Start()
     {
         signCollider = GetComponent<BoxCollider2D>();
         signText = signTextObject.GetComponent<TMP_Text>();
         t = signTextObject.GetComponent<Transform>();
+        box1.SetActive(false);
+        box2.SetActive(false);
     }
 
     // Update is called once per frame
@@ -58,6 +63,9 @@ public class SignPostText : MonoBehaviour
 
     public void DisplayText()
     {
+        box1.SetActive(true);
+        box2.SetActive(true);
+
         if (tag == "title")
         {
             signText.font = titleFont;
@@ -66,19 +74,29 @@ public class SignPostText : MonoBehaviour
             signText.color = titleColor;
             signText.text = "SOS Unicorn";
         }
-        else if (tag == "dash")
-            signText.text = "Jump, Jump, Dash\nto get on top of the castle!";
-        else if (tag == "jump")
-            signText.text = "Hmm, such a tall climb!\nTry using your Jump out of your Dash!";
-        else if (tag == "danger")
+        else
         {
-            signText.text = "Be careful!\nFaeries are more dangerous out here.\nTry using your Puff out of your Dash to deal with big swarms!";
+            signText.font = hintFont;
+            t.localPosition = new Vector3(0f, -200f, 0f);
+            signText.fontSize = 80f;
+            signText.color = hintColor;
+            if (tag == "help")
+                signText.text = "If you need help collecting blood for your demon lord,\ngo find a sign post!\nSincerely, a sign post <3";
+            else if (tag == "basic_controls")
+                signText.text = "Lollipops ahead-- a good opportunity for blood!\nAttack by dashing (R1), ground pounding (L1),\nor shooting (Square).";
+            else if (tag == "climb")
+                signText.text = "You can also use your dash to help you get around.";
+            else if (tag == "jump")
+                signText.text = "Stuck? Jump by pressing (X)!\n(You can also double jump in the air.)";
+            else if (tag == "good_luck")
+                signText.text = "Enemies will get harder from here on out.\nYou won't see another sign post.\nRemember the basics, and good luck!";
         }
-    
     }
 
     public void RemoveText()
     {
+        box1.SetActive(false);
+        box2.SetActive(false);
         signText.font = hintFont;
         t.localPosition = new Vector3(0f, -200f, 0f);
         signText.fontSize = 80f;

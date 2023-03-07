@@ -21,6 +21,7 @@ public class SoundPlayer : MonoBehaviour
     }
 
     public AudioSource backgroundMusic;
+    private bool backgroundPaused;
 
     // PLAYER ACTIONS
     public AudioSource dash;
@@ -69,6 +70,10 @@ public class SoundPlayer : MonoBehaviour
         switch (soundName)
         {
             case Sounds.background:
+                if (cue == Cue.pause)
+                {
+                    backgroundPaused = true;
+                }
                 DoSoundCue(cue, backgroundMusic, vol);
                 break;
             case Sounds.dash:
@@ -114,10 +119,12 @@ public class SoundPlayer : MonoBehaviour
         switch (cue)
         {
             case Cue.start:
-                //Debug.Log("Playing sound!");
-                if (sound.time > 0)
+                Debug.Log("Playing sound, time = " + sound.time);
+                if (backgroundPaused)
                     // if we're paused, not starting from beginning
                 {
+                    backgroundPaused = false;
+                    Debug.Log("UNPAUSE!");
                     sound.UnPause();
                 } else
                 {
@@ -125,6 +132,7 @@ public class SoundPlayer : MonoBehaviour
                 }
                 break;
             case Cue.pause:
+                
                 sound.Pause();
                 break;
             case Cue.stop:
