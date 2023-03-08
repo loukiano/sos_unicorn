@@ -44,7 +44,7 @@ public class World : MonoBehaviour
 
     public static void StartRunning()
     {
-
+        Debug.Log("WORLD. STARTRUNNING CALLED");
         isRunning = true;
         GameObject tutObj = GameObject.Find("Tutorial Transition");
         if (tutObj != null)

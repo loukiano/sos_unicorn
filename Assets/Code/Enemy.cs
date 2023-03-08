@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
 	{
         if (health.isDead())
         {
-            if (!World.isRunning)
+            if (!World.isRunning && World.timer <= 0)
                 World.StartRunning();
             spr.color = Color.grey;
         }

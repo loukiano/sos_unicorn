@@ -15,7 +15,6 @@ public class Stompable : MonoBehaviour
 
     private float RotateSpeed = 3.0f;
     private Player p;
-    public KeyCode stompKey = KeyCode.L;
     private bool doStomp = false;
     private Rigidbody2D rb;
     public bool isStomping = false;
@@ -53,23 +52,7 @@ public class Stompable : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(stompKey) || Input.GetButtonDown("Kick"))
-        {
-            Debug.Log("Stomp pressed!");
-            if (!p.IsGrounded() && canStomp)
-            {
-                doStomp = true;
-            }
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (doStomp)
-        {
-            Stomp();
-        }
-        doStomp = false;
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -84,13 +67,23 @@ public class Stompable : MonoBehaviour
         
     }
 
+    public void DoStomp()
+    {
+        if (!p.IsGrounded() && canStomp)
+        {
+            Stomp();
+        }
+    }
+
     private void Stomp()
     {
+        
         Debug.Log("NYOOM!");
         canStomp = false;
         isStomping = true;
         StopAndSpin();
-        StartCoroutine( DropAndSmash());
+        StartCoroutine(DropAndSmash());
+        
     }
 
     private void StopAndSpin()
@@ -106,8 +99,12 @@ public class Stompable : MonoBehaviour
     {
         yield return new WaitForSeconds(stopTime);
         isSpinning = false;
-        rb.AddForce(Vector2.down * dropForce, ForceMode2D.Impulse);
-        SoundPlayer.PlaySound(SoundPlayer.Sounds.stompFall);
+        if (isStomping)
+            // if we're still stomping
+        {
+            rb.AddForce(Vector2.down * dropForce, ForceMode2D.Impulse);
+            SoundPlayer.PlaySound(SoundPlayer.Sounds.stompFall);
+        }
 
     }
 
@@ -167,5 +164,31 @@ public class Stompable : MonoBehaviour
     {
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0;
+    }
+
+
+    // Make all other actions cancel the stomp
+    public void DoJump()
+    {
+        if (isStomping)
+        {
+            CompleteStomp();
+        }
+    }
+
+    public void DoDash()
+    {
+        if (isStomping)
+        {
+            CompleteStomp();
+        }
+    }
+
+    public void DoFire()
+    {
+        if (isStomping)
+        {
+            CompleteStomp();
+        }
     }
 }

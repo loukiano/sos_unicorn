@@ -37,7 +37,7 @@ public class Controller : MonoBehaviour
         MaybeJump();
         MaybeStopJump();
         MaybeDash();
-        //MaybeKick();
+        MaybeStomp();
     }
 
     void FixedUpdate()
@@ -99,6 +99,14 @@ public class Controller : MonoBehaviour
 
     }
 
+    private void MaybeStomp()
+    {
+        if (Input.GetKeyDown(stompKey) || Input.GetButtonDown("Kick"))
+        {
+            gameObject.SendMessage("DoStomp");
+        }
+    }
+
     private void MaybeDash()
     {
         if (Input.GetKeyDown(dashKey) || Input.GetButtonDown("Dash"))
@@ -107,16 +115,6 @@ public class Controller : MonoBehaviour
             gameObject.SendMessage("DoDash", GetInputDir());
         }
     }
-
-    private void MaybeKick()
-    {
-        if (Input.GetKeyDown(kickKey) || Input.GetButtonDown("Kick"))
-        {
-            Debug.Log("kicking!");
-            gameObject.SendMessage("DoKick");
-        } 
-    }
-
 
     private void MaybeJump()
     {

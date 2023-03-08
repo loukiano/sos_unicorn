@@ -129,6 +129,7 @@ public class Player : MonoBehaviour
         }
 
         if ((Input.GetKeyDown(KeyCode.K) || Input.GetButtonDown("Fire1")) && canFire) {
+            gameObject.SendMessage("DoFire");
             StartCoroutine(Fire());
         }
     }
