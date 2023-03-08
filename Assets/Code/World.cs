@@ -26,7 +26,9 @@ public class World : MonoBehaviour
         {
             tutorialTransition = GameObject.Find("Tutorial Transition").GetComponent<TutorialTransition>();
         }
+        SoundPlayer.PlaySound(SoundPlayer.Sounds.background);
 
+        Debug.Log("WORLD CONSTRUCTOR: " + isRunning);
         if (!isRunning && !hasTutorial)
         {
             World.StartRunning();
@@ -57,7 +59,7 @@ public class World : MonoBehaviour
             }
 
         }
-        SoundPlayer.PlaySound(SoundPlayer.Sounds.background);
+        
         GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().StartBleeding();
     }
 
@@ -69,13 +71,13 @@ public class World : MonoBehaviour
     public static void PauseGame()
     {
         isRunning = false;
-        SoundPlayer.PauseSound(SoundPlayer.Sounds.background);
+        SoundPlayer.HushBackground(.1f);
     }
 
     public static void ContinueGame()
     {
         isRunning = true;
-        SoundPlayer.UnPauseSound(SoundPlayer.Sounds.background);
+        SoundPlayer.RestoreBackground();
     }
 
     // Update is called once per frame

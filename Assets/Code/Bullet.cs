@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour
 
         if (collidingObject.GetComponent<Enemy>() != null)
         {
-            Debug.Log("shot em");
+            //Debug.Log("shot em");
             StartCoroutine(Expand());
             Health enemyHealth = collidingObject.GetComponent<Health>();
             float bloodValue = enemyHealth.TakeDamage(100f);

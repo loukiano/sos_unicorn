@@ -127,7 +127,7 @@ public class EnemySpawner : MonoBehaviour
                 SpawnEnemyOutOfCamera(spawnOnGround);
             }
             isOccupied = true;
-            Debug.Log("Player closer than " + loadDist + " to " + gameObject.name + "; populated with " + transform.childCount + " enemies");
+            //Debug.Log("Player closer than " + loadDist + " to " + gameObject.name + "; populated with " + transform.childCount + " enemies");
         }
     }
 
@@ -139,7 +139,7 @@ public class EnemySpawner : MonoBehaviour
             if (CamDistSqr() > Mathf.Pow(unloadDist, 2))
                 // if the player is too far away, unload the enemies
             {
-                Debug.Log("Player farther than " + unloadDist + " away; depopulating remaining enemies in " + gameObject.name);
+                //Debug.Log("Player farther than " + unloadDist + " away; depopulating remaining enemies in " + gameObject.name);
                 DepopulateArea();
             }
             else if (transform.childCount <= 0)
@@ -208,7 +208,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 spawnMsg += "didn't spawn!";
             }
-            Debug.Log(spawnMsg);
+            //Debug.Log(spawnMsg);
             lastSpawn = World.timer;
         }
     }

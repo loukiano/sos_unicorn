@@ -21,6 +21,7 @@ public class SoundPlayer : MonoBehaviour
     }
 
     public AudioSource backgroundMusic;
+    public float initialBackgroundVol;
     private bool backgroundPaused;
 
     // PLAYER ACTIONS
@@ -41,12 +42,13 @@ public class SoundPlayer : MonoBehaviour
     void Start()
     {
         s = this;
+        initialBackgroundVol = backgroundMusic.volume;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+       
     }
 
     public static void PlaySound(Sounds soundName, float vol = 1)
@@ -67,6 +69,21 @@ public class SoundPlayer : MonoBehaviour
     public static void StopSound(Sounds soundName, float vol = 1)
     {
         s.RouteSoundCue(Cue.stop, soundName, vol);
+    }
+
+    public static void HushBackground(float newVol)
+    {
+        s.ChangeBackgroundVol(newVol);
+    }
+
+    public static void RestoreBackground()
+    {
+        s.ChangeBackgroundVol(s.initialBackgroundVol);
+    }
+
+    public void ChangeBackgroundVol(float newVol)
+    {
+        backgroundMusic.volume = newVol;
     }
 
 
@@ -90,12 +107,12 @@ public class SoundPlayer : MonoBehaviour
                 DoSoundCue(cue, stompFall, vol);
                 break;
             case Sounds.playerDeath:
-                Debug.Log("Player died!");
+                //Debug.Log("Player died!");
                 DoSoundCue(cue, playerDeath, vol);
                 break;
             case Sounds.playerDmg:
                 playerDmg.clip = randDmgClip.GetRandomClip();
-                Debug.Log("OUCH! Clip: " + playerDmg.clip.name);
+                //Debug.Log("OUCH! Clip: " + playerDmg.clip.name);
                 DoSoundCue(cue, playerDmg, vol);
                 break;
             case Sounds.enemyDeath:
