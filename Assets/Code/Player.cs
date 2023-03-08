@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
             HandleEnemyOverlap();
         }
 
-        if ((Input.GetKeyDown(KeyCode.K) || Input.GetButtonDown("Fire1")) && canFire) {
+        if ((Input.GetKeyDown(KeyCode.K) || Input.GetButtonDown("Fire1")) && canFire && World.isRunning) {
             gameObject.SendMessage("DoFire");
             StartCoroutine(Fire());
         }
